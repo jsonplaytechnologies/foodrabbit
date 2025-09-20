@@ -19,45 +19,47 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="bg-gradient-to-r from-red-600 to-red-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
               Hungry? We've got you covered
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-red-100">
+            <p className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-red-100 max-w-3xl mx-auto leading-relaxed">
               {orderType === 'delivery'
                 ? 'Order from your favorite restaurants with fast delivery'
                 : 'Order from your favorite restaurants for quick pickup'
               }
             </p>
 
-            <div className="max-w-2xl mx-auto">
-              <div className="bg-white rounded-lg p-2 flex items-center shadow-lg">
-                <FiMapPin className="text-gray-400 ml-4 mr-3" />
-                <input
-                  type="text"
-                  placeholder={orderType === 'delivery' ? "Enter your delivery address" : "Enter your location"}
-                  className="flex-1 py-3 px-2 text-gray-700 focus:outline-none"
-                />
-                <button className="bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition-colors flex items-center">
+            <div className="max-w-2xl mx-auto mb-6 sm:mb-8">
+              <div className="bg-white rounded-lg p-2 flex flex-col sm:flex-row items-stretch sm:items-center shadow-lg">
+                <div className="flex items-center flex-1 mb-2 sm:mb-0">
+                  <FiMapPin className="text-gray-400 ml-4 mr-3 flex-shrink-0" />
+                  <input
+                    type="text"
+                    placeholder={orderType === 'delivery' ? "Enter your delivery address" : "Enter your location"}
+                    className="flex-1 py-3 px-2 text-gray-700 focus:outline-none text-sm sm:text-base"
+                  />
+                </div>
+                <button className="bg-red-600 text-white px-4 sm:px-6 py-3 rounded-md hover:bg-red-700 transition-colors flex items-center justify-center text-sm sm:text-base font-medium">
                   <FiSearch className="mr-2" />
                   Find Food
                 </button>
               </div>
             </div>
 
-            <div className="flex justify-center space-x-8 mt-8 text-red-100">
+            <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-red-100">
               <div className="flex items-center">
-                <FiTruck className="mr-2" />
-                <span>{orderType === 'delivery' ? 'Fast Delivery' : 'Quick Pickup'}</span>
+                <FiTruck className="mr-2 w-4 h-4" />
+                <span className="text-sm sm:text-base">{orderType === 'delivery' ? 'Fast Delivery' : 'Quick Pickup'}</span>
               </div>
               <div className="flex items-center">
-                <FiStar className="mr-2" />
-                <span>Top Rated</span>
+                <FiStar className="mr-2 w-4 h-4" />
+                <span className="text-sm sm:text-base">Top Rated</span>
               </div>
               <div className="flex items-center">
-                <FiClock className="mr-2" />
-                <span>Real-time Tracking</span>
+                <FiClock className="mr-2 w-4 h-4" />
+                <span className="text-sm sm:text-base">Real-time Tracking</span>
               </div>
             </div>
           </div>

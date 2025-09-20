@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
-import { FiPlus, FiMinus, FiTrash2, FiShoppingBag, FiClock, FiMapPin, FiPackage } from 'react-icons/fi';
+import { useEffect } from 'react';
+import { FiPlus, FiMinus, FiTrash2, FiShoppingBag, FiClock, FiMapPin, FiPackage, FiTruck } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, getTotal, orderType } = useCart();
+  const { items, updateQuantity, removeItem, getTotal, orderType, setOrderType } = useCart();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const deliveryFee = orderType === 'delivery' ? 3.99 : 0;
   const serviceFee = 2.50;
@@ -37,11 +42,42 @@ const Cart = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 space-y-4 sm:space-y-0">
           <h1 className="text-2xl font-bold text-gray-900">Your Cart</h1>
           <div className="flex items-center text-gray-600">
             <FiClock className="w-4 h-4 mr-2" />
-            <span className="text-sm">Estimated delivery: {estimatedDeliveryTime}</span>
+            <span className="text-sm">Estimated {orderType}: {estimatedDeliveryTime}</span>
+          </div>
+        </div>
+
+        {/* Mobile Order Type Toggle */}
+        <div className="lg:hidden mb-6">
+          <div className="bg-white rounded-lg shadow-md p-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Order Type</h3>
+            <div className="flex bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={() => setOrderType('delivery')}
+                className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  orderType === 'delivery'
+                    ? 'bg-red-600 text-white'
+                    : 'text-gray-600 hover:text-red-600'
+                }`}
+              >
+                <FiTruck className="w-4 h-4" />
+                <span>Delivery</span>
+              </button>
+              <button
+                onClick={() => setOrderType('pickup')}
+                className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  orderType === 'pickup'
+                    ? 'bg-red-600 text-white'
+                    : 'text-gray-600 hover:text-red-600'
+                }`}
+              >
+                <FiPackage className="w-4 h-4" />
+                <span>Pickup</span>
+              </button>
+            </div>
           </div>
         </div>
 
