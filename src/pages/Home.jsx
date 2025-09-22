@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { FiSearch, FiClock, FiStar, FiMapPin, FiTruck, FiShield, FiHeart, FiAward, FiUsers } from 'react-icons/fi';
 import { restaurants } from '../data/restaurants';
+import { groceryStores } from '../data/groceryStores';
 import { useCart } from '../context/CartContext';
 
 const Home = () => {
-  const { orderType } = useCart();
+  const { orderType, serviceType } = useCart();
   const featuredRestaurants = restaurants.filter(restaurant => restaurant.featured);
+  const featuredStores = groceryStores.filter(store => store.featured);
 
-  const categories = [
+  const foodCategories = [
     { name: "Pizza", icon: "🍕", count: "120+ restaurants" },
     { name: "Burgers", icon: "🍔", count: "85+ restaurants" },
     { name: "Sushi", icon: "🍣", count: "45+ restaurants" },
@@ -16,16 +18,34 @@ const Home = () => {
     { name: "Indian", icon: "🍛", count: "55+ restaurants" }
   ];
 
+  const groceryCategories = [
+    { name: "Fresh Produce", icon: "🥬", count: "45+ items" },
+    { name: "Dairy & Eggs", icon: "🥛", count: "32+ items" },
+    { name: "Meat & Seafood", icon: "🥩", count: "28+ items" },
+    { name: "Bakery", icon: "🍞", count: "24+ items" },
+    { name: "Pantry", icon: "🥫", count: "156+ items" },
+    { name: "Frozen", icon: "❄️", count: "67+ items" }
+  ];
+
+  const categories = serviceType === 'grocery' ? groceryCategories : foodCategories;
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white">
+    <div className={`min-h-screen ${serviceType === 'grocery' ? 'bg-green-50' : 'bg-gray-50'} transition-colors duration-300`}>
+      <section className={`bg-gradient-to-r ${serviceType === 'grocery' ? 'from-green-600 to-green-700' : 'from-red-600 to-red-700'} text-white`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-              Hungry? We've got you covered
+              {serviceType === 'grocery'
+                ? 'Fresh groceries delivered to your door'
+                : 'Hungry? We\'ve got you covered'
+              }
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-red-100 max-w-3xl mx-auto leading-relaxed">
-              {orderType === 'delivery'
+            <p className={`text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 ${serviceType === 'grocery' ? 'text-green-100' : 'text-red-100'} max-w-3xl mx-auto leading-relaxed`}>
+              {serviceType === 'grocery'
+                ? orderType === 'delivery'
+                  ? 'Shop from your favorite stores with same-day delivery'
+                  : 'Shop from your favorite stores for convenient pickup'
+                : orderType === 'delivery'
                 ? 'Order from your favorite restaurants with fast delivery'
                 : 'Order from your favorite restaurants for quick pickup'
               }
@@ -41,14 +61,14 @@ const Home = () => {
                     className="flex-1 py-3 px-2 text-gray-700 focus:outline-none text-sm sm:text-base"
                   />
                 </div>
-                <button className="bg-red-600 text-white px-4 sm:px-6 py-3 rounded-md hover:bg-red-700 transition-colors flex items-center justify-center text-sm sm:text-base font-medium">
+                <button className={`${serviceType === 'grocery' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white px-4 sm:px-6 py-3 rounded-md transition-colors flex items-center justify-center text-sm sm:text-base font-medium`}>
                   <FiSearch className="mr-2" />
-                  Find Food
+                  {serviceType === 'grocery' ? 'Find Stores' : 'Find Food'}
                 </button>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-6 lg:space-x-8 text-red-100">
+            <div className={`flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-6 lg:space-x-8 ${serviceType === 'grocery' ? 'text-green-100' : 'text-red-100'}`}>
               <div className="flex items-center">
                 <FiTruck className="mr-2 w-4 h-4" />
                 <span className="text-sm sm:text-base">{orderType === 'delivery' ? 'Fast Delivery' : 'Quick Pickup'}</span>
@@ -74,11 +94,11 @@ const Home = () => {
             {categories.map((category, index) => (
               <Link
                 key={index}
-                to="/restaurants"
+                to={serviceType === 'grocery' ? "/grocery-stores" : "/restaurants"}
                 className="bg-white rounded-lg p-6 text-center shadow-md hover:shadow-lg transition-shadow cursor-pointer group"
               >
                 <div className="text-4xl mb-3">{category.icon}</div>
-                <h3 className="font-semibold text-gray-900 group-hover:text-red-600 transition-colors">
+                <h3 className={`font-semibold text-gray-900 transition-colors ${serviceType === 'grocery' ? 'group-hover:text-green-600' : 'group-hover:text-red-600'}`}>
                   {category.name}
                 </h3>
                 <p className="text-sm text-gray-500 mt-1">{category.count}</p>
@@ -91,10 +111,12 @@ const Home = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Featured Restaurants</h2>
+            <h2 className="text-3xl font-bold text-gray-900">
+              {serviceType === 'grocery' ? 'Featured Stores' : 'Featured Restaurants'}
+            </h2>
             <Link
-              to="/restaurants"
-              className="text-red-600 hover:text-red-700 font-medium flex items-center"
+              to={serviceType === 'grocery' ? "/grocery-stores" : "/restaurants"}
+              className={`${serviceType === 'grocery' ? 'text-green-600 hover:text-green-700' : 'text-red-600 hover:text-red-700'} font-medium flex items-center`}
             >
               View all
               <span className="ml-1">→</span>
@@ -102,37 +124,39 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredRestaurants.map((restaurant) => (
+            {(serviceType === 'grocery' ? featuredStores : featuredRestaurants).map((item) => (
               <Link
-                key={restaurant.id}
-                to={`/restaurant/${restaurant.id}`}
+                key={item.id}
+                to={serviceType === 'grocery' ? `/grocery-store/${item.id}` : `/restaurant/${item.id}`}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group block"
               >
                 <div className="relative h-48">
                   <img
-                    src={restaurant.image}
-                    alt={restaurant.name}
+                    src={item.image}
+                    alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-4 right-4 bg-white px-2 py-1 rounded-full text-sm font-medium">
-                    {restaurant.priceRange}
+                    {serviceType === 'grocery' ? item.type : item.priceRange}
                   </div>
                 </div>
 
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {restaurant.name}
+                    {item.name}
                   </h3>
-                  <p className="text-gray-600 mb-4">{restaurant.cuisine}</p>
+                  <p className="text-gray-600 mb-4">
+                    {serviceType === 'grocery' ? item.description : item.cuisine}
+                  </p>
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <FiStar className="text-yellow-400 mr-1" />
-                      <span className="font-medium">{restaurant.rating}</span>
+                      <span className="font-medium">{item.rating}</span>
                     </div>
                     <div className="flex items-center text-gray-600">
                       <FiClock className="mr-1" />
-                      <span className="text-sm">{restaurant.deliveryTime}</span>
+                      <span className="text-sm">{item.deliveryTime}</span>
                     </div>
                   </div>
                 </div>
@@ -145,38 +169,59 @@ const Home = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose FoodRabbit?</h2>
-            <p className="text-lg text-gray-600">We're committed to delivering the best food experience</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Why Choose {serviceType === 'grocery' ? 'GroceryRabbit' : 'FoodRabbit'}?
+            </h2>
+            <p className="text-lg text-gray-600">
+              We're committed to delivering the best {serviceType === 'grocery' ? 'grocery shopping' : 'food'} experience
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiTruck className="w-8 h-8 text-red-600" />
+              <div className={`w-16 h-16 ${serviceType === 'grocery' ? 'bg-green-100' : 'bg-red-100'} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <FiTruck className={`w-8 h-8 ${serviceType === 'grocery' ? 'text-green-600' : 'text-red-600'}`} />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Fast Delivery</h3>
-              <p className="text-gray-600">Get your food delivered in 30 minutes or less</p>
+              <p className="text-gray-600">
+                {serviceType === 'grocery'
+                  ? 'Get your groceries delivered fresh and fast'
+                  : 'Get your food delivered in 30 minutes or less'
+                }
+              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiShield className="w-8 h-8 text-red-600" />
+              <div className={`w-16 h-16 ${serviceType === 'grocery' ? 'bg-green-100' : 'bg-red-100'} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <FiShield className={`w-8 h-8 ${serviceType === 'grocery' ? 'text-green-600' : 'text-red-600'}`} />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Safe & Secure</h3>
-              <p className="text-gray-600">Your payments and data are always protected</p>
+              <p className="text-gray-600">
+                {serviceType === 'grocery'
+                  ? 'Freshness guaranteed with secure cold-chain delivery'
+                  : 'Your payments and data are always protected'
+                }
+              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiAward className="w-8 h-8 text-red-600" />
+              <div className={`w-16 h-16 ${serviceType === 'grocery' ? 'bg-green-100' : 'bg-red-100'} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <FiAward className={`w-8 h-8 ${serviceType === 'grocery' ? 'text-green-600' : 'text-red-600'}`} />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Quality Food</h3>
-              <p className="text-gray-600">Only the best restaurants and highest quality ingredients</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {serviceType === 'grocery' ? 'Premium Quality' : 'Quality Food'}
+              </h3>
+              <p className="text-gray-600">
+                {serviceType === 'grocery'
+                  ? 'Carefully selected fresh produce and premium grocery items'
+                  : 'Only the best restaurants and highest quality ingredients'
+                }
+              </p>
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FiUsers className="w-8 h-8 text-red-600" />
+              <div className={`w-16 h-16 ${serviceType === 'grocery' ? 'bg-green-100' : 'bg-red-100'} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <FiUsers className={`w-8 h-8 ${serviceType === 'grocery' ? 'text-green-600' : 'text-red-600'}`} />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">24/7 Support</h3>
               <p className="text-gray-600">Our customer service team is always here to help</p>
@@ -264,12 +309,12 @@ const Home = () => {
 
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-red-600 rounded-2xl p-8 md:p-12 text-white text-center">
+          <div className={`${serviceType === 'grocery' ? 'bg-green-600' : 'bg-red-600'} rounded-2xl p-8 md:p-12 text-white text-center`}>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Get the FoodRabbit App
+              Get the {serviceType === 'grocery' ? 'GroceryRabbit' : 'FoodRabbit'} App
             </h2>
-            <p className="text-xl text-red-100 mb-8">
-              Download our app for faster ordering and exclusive deals
+            <p className={`text-xl ${serviceType === 'grocery' ? 'text-green-100' : 'text-red-100'} mb-8`}>
+              Download our app for faster {serviceType === 'grocery' ? 'grocery shopping' : 'ordering'} and exclusive deals
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors">

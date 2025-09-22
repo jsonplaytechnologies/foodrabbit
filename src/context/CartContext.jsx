@@ -58,6 +58,13 @@ const cartReducer = (state, action) => {
         orderType: action.payload
       };
 
+    case 'SET_SERVICE_TYPE':
+      return {
+        ...state,
+        serviceType: action.payload,
+        items: [] // Clear cart when switching service types
+      };
+
     default:
       return state;
   }
@@ -65,7 +72,8 @@ const cartReducer = (state, action) => {
 
 const initialState = {
   items: [],
-  orderType: 'delivery' // 'delivery' or 'pickup'
+  orderType: 'delivery', // 'delivery' or 'pickup'
+  serviceType: 'food' // 'food' or 'grocery'
 };
 
 export const CartProvider = ({ children }) => {
@@ -91,6 +99,10 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'SET_ORDER_TYPE', payload: orderType });
   };
 
+  const setServiceType = (serviceType) => {
+    dispatch({ type: 'SET_SERVICE_TYPE', payload: serviceType });
+  };
+
   const getItemCount = () => {
     return state.items.reduce((total, item) => total + item.quantity, 0);
   };
@@ -102,11 +114,13 @@ export const CartProvider = ({ children }) => {
   const value = {
     items: state.items,
     orderType: state.orderType,
+    serviceType: state.serviceType,
     addItem,
     removeItem,
     updateQuantity,
     clearCart,
     setOrderType,
+    setServiceType,
     getItemCount,
     getTotal
   };

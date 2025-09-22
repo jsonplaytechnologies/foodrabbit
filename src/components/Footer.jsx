@@ -7,39 +7,43 @@ import {
   FiFacebook,
   FiTwitter,
 } from 'react-icons/fi';
+import { useCart } from '../context/CartContext';
 
 const Footer = () => {
+  const { serviceType } = useCart();
   return (
     <footer className='bg-gray-900 text-white'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           <div className='space-y-4'>
             <div className='flex items-center space-x-2'>
-              <div className='w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center'>
-                <span className='text-white font-bold text-xl'>F</span>
+              <div className={`w-10 h-10 ${serviceType === 'grocery' ? 'bg-green-600' : 'bg-red-600'} rounded-lg flex items-center justify-center`}>
+                <span className='text-white font-bold text-xl'>{serviceType === 'grocery' ? 'G' : 'F'}</span>
               </div>
-              <span className='text-2xl font-bold'>FoodRabbit</span>
+              <span className='text-2xl font-bold'>{serviceType === 'grocery' ? 'GroceryRabbit' : 'FoodRabbit'}</span>
             </div>
             <p className='text-gray-400'>
-              Delivering delicious food from your favorite restaurants to your
-              door.
+              {serviceType === 'grocery'
+                ? 'Fresh groceries delivered from your favorite stores to your door.'
+                : 'Delivering delicious food from your favorite restaurants to your door.'
+              }
             </p>
             <div className='flex space-x-4'>
               <a
                 href='#'
-                className='text-gray-400 hover:text-red-400 transition-colors'
+                className={`text-gray-400 ${serviceType === 'grocery' ? 'hover:text-green-400' : 'hover:text-red-400'} transition-colors`}
               >
                 <FiFacebook className='w-5 h-5' />
               </a>
               <a
                 href='#'
-                className='text-gray-400 hover:text-red-400 transition-colors'
+                className={`text-gray-400 ${serviceType === 'grocery' ? 'hover:text-green-400' : 'hover:text-red-400'} transition-colors`}
               >
                 <FiTwitter className='w-5 h-5' />
               </a>
               <a
                 href='#'
-                className='text-gray-400 hover:text-red-400 transition-colors'
+                className={`text-gray-400 ${serviceType === 'grocery' ? 'hover:text-green-400' : 'hover:text-red-400'} transition-colors`}
               >
                 <FiInstagram className='w-5 h-5' />
               </a>
@@ -59,10 +63,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to='/restaurants'
+                  to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Restaurants
+                  {serviceType === 'grocery' ? 'Stores' : 'Restaurants'}
                 </Link>
               </li>
               <li>
@@ -134,15 +138,17 @@ const Footer = () => {
             <h3 className='text-lg font-semibold mb-4'>Contact Us</h3>
             <div className='space-y-3'>
               <div className='flex items-center space-x-3'>
-                <FiPhone className='w-5 h-5 text-red-400' />
+                <FiPhone className={`w-5 h-5 ${serviceType === 'grocery' ? 'text-green-400' : 'text-red-400'}`} />
                 <span className='text-gray-400'>+1 (555) 123-4567</span>
               </div>
               <div className='flex items-center space-x-3'>
-                <FiMail className='w-5 h-5 text-red-400' />
-                <span className='text-gray-400'>support@foodrabbit.com</span>
+                <FiMail className={`w-5 h-5 ${serviceType === 'grocery' ? 'text-green-400' : 'text-red-400'}`} />
+                <span className='text-gray-400'>
+                  support@{serviceType === 'grocery' ? 'groceryrabbit' : 'foodrabbit'}.com
+                </span>
               </div>
               <div className='flex items-start space-x-3'>
-                <FiMapPin className='w-5 h-5 text-red-400 mt-1' />
+                <FiMapPin className={`w-5 h-5 ${serviceType === 'grocery' ? 'text-green-400' : 'text-red-400'} mt-1`} />
                 <span className='text-gray-400'>
                   123 Food Street
                   <br />
@@ -156,7 +162,7 @@ const Footer = () => {
         <div className='border-t border-gray-800 mt-8 pt-8'>
           <div className='flex flex-col md:flex-row justify-between items-center'>
             <div className='text-gray-400 text-sm'>
-              © 2025 FoodRabbit. All rights reserved.
+              © 2025 {serviceType === 'grocery' ? 'GroceryRabbit' : 'FoodRabbit'}. All rights reserved.
             </div>
             <div className='flex space-x-6 mt-4 md:mt-0'>
               <span className='text-gray-400 text-sm'>Available on:</span>
