@@ -36,30 +36,60 @@ const Restaurant = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative h-80">
-        <img
-          src={restaurant.image}
-          alt={restaurant.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-          <div className="container">
-            <h1 className="text-4xl font-bold mb-2 font-display">{restaurant.name}</h1>
-            <p className="text-xl mb-4">{restaurant.cuisine}</p>
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-1">
-                <FiStar className="text-yellow-400 w-5 h-5 fill-current" />
-                <span className="font-semibold">{restaurant.rating}</span>
-                <span className="opacity-80">({restaurant.reviewCount} reviews)</span>
+      <div className="relative h-80" style={{
+        backgroundImage: `url(${restaurant.image})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}>
+        <div style={{
+          position: 'absolute',
+          inset: '0',
+          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          backdropFilter: 'blur(1px)'
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '0',
+          left: '0',
+          right: '0',
+          padding: '2rem',
+          zIndex: '10'
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
+            <h1 style={{
+              fontSize: '2.5rem',
+              fontWeight: 'bold',
+              marginBottom: '0.5rem',
+              color: '#ffffff',
+              lineHeight: '1.2',
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.8)'
+            }}>{restaurant.name}</h1>
+            <p style={{
+              fontSize: '1.25rem',
+              marginBottom: '1rem',
+              color: '#ffffff',
+              lineHeight: '1.5',
+              textShadow: '0 1px 3px rgba(0, 0, 0, 0.8)'
+            }}>{restaurant.cuisine}</p>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1.5rem',
+              flexWrap: 'wrap'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                <FiStar style={{ color: '#fbbf24', width: '1.25rem', height: '1.25rem' }} />
+                <span style={{ fontWeight: '600', color: '#ffffff' }}>{restaurant.rating}</span>
+                <span style={{ color: '#e5e7eb' }}>({restaurant.reviewCount} reviews)</span>
               </div>
-              <div className="flex items-center gap-1">
-                <FiClock className="w-5 h-5" />
-                <span>{restaurant.deliveryTime}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                <FiClock style={{ color: '#ffffff', width: '1.25rem', height: '1.25rem' }} />
+                <span style={{ color: '#ffffff' }}>{restaurant.deliveryTime}</span>
               </div>
-              <div className="flex items-center gap-1">
-                <FiMapPin className="w-5 h-5" />
-                <span>{restaurant.address}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                <FiMapPin style={{ color: '#ffffff', width: '1.25rem', height: '1.25rem' }} />
+                <span style={{ color: '#ffffff' }}>{restaurant.address}</span>
               </div>
             </div>
           </div>
