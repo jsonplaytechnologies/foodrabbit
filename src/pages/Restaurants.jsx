@@ -1,160 +1,232 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiSearch, FiFilter, FiStar, FiClock, FiMapPin, FiHeart } from 'react-icons/fi';
+import { FiStar, FiClock, FiSearch, FiMapPin } from 'react-icons/fi';
 import { restaurants } from '../data/restaurants';
 
 const Restaurants = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [priceFilter, setPriceFilter] = useState('All');
-  const [ratingFilter, setRatingFilter] = useState('All');
+  const [selectedCuisine, setSelectedCuisine] = useState('');
+  const [sortBy, setSortBy] = useState('featured');
 
-  const categories = ['All', 'Italian', 'American', 'Japanese', 'Chinese', 'Mexican', 'Indian', 'Thai'];
-  const priceRanges = ['All', '$', '$$', '$$$', '$$$$'];
-  const ratingOptions = ['All', '4.5+', '4.0+', '3.5+'];
+  const cuisines = [
+    'All',
+    'Italian',
+    'Chinese',
+    'Mexican',
+    'Indian',
+    'American',
+    'Japanese',
+    'Thai',
+  ];
 
+  const filteredRestaurants = restaurants.filter((restaurant) => {
+    const matchesSearch =
+      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      restaurant.cuisine.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCuisine =
+      selectedCuisine === '' ||
+      selectedCuisine === 'All' ||
+      restaurant.cuisine === selectedCuisine;
+    return matchesSearch && matchesCuisine;
+  });
 
-  const filteredRestaurants = restaurants.filter(restaurant => {
-    const matchesSearch = restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         restaurant.cuisine.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || restaurant.cuisine === selectedCategory;
-    const matchesPrice = priceFilter === 'All' || restaurant.priceRange === priceFilter;
-    const matchesRating = ratingFilter === 'All' ||
-                         (ratingFilter === '4.5+' && restaurant.rating >= 4.5) ||
-                         (ratingFilter === '4.0+' && restaurant.rating >= 4.0) ||
-                         (ratingFilter === '3.5+' && restaurant.rating >= 3.5);
-
-    return matchesSearch && matchesCategory && matchesPrice && matchesRating;
+  const sortedRestaurants = [...filteredRestaurants].sort((a, b) => {
+    switch (sortBy) {
+      case 'rating':
+        return b.rating - a.rating;
+      case 'deliveryTime':
+        return parseInt(a.deliveryTime) - parseInt(b.deliveryTime);
+      case 'name':
+        return a.name.localeCompare(b.name);
+      default:
+        return b.featured ? 1 : -1;
+    }
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search restaurants or cuisines..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
-                />
-              </div>
+    <div className='min-h-screen bg-gradient-to-br from-orange-50 via-white to-red-50'>
+      {/* Hero Section with Search */}
+      <div className='relative bg-gradient-to-r from-orange-600 via-red-500 to-pink-600 overflow-hidden py-4'>
+        <div className='absolute inset-0 bg-black/20'></div>
+        <div className='absolute inset-0 bg-gradient-to-b from-transparent to-black/30'></div>
+
+        {/* Decorative elements */}
+        <div className='absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl'></div>
+        <div className='absolute bottom-20 right-10 w-40 h-40 bg-white/10 rounded-full blur-xl'></div>
+        <div className='absolute top-1/2 left-1/3 w-24 h-24 bg-white/5 rounded-full blur-lg'></div>
+
+        <div className='relative container py-20 text-center text-white'>
+          <h1 className='text-5xl md:text-6xl font-bold mb-6 font-display leading-tight'>
+            Delicious Food
+            <span className='block text-4xl md:text-5xl text-orange-200 mt-2'>
+              Delivered Fast
+            </span>
+          </h1>
+          <p className='text-xl md:text-2xl mb-12 text-orange-100 max-w-3xl mx-auto leading-relaxed'>
+            Discover amazing restaurants and cuisines near you. Order your
+            favorite meals with just a few clicks.
+          </p>
+
+          {/* Search Bar */}
+          <div className='max-w-4xl mx-auto mb-8'>
+            <div className='relative'>
+              <FiSearch className='absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6' />
+              <input
+                type='text'
+                placeholder='Search for restaurants, cuisines, or dishes...'
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className='w-full pl-16 pr-6 py-5 text-lg bg-white/95 backdrop-blur-md border-0 rounded-2xl focus:outline-none focus:ring-4 focus:ring-white/50 shadow-2xl placeholder-gray-500'
+              />
             </div>
+          </div>
 
-            <div className="flex items-center gap-4">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+          {/* Filter Pills */}
+          <div className='flex flex-wrap justify-center gap-3 mb-8'>
+            {cuisines.map((cuisine) => (
+              <button
+                key={cuisine}
+                onClick={() =>
+                  setSelectedCuisine(cuisine === 'All' ? '' : cuisine)
+                }
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-200 backdrop-blur-md ${
+                  (selectedCuisine === '' && cuisine === 'All') ||
+                  selectedCuisine === cuisine
+                    ? 'bg-white text-orange-600 shadow-lg transform scale-105'
+                    : 'bg-white/20 text-white hover:bg-white/30 border border-white/30'
+                }`}
               >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
+                {cuisine}
+              </button>
+            ))}
+          </div>
 
-              <select
-                value={priceFilter}
-                onChange={(e) => setPriceFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+          {/* Sort Options */}
+          <div className='flex flex-wrap justify-center gap-3'>
+            {[
+              { value: 'featured', label: '⭐ Featured' },
+              { value: 'rating', label: '🏆 Top Rated' },
+              { value: 'deliveryTime', label: '⚡ Fast Delivery' },
+              { value: 'name', label: '📝 A-Z' },
+            ].map((option) => (
+              <button
+                key={option.value}
+                onClick={() => setSortBy(option.value)}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 backdrop-blur-md ${
+                  sortBy === option.value
+                    ? 'bg-white text-red-600 shadow-lg'
+                    : 'bg-white/15 text-white hover:bg-white/25 border border-white/20'
+                }`}
               >
-                {priceRanges.map(price => (
-                  <option key={price} value={price}>{price === 'All' ? 'Any Price' : price}</option>
-                ))}
-              </select>
-
-              <select
-                value={ratingFilter}
-                onChange={(e) => setRatingFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
-              >
-                {ratingOptions.map(rating => (
-                  <option key={rating} value={rating}>{rating === 'All' ? 'Any Rating' : rating}</option>
-                ))}
-              </select>
-            </div>
+                {option.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Restaurants near you ({filteredRestaurants.length})
-          </h1>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <FiMapPin className="w-4 h-4" />
-            <span>Downtown Area</span>
-          </div>
+      {/* Results Section */}
+      <div className='container py-16'>
+        {/* Results Header */}
+        <div className='mb-8 text-center'>
+          <h2 className='text-3xl font-bold text-gray-800 mb-3'>
+            {sortedRestaurants.length} Amazing Restaurants Found
+          </h2>
+          <p className='text-lg text-gray-600'>
+            {searchTerm && `Results for "${searchTerm}"`}
+            {selectedCuisine &&
+              selectedCuisine !== 'All' &&
+              ` • ${selectedCuisine} cuisine`}
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredRestaurants.map((restaurant) => (
+        {/* Restaurant Grid */}
+        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'>
+          {sortedRestaurants.map((restaurant) => (
             <Link
               key={restaurant.id}
               to={`/restaurant/${restaurant.id}`}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group block"
+              className='group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2 border border-gray-100'
             >
-              <div className="relative h-48">
+              {/* Image Container */}
+              <div className='relative h-56 overflow-hidden'>
                 <img
                   src={restaurant.image}
                   alt={restaurant.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-700'
                 />
-                <button className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                  <FiHeart className="w-4 h-4 text-gray-600" />
-                </button>
-                {restaurant.featured && (
-                  <div className="absolute top-3 left-3 bg-red-600 text-white px-2 py-1 rounded text-xs font-medium">
-                    Featured
-                  </div>
-                )}
-                <div className="absolute bottom-3 left-3">
-                  <div className="flex flex-wrap gap-1">
-                    {restaurant.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                <div className='absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+
+                {/* Badges */}
+                <div className='absolute top-4 left-4 flex flex-col gap-2'>
+                  {restaurant.featured && (
+                    <span className='bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg'>
+                      ⭐ Featured
+                    </span>
+                  )}
+                </div>
+                <div className='absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-sm font-bold text-gray-700 shadow-lg'>
+                  {restaurant.priceRange}
+                </div>
+
+                {/* Quick Action Overlay */}
+                <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                  <div className='bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-2xl font-semibold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300'>
+                    View Menu →
                   </div>
                 </div>
               </div>
 
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-red-600 transition-colors">
+              {/* Content */}
+              <div className='p-6'>
+                <div className='mb-4'>
+                  <h3 className='text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors line-clamp-1'>
                     {restaurant.name}
                   </h3>
-                  <span className="text-gray-600 font-medium">{restaurant.priceRange}</span>
+                  <p className='text-orange-600 font-medium text-sm uppercase tracking-wide'>
+                    {restaurant.cuisine}
+                  </p>
                 </div>
 
-                <p className="text-gray-600 mb-3">{restaurant.cuisine}</p>
-
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center">
-                    <FiStar className="text-yellow-400 mr-1 w-4 h-4" />
-                    <span className="font-medium">{restaurant.rating}</span>
-                    <span className="text-gray-500 text-sm ml-1">({restaurant.reviewCount})</span>
-                  </div>
-                  <div className="flex items-center text-gray-600">
-                    <FiMapPin className="mr-1 w-4 h-4" />
-                    <span className="text-sm">{restaurant.distance}</span>
+                {/* Stats Row */}
+                <div className='flex items-center justify-between mb-4'>
+                  <div className='flex items-center gap-3'>
+                    <div className='flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg'>
+                      <FiStar className='text-yellow-500 w-4 h-4 fill-current' />
+                      <span className='font-bold text-gray-900'>
+                        {restaurant.rating}
+                      </span>
+                      <span className='text-gray-500 text-xs'>
+                        ({restaurant.reviewCount})
+                      </span>
+                    </div>
+                    <div className='flex items-center gap-1 text-gray-600'>
+                      <FiClock className='w-4 h-4' />
+                      <span className='text-sm font-medium'>
+                        {restaurant.deliveryTime}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center text-gray-600">
-                    <FiClock className="mr-1 w-4 h-4" />
-                    <span>{restaurant.deliveryTime}</span>
-                  </div>
-                  <span className="text-gray-900 font-medium">
-                    Delivery: {restaurant.deliveryFee}
+                {/* Delivery Info */}
+                <div className='flex items-center justify-between mb-4'>
+                  {restaurant.deliveryFee === 0 ? (
+                    <span className='bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold'>
+                      🚚 Free Delivery
+                    </span>
+                  ) : (
+                    <span className='text-gray-600 text-sm font-medium'>
+                      Delivery: ${restaurant.deliveryFee}
+                    </span>
+                  )}
+                </div>
+
+                {/* Address */}
+                <div className='flex items-start gap-2 text-gray-500 pt-4 border-t border-gray-100'>
+                  <FiMapPin className='w-4 h-4 mt-0.5 flex-shrink-0' />
+                  <span className='text-sm line-clamp-2'>
+                    {restaurant.address}
                   </span>
                 </div>
               </div>
@@ -162,13 +234,17 @@ const Restaurants = () => {
           ))}
         </div>
 
-        {filteredRestaurants.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
-              <FiSearch className="w-16 h-16 mx-auto" />
+        {sortedRestaurants.length === 0 && (
+          <div className='text-center py-12'>
+            <div className='w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4'>
+              <FiSearch className='w-12 h-12 text-gray-400' />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No restaurants found</h3>
-            <p className="text-gray-600">Try adjusting your search or filters</p>
+            <h3 className='text-xl font-semibold text-gray-900 mb-2'>
+              No restaurants found
+            </h3>
+            <p className='text-gray-600'>
+              Try adjusting your search or filters
+            </p>
           </div>
         )}
       </div>

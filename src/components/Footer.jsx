@@ -1,55 +1,58 @@
 import { Link } from 'react-router-dom';
 import {
+  FiFacebook,
+  FiTwitter,
+  FiInstagram,
   FiMail,
   FiPhone,
   FiMapPin,
-  FiInstagram,
-  FiFacebook,
-  FiTwitter,
 } from 'react-icons/fi';
-import { useCart } from '../context/CartContext';
 
 const Footer = () => {
-  const { serviceType } = useCart();
   return (
-    <footer className='bg-gray-900 text-white'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
+    <footer className='bg-gray-900 text-white py-4'>
+      <div className='container mx-auto px-6 py-16'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
-          <div className='space-y-4'>
-            <div className='flex items-center space-x-2'>
-              <div className={`w-10 h-10 ${serviceType === 'grocery' ? 'bg-green-600' : 'bg-red-600'} rounded-lg flex items-center justify-center`}>
-                <span className='text-white font-bold text-xl'>{serviceType === 'grocery' ? 'G' : 'F'}</span>
+          {/* Company Info */}
+          <div>
+            <div className='flex items-center gap-3 mb-4'>
+              <div className='w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center'>
+                <span className='text-white font-bold text-xl'>R</span>
               </div>
-              <span className='text-2xl font-bold'>{serviceType === 'grocery' ? 'GroceryRabbit' : 'FoodRabbit'}</span>
+              <div>
+                <h3 className='text-xl font-bold font-display'>Rabbit</h3>
+                <p className='text-xs text-gray-400 -mt-1'>
+                  Food & Grocery Delivery
+                </p>
+              </div>
             </div>
-            <p className='text-gray-400'>
-              {serviceType === 'grocery'
-                ? 'Fresh groceries delivered from your favorite stores to your door.'
-                : 'Delivering delicious food from your favorite restaurants to your door.'
-              }
+            <p className='text-gray-400 mb-4'>
+              Your one-stop solution for food delivery and grocery shopping.
+              Fresh ingredients, delicious meals, delivered fast.
             </p>
-            <div className='flex space-x-4'>
+            <div className='flex items-center gap-4'>
               <a
                 href='#'
-                className={`text-gray-400 ${serviceType === 'grocery' ? 'hover:text-green-400' : 'hover:text-red-400'} transition-colors`}
+                className='text-gray-400 hover:text-white transition-colors'
               >
                 <FiFacebook className='w-5 h-5' />
               </a>
               <a
                 href='#'
-                className={`text-gray-400 ${serviceType === 'grocery' ? 'hover:text-green-400' : 'hover:text-red-400'} transition-colors`}
+                className='text-gray-400 hover:text-white transition-colors'
               >
                 <FiTwitter className='w-5 h-5' />
               </a>
               <a
                 href='#'
-                className={`text-gray-400 ${serviceType === 'grocery' ? 'hover:text-green-400' : 'hover:text-red-400'} transition-colors`}
+                className='text-gray-400 hover:text-white transition-colors'
               >
                 <FiInstagram className='w-5 h-5' />
               </a>
             </div>
           </div>
 
+          {/* Quick Links */}
           <div>
             <h3 className='text-lg font-semibold mb-4'>Quick Links</h3>
             <ul className='space-y-2'>
@@ -63,121 +66,133 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
+                  to='/restaurants'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  {serviceType === 'grocery' ? 'Stores' : 'Restaurants'}
+                  Restaurants
                 </Link>
               </li>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to='/grocery-stores'
+                  className='text-gray-400 hover:text-white transition-colors'
+                >
+                  Grocery Stores
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to='/about'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to='/contact'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Help & Support
-                </a>
-              </li>
-              <li>
-                <a
-                  href='#'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
-                  Partner with Us
-                </a>
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
 
+          {/* Support */}
           <div>
-            <h3 className='text-lg font-semibold mb-4'>Legal</h3>
+            <h3 className='text-lg font-semibold mb-4'>Support</h3>
             <ul className='space-y-2'>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to='/help'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Terms of Service
-                </a>
+                  Help Center
+                </Link>
               </li>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to='/order-tracking'
+                  className='text-gray-400 hover:text-white transition-colors'
+                >
+                  Track Your Order
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to='/faq'
+                  className='text-gray-400 hover:text-white transition-colors'
+                >
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to='/privacy'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href='#'
+                <Link
+                  to='/terms'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Cookie Policy
-                </a>
-              </li>
-              <li>
-                <a
-                  href='#'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
-                  Refund Policy
-                </a>
+                  Terms of Service
+                </Link>
               </li>
             </ul>
           </div>
 
+          {/* Contact Info */}
           <div>
             <h3 className='text-lg font-semibold mb-4'>Contact Us</h3>
             <div className='space-y-3'>
-              <div className='flex items-center space-x-3'>
-                <FiPhone className={`w-5 h-5 ${serviceType === 'grocery' ? 'text-green-400' : 'text-red-400'}`} />
-                <span className='text-gray-400'>+1 (555) 123-4567</span>
+              <div className='flex items-center gap-3'>
+                <FiPhone className='w-5 h-5 text-orange-500' />
+                <span className='text-gray-400'>1-800-RABBIT</span>
               </div>
-              <div className='flex items-center space-x-3'>
-                <FiMail className={`w-5 h-5 ${serviceType === 'grocery' ? 'text-green-400' : 'text-red-400'}`} />
-                <span className='text-gray-400'>
-                  support@{serviceType === 'grocery' ? 'groceryrabbit' : 'foodrabbit'}.com
-                </span>
+              <div className='flex items-center gap-3'>
+                <FiMail className='w-5 h-5 text-orange-500' />
+                <span className='text-gray-400'>support@rabbit.com</span>
               </div>
-              <div className='flex items-start space-x-3'>
-                <FiMapPin className={`w-5 h-5 ${serviceType === 'grocery' ? 'text-green-400' : 'text-red-400'} mt-1`} />
+              <div className='flex items-start gap-3'>
+                <FiMapPin className='w-5 h-5 text-orange-500 mt-1' />
                 <span className='text-gray-400'>
-                  123 Food Street
+                  123 Delivery Street
                   <br />
-                  Downtown City, DC 12345
+                  New York, NY 10001
                 </span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className='border-t border-gray-800 mt-8 pt-8'>
-          <div className='flex flex-col md:flex-row justify-between items-center'>
-            <div className='text-gray-400 text-sm'>
-              © 2025 {serviceType === 'grocery' ? 'GroceryRabbit' : 'FoodRabbit'}. All rights reserved.
-            </div>
-            <div className='flex space-x-6 mt-4 md:mt-0'>
-              <span className='text-gray-400 text-sm'>Available on:</span>
-              <div className='flex space-x-2'>
-                <span className='bg-gray-800 text-gray-300 px-3 py-1 rounded text-xs'>
-                  iOS
-                </span>
-                <span className='bg-gray-800 text-gray-300 px-3 py-1 rounded text-xs'>
-                  Android
-                </span>
-                <span className='bg-gray-800 text-gray-300 px-3 py-1 rounded text-xs'>
-                  Web
-                </span>
-              </div>
-            </div>
+        <div className='border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center'>
+          <p className='text-gray-400 text-sm'>
+            © 2024 Rabbit. All rights reserved.
+          </p>
+          <div className='flex items-center gap-6 mt-4 md:mt-0'>
+            <Link
+              to='/privacy'
+              className='text-gray-400 hover:text-white text-sm transition-colors'
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              to='/terms'
+              className='text-gray-400 hover:text-white text-sm transition-colors'
+            >
+              Terms of Service
+            </Link>
+            <Link
+              to='/cookies'
+              className='text-gray-400 hover:text-white text-sm transition-colors'
+            >
+              Cookie Policy
+            </Link>
           </div>
         </div>
       </div>

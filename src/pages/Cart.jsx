@@ -1,230 +1,172 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { FiPlus, FiMinus, FiTrash2, FiShoppingBag, FiClock, FiMapPin, FiPackage, FiTruck } from 'react-icons/fi';
+import { FiMinus, FiPlus, FiTrash2, FiShoppingBag, FiTruck, FiPackage } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, getTotal, orderType, setOrderType } = useCart();
+  const { items, updateQuantity, removeItem, getTotal, clearCart, orderType, serviceType } = useCart();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const deliveryFee = orderType === 'delivery' ? 3.99 : 0;
-  const serviceFee = 2.50;
-  const tax = 4.35;
-
-  const subtotal = getTotal();
-  const total = subtotal + deliveryFee + serviceFee + tax;
-
-  const estimatedDeliveryTime = "35-45 min";
+  const deliveryFee = getTotal() > 35 ? 0 : 3.99;
+  const tax = getTotal() * 0.08;
+  const total = getTotal() + deliveryFee + tax;
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto px-4">
-          <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
-            <FiShoppingBag className="w-12 h-12 text-gray-400" />
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container">
+          <div className="max-w-md mx-auto text-center">
+            <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+              <FiShoppingBag className="w-12 h-12 text-gray-400" />
+            </div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
+            <p className="text-gray-600 mb-8">
+              Add some {serviceType === 'grocery' ? 'products' : 'items'} to get started
+            </p>
+            <Link
+              to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
+              className={`inline-flex items-center gap-2 px-6 py-3 ${
+                serviceType === 'grocery' ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600'
+              } text-white rounded-lg font-medium transition-colors`}
+            >
+              {serviceType === 'grocery' ? 'Shop Groceries' : 'Order Food'}
+            </Link>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
-          <p className="text-gray-600 mb-8">Add some delicious food to get started!</p>
-          <Link
-            to="/restaurants"
-            className="bg-red-600 text-white px-8 py-3 rounded-lg hover:bg-red-700 transition-colors inline-flex items-center"
-          >
-            Browse Restaurants
-          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 space-y-4 sm:space-y-0">
-          <h1 className="text-2xl font-bold text-gray-900">Your Cart</h1>
-          <div className="flex items-center text-gray-600">
-            <FiClock className="w-4 h-4 mr-2" />
-            <span className="text-sm">Estimated {orderType}: {estimatedDeliveryTime}</span>
-          </div>
-        </div>
-
-        {/* Mobile Order Type Toggle */}
-        <div className="lg:hidden mb-6">
-          <div className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Order Type</h3>
-            <div className="flex bg-gray-100 rounded-lg p-1">
-              <button
-                onClick={() => setOrderType('delivery')}
-                className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  orderType === 'delivery'
-                    ? 'bg-red-600 text-white'
-                    : 'text-gray-600 hover:text-red-600'
-                }`}
-              >
-                <FiTruck className="w-4 h-4" />
-                <span>Delivery</span>
-              </button>
-              <button
-                onClick={() => setOrderType('pickup')}
-                className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  orderType === 'pickup'
-                    ? 'bg-red-600 text-white'
-                    : 'text-gray-600 hover:text-red-600'
-                }`}
-              >
-                <FiPackage className="w-4 h-4" />
-                <span>Pickup</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Cart Items */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-md">
-              <div className="p-6 border-b border-gray-200">
-                <div className="flex items-center">
-                  {orderType === 'delivery' ? (
-                    <FiMapPin className="w-5 h-5 text-red-600 mr-2" />
-                  ) : (
-                    <FiPackage className="w-5 h-5 text-red-600 mr-2" />
-                  )}
-                  <div>
-                    <h3 className="font-medium text-gray-900">
-                      {orderType === 'delivery' ? 'Delivery to' : 'Pickup from'}
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      {orderType === 'delivery'
-                        ? '123 Main Street, Downtown'
-                        : 'Restaurant location - Ready in 20-30 min'
-                      }
-                    </p>
-                  </div>
-                  <button className="ml-auto text-red-600 hover:text-red-700 text-sm font-medium">
-                    Change
-                  </button>
-                </div>
+            <div className="bg-white rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h1 className="text-2xl font-bold text-gray-900">Your Cart</h1>
+                <button
+                  onClick={clearCart}
+                  className="text-red-600 hover:text-red-700 text-sm font-medium"
+                >
+                  Clear all
+                </button>
               </div>
 
-              <div className="divide-y divide-gray-200">
+              <div className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.id} className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-16 h-16 rounded-lg object-cover"
-                      />
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
-                            <p className="text-sm text-gray-600">{item.restaurant}</p>
-                          </div>
-
-                          <div className="text-right">
-                            <p className="text-lg font-medium text-gray-900">
-                              ${(item.price * item.quantity).toFixed(2)}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              ${item.price.toFixed(2)} each
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between mt-4">
-                          <div className="flex items-center space-x-3">
-                            <button
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                            >
-                              <FiMinus className="w-4 h-4" />
-                            </button>
-
-                            <span className="text-lg font-medium text-gray-900 w-8 text-center">
-                              {item.quantity}
-                            </span>
-
-                            <button
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors"
-                            >
-                              <FiPlus className="w-4 h-4" />
-                            </button>
-                          </div>
-
-                          <button
-                            onClick={() => removeItem(item.id)}
-                            className="text-red-600 hover:text-red-700 p-2 transition-colors"
-                          >
-                            <FiTrash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
+                  <div key={item.id} className="flex items-center gap-4 p-4 border border-gray-200 rounded-xl">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-16 h-16 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                      {item.restaurant && (
+                        <p className="text-sm text-gray-500">From {item.restaurant}</p>
+                      )}
+                      {item.store && (
+                        <p className="text-sm text-gray-500">From {item.store}</p>
+                      )}
+                      <p className="text-lg font-bold text-gray-900">${item.price}</p>
                     </div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50"
+                      >
+                        <FiMinus className="w-4 h-4" />
+                      </button>
+                      <span className="text-lg font-medium w-8 text-center">{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50"
+                      >
+                        <FiPlus className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => removeItem(item.id)}
+                      className="text-red-600 hover:text-red-700 p-2"
+                    >
+                      <FiTrash2 className="w-5 h-5" />
+                    </button>
                   </div>
                 ))}
               </div>
             </div>
-
-            <div className="mt-6">
-              <Link
-                to="/restaurants"
-                className="text-red-600 hover:text-red-700 font-medium flex items-center"
-              >
-                <FiPlus className="w-4 h-4 mr-2" />
-                Add more items
-              </Link>
-            </div>
           </div>
 
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h3>
+          {/* Order Summary */}
+          <div>
+            <div className="bg-white rounded-2xl p-6 sticky top-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
 
-              <div className="space-y-3 mb-4">
+              <div className="space-y-3 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="text-gray-900">${subtotal.toFixed(2)}</span>
+                  <span className="font-medium">${getTotal().toFixed(2)}</span>
                 </div>
-                {orderType === 'delivery' && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Delivery fee</span>
-                    <span className="text-gray-900">${deliveryFee.toFixed(2)}</span>
-                  </div>
-                )}
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Service fee</span>
-                  <span className="text-gray-900">${serviceFee.toFixed(2)}</span>
+                  <span className="text-gray-600">
+                    {orderType === 'delivery' ? 'Delivery fee' : 'Service fee'}
+                  </span>
+                  <span className="font-medium">
+                    {deliveryFee === 0 ? 'Free' : `$${deliveryFee.toFixed(2)}`}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tax</span>
-                  <span className="text-gray-900">${tax.toFixed(2)}</span>
+                  <span className="font-medium">${tax.toFixed(2)}</span>
+                </div>
+                <div className="border-t border-gray-200 pt-3">
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-gray-900">Total</span>
+                    <span className="font-bold text-xl">${total.toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 pt-4 mb-6">
-                <div className="flex justify-between">
-                  <span className="text-lg font-semibold text-gray-900">Total</span>
-                  <span className="text-lg font-semibold text-gray-900">${total.toFixed(2)}</span>
+              {/* Order Type */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-2 text-gray-700">
+                  {orderType === 'delivery' ? (
+                    <FiTruck className="w-5 h-5" />
+                  ) : (
+                    <FiPackage className="w-5 h-5" />
+                  )}
+                  <span className="font-medium">
+                    {orderType === 'delivery' ? 'Delivery' : 'Pickup'}
+                  </span>
                 </div>
-              </div>
-
-              <Link
-                to="/payment"
-                className="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors font-medium text-center block"
-              >
-                Proceed to Checkout
-              </Link>
-
-              <div className="mt-4 text-center">
-                <p className="text-xs text-gray-500">
-                  By placing your order, you agree to our Terms of Service
+                <p className="text-sm text-gray-600 mt-1">
+                  {orderType === 'delivery'
+                    ? 'Estimated delivery: 30-45 minutes'
+                    : 'Ready for pickup in 15-20 minutes'
+                  }
                 </p>
               </div>
+
+              {getTotal() < 35 && orderType === 'delivery' && (
+                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p className="text-sm text-blue-700">
+                    Add ${(35 - getTotal()).toFixed(2)} more for free delivery
+                  </p>
+                </div>
+              )}
+
+              <button className={`w-full py-4 ${
+                serviceType === 'grocery' ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600'
+              } text-white rounded-lg font-semibold text-lg transition-colors`}>
+                Proceed to Checkout
+              </button>
+
+              <Link
+                to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
+                className="block text-center mt-4 text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Continue Shopping
+              </Link>
             </div>
           </div>
         </div>

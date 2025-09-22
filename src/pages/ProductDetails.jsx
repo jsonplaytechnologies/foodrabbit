@@ -1,407 +1,403 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { FiStar, FiArrowLeft, FiHeart, FiShare2, FiShoppingCart, FiPlus, FiMinus, FiTruck, FiShield, FiClock, FiCheckCircle } from 'react-icons/fi';
-import { getAllGroceryProducts } from '../data/groceryStores';
+import { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { FiStar, FiHeart, FiShare2, FiPlus, FiMinus, FiTruck, FiShield, FiClock, FiUser, FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import { getAllGroceryProducts } from '../data/groceryStores';
 
 const ProductDetails = () => {
   const { productId } = useParams();
-  const navigate = useNavigate();
-  const { addItem, items, updateQuantity } = useCart();
-  const [product, setProduct] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [activeTab, setActiveTab] = useState('description');
+  const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
 
-  useEffect(() => {
-    const allProducts = getAllGroceryProducts();
-    const foundProduct = allProducts.find(p => p.id === parseInt(productId));
-    setProduct(foundProduct);
-  }, [productId]);
-
-  const getCartItemQuantity = (itemId) => {
-    const cartItem = items.find(item => item.id === itemId);
-    return cartItem ? cartItem.quantity : 0;
-  };
-
-  const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addItem({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        unit: product.unit
-      });
-    }
-    setQuantity(1);
-  };
-
-  const handleQuantityChange = (newQuantity) => {
-    if (newQuantity === 0) {
-      updateQuantity(product.id, 0);
-    } else {
-      updateQuantity(product.id, newQuantity);
-    }
-  };
-
-  const renderStars = (rating) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <FiStar
-        key={i}
-        className={`w-4 h-4 ${i < Math.floor(rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
-      />
-    ));
-  };
+  // Get product data from grocery stores
+  const allProducts = getAllGroceryProducts();
+  const product = allProducts.find(p => p.id === parseInt(productId));
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-green-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading product details...</p>
-        </div>
+      <div className="container py-12 text-center">
+        <h1 className="text-2xl font-bold text-gray-900">Product not found</h1>
+        <Link to="/grocery-stores" className="text-green-600 hover:text-green-700 mt-4 inline-block">
+          Back to Grocery Stores
+        </Link>
       </div>
     );
   }
 
-  const images = [product.image]; // Could be extended to multiple images
-  const cartQuantity = getCartItemQuantity(product.id);
+  // Use product data or fallback to defaults
+  const productData = {
+    ...product,
+    brand: product.brand || "Premium Brand",
+    originalPrice: product.originalPrice || null,
+    images: [
+      product.image,
+      product.image,
+      product.image
+    ],
+    store: product.storeName || "FreshMart",
+    inStock: product.inStock ?? true,
+    stockCount: product.stockCount || 25,
+    deliveryTime: product.deliveryTime || "30-45 min",
+    features: product.nutritionHighlights || ["Fresh Daily", "Quality Guaranteed"],
+    fullDescription: product.fullDescription || product.description,
+    nutritionFacts: product.nutritionFacts || {
+      calories: 105,
+      protein: "1.3g",
+      carbs: "27g",
+      fiber: "3.1g",
+      sugar: "14g",
+      fat: "0.4g"
+    }
+  };
+
+  const reviews = product.reviews || [
+    {
+      id: 1,
+      customerName: "Sarah M.",
+      rating: 5,
+      date: "2024-12-15",
+      comment: "Always fresh and perfectly ripe! These products are sweet and delicious. Great for my morning routine.",
+      verified: true
+    },
+    {
+      id: 2,
+      customerName: "Mike K.",
+      rating: 4,
+      date: "2024-12-10",
+      comment: "Good quality product, though sometimes they arrive needing a day to ripen. Still taste great.",
+      verified: true
+    },
+    {
+      id: 3,
+      customerName: "Emma L.",
+      rating: 5,
+      date: "2024-12-08",
+      comment: "Love the quality and freshness. The taste is noticeably better than other brands.",
+      verified: true
+    }
+  ];
+
+  const relatedProducts = [
+    {
+      id: 2,
+      name: "Organic Strawberries",
+      price: 4.99,
+      image: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=200&h=200&fit=crop",
+      rating: 4.7
+    },
+    {
+      id: 3,
+      name: "Organic Blueberries",
+      price: 5.99,
+      image: "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=200&h=200&fit=crop",
+      rating: 4.6
+    },
+    {
+      id: 4,
+      name: "Organic Apples",
+      price: 3.99,
+      image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=200&h=200&fit=crop",
+      rating: 4.4
+    }
+  ];
+
+  const handleAddToCart = () => {
+    for (let i = 0; i < quantity; i++) {
+      addItem({
+        id: `product-${productData.id}-${Date.now()}-${i}`,
+        name: productData.name,
+        price: productData.price,
+        image: productData.images[0],
+        store: productData.store
+      });
+    }
+  };
+
+  const incrementQuantity = () => setQuantity(q => q + 1);
+  const decrementQuantity = () => setQuantity(q => q > 1 ? q - 1 : 1);
 
   return (
-    <div className="min-h-screen bg-green-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex items-center text-gray-600 hover:text-green-600 transition-colors"
-            >
-              <FiArrowLeft className="w-5 h-5 mr-2" />
-              Back to Store
-            </button>
-            <div className="flex items-center space-x-3">
-              <button className="p-2 text-gray-600 hover:text-red-500 transition-colors">
-                <FiHeart className="w-5 h-5" />
-              </button>
-              <button className="p-2 text-gray-600 hover:text-green-600 transition-colors">
-                <FiShare2 className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumb */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="container py-4">
+          <nav className="flex items-center space-x-2 text-sm">
+            <Link to="/" className="text-gray-500 hover:text-gray-700">Home</Link>
+            <span className="text-gray-400">/</span>
+            <Link to="/grocery-stores" className="text-gray-500 hover:text-gray-700">Grocery Stores</Link>
+            <span className="text-gray-400">/</span>
+            <Link to={`/grocery-store/${product.storeId || 1}`} className="text-gray-500 hover:text-gray-700">{productData.store}</Link>
+            <span className="text-gray-400">/</span>
+            <span className="text-gray-900">{productData.name}</span>
+          </nav>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="container py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Images */}
-          <div className="space-y-4">
-            <div className="aspect-square bg-white rounded-lg overflow-hidden shadow-lg">
+          <div>
+            <div className="bg-white rounded-2xl p-6 mb-4">
               <img
-                src={images[selectedImage]}
-                alt={product.name}
-                className="w-full h-full object-cover"
+                src={productData.images[selectedImage]}
+                alt={productData.name}
+                className="w-full h-96 object-cover rounded-xl"
               />
-              {product.organic && (
-                <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                  Organic
-                </div>
-              )}
             </div>
-
-            {images.length > 1 && (
-              <div className="flex space-x-2">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${
-                      selectedImage === index ? 'border-green-600' : 'border-gray-200'
-                    }`}
-                  >
-                    <img src={image} alt={`${product.name} ${index + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="flex gap-3">
+              {productData.images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(index)}
+                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 ${
+                    selectedImage === index ? 'border-green-500' : 'border-gray-200'
+                  }`}
+                >
+                  <img src={image} alt="" className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Product Info */}
-          <div className="space-y-6">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                  {product.category}
-                </span>
-                <span className="text-sm text-gray-600">From {product.storeName}</span>
-              </div>
-
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-
-              <div className="flex items-center space-x-4 mb-4">
-                <div className="flex items-center">
-                  {renderStars(product.rating)}
-                  <span className="ml-2 text-sm text-gray-600">
-                    {product.rating} ({product.reviewCount} reviews)
+          {/* Product Details */}
+          <div>
+            <div className="bg-white rounded-2xl p-8">
+              {/* Header */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-medium">
+                    {productData.category}
                   </span>
+                  {productData.inStock ? (
+                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-medium">
+                      In Stock ({productData.stockCount} available)
+                    </span>
+                  ) : (
+                    <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-sm font-medium">
+                      Out of Stock
+                    </span>
+                  )}
+                </div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">{productData.name}</h1>
+                <p className="text-lg text-gray-600 mb-2">by {productData.brand}</p>
+
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex items-center gap-1">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <FiStar
+                          key={i}
+                          className={`w-5 h-5 ${
+                            i < Math.floor(productData.rating || 4.5) ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="font-medium">{productData.rating || 4.5}</span>
+                    <span className="text-gray-500">({productData.reviewCount || reviews.length} reviews)</span>
+                  </div>
+                </div>
+
+                <div className="flex items-baseline gap-3 mb-6">
+                  <span className="text-3xl font-bold text-green-600">${productData.price}</span>
+                  {productData.originalPrice && (
+                    <span className="text-xl text-gray-400 line-through">${productData.originalPrice}</span>
+                  )}
+                  <span className="text-gray-600">{productData.unit}</span>
                 </div>
               </div>
 
-              <div className="flex items-baseline space-x-2 mb-4">
-                <span className="text-3xl font-bold text-gray-900">${product.price.toFixed(2)}</span>
-                <span className="text-lg text-gray-600">{product.unit}</span>
-              </div>
-
-              <p className="text-gray-600 leading-relaxed">{product.description}</p>
-            </div>
-
-            {/* Nutrition Highlights */}
-            {product.nutritionHighlights && (
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Nutrition Highlights</h3>
+              {/* Features */}
+              <div className="mb-6">
+                <h3 className="font-semibold text-gray-900 mb-3">Product Features</h3>
                 <div className="flex flex-wrap gap-2">
-                  {product.nutritionHighlights.map((highlight, index) => (
-                    <span
-                      key={index}
-                      className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm"
-                    >
-                      {highlight}
+                  {productData.features.map((feature, index) => (
+                    <span key={index} className="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
+                      {feature}
                     </span>
                   ))}
                 </div>
               </div>
-            )}
 
-            {/* Stock Status */}
-            <div className="flex items-center space-x-2">
-              {product.inStock ? (
-                <>
-                  <FiCheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-green-600 font-medium">In Stock</span>
-                </>
-              ) : (
-                <>
-                  <span className="w-5 h-5 bg-red-600 rounded-full"></span>
-                  <span className="text-red-600 font-medium">Out of Stock</span>
-                </>
-              )}
-            </div>
-
-            {/* Quantity and Add to Cart */}
-            <div className="border-t pt-6">
-              {cartQuantity > 0 ? (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-4">
-                    <span className="text-green-700 font-medium">In Cart: {cartQuantity}</span>
-                    <div className="flex items-center space-x-3">
-                      <button
-                        onClick={() => handleQuantityChange(cartQuantity - 1)}
-                        className="text-green-600 hover:bg-green-100 p-2 rounded-full"
-                      >
-                        <FiMinus className="w-4 h-4" />
-                      </button>
-                      <span className="font-medium text-green-700 min-w-[3rem] text-center">{cartQuantity}</span>
-                      <button
-                        onClick={() => handleQuantityChange(cartQuantity + 1)}
-                        className="text-green-600 hover:bg-green-100 p-2 rounded-full"
-                      >
-                        <FiPlus className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="flex space-x-3">
-                    <div className="flex items-center border border-gray-300 rounded-lg">
-                      <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="p-3 text-gray-600 hover:bg-gray-100"
-                      >
-                        <FiMinus className="w-4 h-4" />
-                      </button>
-                      <span className="px-4 py-3 font-medium min-w-[3rem] text-center">{quantity}</span>
-                      <button
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="p-3 text-gray-600 hover:bg-gray-100"
-                      >
-                        <FiPlus className="w-4 h-4" />
-                      </button>
-                    </div>
-
-                    <button
-                      onClick={handleAddToCart}
-                      disabled={!product.inStock}
-                      className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center font-medium"
-                    >
-                      <FiPlus className="w-5 h-5 mr-2" />
-                      Add {quantity > 1 ? `${quantity} ` : ''}to Cart
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex space-x-3">
+              {/* Quantity & Add to Cart */}
+              <div className="mb-6">
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="font-medium text-gray-900">Quantity:</span>
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-3 text-gray-600 hover:bg-gray-100"
+                      onClick={decrementQuantity}
+                      className="p-2 hover:bg-gray-50 transition-colors"
                     >
                       <FiMinus className="w-4 h-4" />
                     </button>
-                    <span className="px-4 py-3 font-medium min-w-[3rem] text-center">{quantity}</span>
+                    <span className="px-4 py-2 font-medium">{quantity}</span>
                     <button
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="p-3 text-gray-600 hover:bg-gray-100"
+                      onClick={incrementQuantity}
+                      className="p-2 hover:bg-gray-50 transition-colors"
                     >
                       <FiPlus className="w-4 h-4" />
                     </button>
                   </div>
+                </div>
 
+                <div className="flex gap-3">
                   <button
                     onClick={handleAddToCart}
-                    disabled={!product.inStock}
-                    className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center font-medium"
+                    className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-xl font-semibold transition-colors"
                   >
-                    <FiShoppingCart className="w-5 h-5 mr-2" />
-                    Add {quantity > 1 ? `${quantity} ` : ''}to Cart
+                    Add to Cart - ${(productData.price * quantity).toFixed(2)}
+                  </button>
+                  <button className="p-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">
+                    <FiHeart className="w-6 h-6" />
+                  </button>
+                  <button className="p-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors">
+                    <FiShare2 className="w-6 h-6" />
                   </button>
                 </div>
-              )}
-            </div>
+              </div>
 
-            {/* Delivery Info */}
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-3">
-              <div className="flex items-center text-green-700">
-                <FiTruck className="w-5 h-5 mr-3" />
-                <span className="font-medium">Free delivery on orders over $35</span>
-              </div>
-              <div className="flex items-center text-green-700">
-                <FiClock className="w-5 h-5 mr-3" />
-                <span className="font-medium">Same-day delivery available</span>
-              </div>
-              <div className="flex items-center text-green-700">
-                <FiShield className="w-5 h-5 mr-3" />
-                <span className="font-medium">Freshness guaranteed</span>
+              {/* Delivery Info */}
+              <div className="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-xl">
+                <div className="text-center">
+                  <FiTruck className="w-6 h-6 text-green-600 mx-auto mb-2" />
+                  <p className="text-sm font-medium text-gray-900">Fast Delivery</p>
+                  <p className="text-xs text-gray-600">{product.deliveryTime}</p>
+                </div>
+                <div className="text-center">
+                  <FiShield className="w-6 h-6 text-green-600 mx-auto mb-2" />
+                  <p className="text-sm font-medium text-gray-900">Quality Guaranteed</p>
+                  <p className="text-xs text-gray-600">Fresh or refund</p>
+                </div>
+                <div className="text-center">
+                  <FiClock className="w-6 h-6 text-green-600 mx-auto mb-2" />
+                  <p className="text-sm font-medium text-gray-900">Fast Delivery</p>
+                  <p className="text-xs text-gray-600">{productData.deliveryTime}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Product Details Tabs */}
-        <div className="mt-16">
-          <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
-              {['description', 'nutrition', 'reviews'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm capitalize ${
-                    activeTab === tab
-                      ? 'border-green-600 text-green-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  {tab === 'nutrition' ? 'Nutrition Facts' : tab}
+        <div className="mt-12">
+          <div className="bg-white rounded-2xl overflow-hidden">
+            <div className="border-b border-gray-200">
+              <nav className="flex">
+                <button className="px-6 py-4 border-b-2 border-green-500 text-green-600 font-medium">
+                  Description
                 </button>
-              ))}
-            </nav>
+                <button className="px-6 py-4 text-gray-500 hover:text-gray-700 font-medium">
+                  Nutrition Facts
+                </button>
+                <button className="px-6 py-4 text-gray-500 hover:text-gray-700 font-medium">
+                  Reviews ({productData.reviewCount || reviews.length})
+                </button>
+              </nav>
+            </div>
+
+            <div className="p-8">
+              {/* Description Tab */}
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Product Description</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">{productData.fullDescription}</p>
+
+                {productData.origin && (
+                  <>
+                    <h4 className="font-semibold text-gray-900 mb-2">Origin</h4>
+                    <p className="text-gray-600 mb-4">{productData.origin}</p>
+                  </>
+                )}
+
+                {productData.storageInstructions && (
+                  <>
+                    <h4 className="font-semibold text-gray-900 mb-2">Storage Instructions</h4>
+                    <p className="text-gray-600">{productData.storageInstructions}</p>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div className="py-8">
-            {activeTab === 'description' && (
-              <div className="prose max-w-none">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Description</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">{product.fullDescription}</p>
+        {/* Reviews Section */}
+        <div className="mt-8">
+          <div className="bg-white rounded-2xl p-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">Customer Reviews</h3>
 
-                {product.origin && (
-                  <div className="mb-4">
-                    <span className="font-medium text-gray-900">Origin: </span>
-                    <span className="text-gray-600">{product.origin}</span>
-                  </div>
-                )}
-
-                {product.storageInstructions && (
-                  <div>
-                    <span className="font-medium text-gray-900">Storage Instructions: </span>
-                    <span className="text-gray-600">{product.storageInstructions}</span>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {activeTab === 'nutrition' && product.nutritionFacts && (
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Nutrition Facts</h3>
-                <div className="bg-white border border-gray-200 rounded-lg p-6 max-w-md">
-                  <div className="border-b-2 border-black pb-2 mb-4">
-                    <h4 className="text-xl font-bold">Nutrition Facts</h4>
-                    <p className="text-sm">{product.nutritionFacts.servingSize}</p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <div className="flex justify-between border-b border-gray-200 pb-1">
-                      <span className="font-semibold">Calories</span>
-                      <span className="font-bold">{product.nutritionFacts.calories}</span>
+            <div className="space-y-6">
+              {reviews.map((review) => (
+                <div key={review.id} className="border-b border-gray-200 pb-6 last:border-b-0">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                      <FiUser className="w-5 h-5 text-gray-500" />
                     </div>
-
-                    {Object.entries(product.nutritionFacts).map(([key, value]) => {
-                      if (key === 'servingSize' || key === 'calories') return null;
-                      const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-                      return (
-                        <div key={key} className="flex justify-between text-sm">
-                          <span>{label}</span>
-                          <span>{value}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'reviews' && (
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900">Customer Reviews</h3>
-                  <div className="flex items-center space-x-2">
-                    {renderStars(product.rating)}
-                    <span className="text-sm text-gray-600">
-                      {product.rating} out of 5 ({product.reviewCount} reviews)
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  {product.reviews?.map((review) => (
-                    <div key={review.id} className="bg-white rounded-lg p-6 border border-gray-200">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                            <span className="text-green-600 font-medium">
-                              {review.customerName.charAt(0)}
-                            </span>
-                          </div>
-                          <div>
-                            <div className="flex items-center space-x-2">
-                              <span className="font-medium text-gray-900">{review.customerName}</span>
-                              {review.verified && (
-                                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
-                                  Verified Purchase
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex items-center space-x-2 mt-1">
-                              {renderStars(review.rating)}
-                              <span className="text-sm text-gray-500">{review.date}</span>
-                            </div>
-                          </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h4 className="font-medium text-gray-900">{review.customerName || review.user}</h4>
+                        {review.verified && (
+                          <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-medium">
+                            Verified Purchase
+                          </span>
+                        )}
+                        <span className="text-sm text-gray-500">{review.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <FiStar
+                              key={i}
+                              className={`w-4 h-4 ${
+                                i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
                         </div>
                       </div>
-                      <p className="text-gray-600">{review.comment}</p>
+                      <p className="text-gray-600 mb-3">{review.comment}</p>
+                      <div className="flex items-center gap-4 text-sm">
+                        <button className="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+                          <FiThumbsUp className="w-4 h-4" />
+                          <span>Helpful ({review.helpful})</span>
+                        </button>
+                        <button className="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+                          <FiThumbsDown className="w-4 h-4" />
+                          <span>Not helpful</span>
+                        </button>
+                      </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Related Products */}
+        <div className="mt-12">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">You might also like</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedProducts.map((item) => (
+              <Link
+                key={item.id}
+                to={`/product/${item.id}`}
+                className="bg-white rounded-2xl p-6 hover:shadow-lg transition-shadow"
+              >
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-40 object-cover rounded-lg mb-4"
+                />
+                <h4 className="font-semibold text-gray-900 mb-2">{item.name}</h4>
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold text-green-600">${item.price}</span>
+                  <div className="flex items-center gap-1">
+                    <FiStar className="w-4 h-4 text-yellow-400 fill-current" />
+                    <span className="text-sm font-medium">{item.rating}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
