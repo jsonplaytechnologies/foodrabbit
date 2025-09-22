@@ -74,7 +74,7 @@ const GroceryStores = () => {
                 placeholder='Search for stores, products, or brands...'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className='w-full pl-16 pr-6 py-5 text-lg bg-white/95 backdrop-blur-md border-0 rounded-2xl focus:outline-none focus:ring-4 focus:ring-white/50 shadow-2xl placeholder-gray-500'
+                className='w-full pl-16 pr-6 py-5 text-lg text-gray-900 bg-white/95 backdrop-blur-md border-0 rounded-2xl focus:outline-none focus:ring-4 focus:ring-white/50 shadow-2xl placeholder-gray-500'
               />
             </div>
           </div>

@@ -6,6 +6,8 @@ import GroceryStores from './pages/GroceryStores';
 import GroceryStore from './pages/GroceryStore';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import OrderStatus from './pages/OrderStatus';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Header from './components/Header';
@@ -28,6 +30,8 @@ const AppContent = () => {
             <Route path="/grocery-store/:id" element={<GroceryStore />} />
             <Route path="/product/:productId" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/order-status/:orderId" element={<OrderStatus />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Routes>

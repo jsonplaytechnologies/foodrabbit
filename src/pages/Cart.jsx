@@ -155,11 +155,14 @@ const Cart = () => {
                 </div>
               )}
 
-              <button className={`w-full py-4 ${
-                serviceType === 'grocery' ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600'
-              } text-white rounded-lg font-semibold text-lg transition-colors`}>
+              <Link
+                to="/checkout"
+                className={`w-full py-4 ${
+                  serviceType === 'grocery' ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600'
+                } text-white rounded-lg font-semibold text-lg transition-colors block text-center`}
+              >
                 Proceed to Checkout
-              </button>
+              </Link>
 
               <Link
                 to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
