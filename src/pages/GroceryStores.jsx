@@ -124,7 +124,7 @@ const GroceryStores = () => {
       {/* Results Section */}
       <div className='container py-16'>
         {/* Results Header */}
-        <div className='mb-8 text-center'>
+        <div className='mb-8 mt-8 text-center'>
           <h2 className='text-3xl font-bold text-gray-800 mb-3'>
             {sortedStores.length} Quality Stores Found
           </h2>
@@ -137,7 +137,7 @@ const GroceryStores = () => {
         </div>
 
         {/* Store Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-4'>
           {sortedStores.map((store) => (
             <Link
               key={store.id}

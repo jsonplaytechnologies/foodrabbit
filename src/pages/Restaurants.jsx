@@ -128,7 +128,7 @@ const Restaurants = () => {
       {/* Results Section */}
       <div className='container py-16'>
         {/* Results Header */}
-        <div className='mb-8 text-center'>
+        <div className='mb-8 text-center pt-4'>
           <h2 className='text-3xl font-bold text-gray-800 mb-3'>
             {sortedRestaurants.length} Amazing Restaurants Found
           </h2>
@@ -141,7 +141,7 @@ const Restaurants = () => {
         </div>
 
         {/* Restaurant Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-4'>
           {sortedRestaurants.map((restaurant) => (
             <Link
               key={restaurant.id}
