@@ -102,28 +102,28 @@ const Cart = () => {
           {/* Order Summary */}
           <div>
             <div className="bg-white rounded-2xl p-6 sticky top-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Order Summary</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">{translate('Order Summary')}</h2>
 
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-gray-600">{translate('Subtotal')}</span>
                   <span className="font-medium">${getTotal().toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">
-                    {orderType === 'delivery' ? 'Delivery fee' : 'Service fee'}
+                    {orderType === 'delivery' ? translate('Delivery Fee') : translate('Service fee')}
                   </span>
                   <span className="font-medium">
-                    {deliveryFee === 0 ? 'Free' : `$${deliveryFee.toFixed(2)}`}
+                    {deliveryFee === 0 ? translate('Free') : `$${deliveryFee.toFixed(2)}`}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Tax</span>
+                  <span className="text-gray-600">{translate('Tax')}</span>
                   <span className="font-medium">${tax.toFixed(2)}</span>
                 </div>
                 <div className="border-t border-gray-200 pt-3">
                   <div className="flex justify-between">
-                    <span className="font-semibold text-gray-900">Total</span>
+                    <span className="font-semibold text-gray-900">{translate('Total')}</span>
                     <span className="font-bold text-xl">${total.toFixed(2)}</span>
                   </div>
                 </div>
@@ -138,13 +138,13 @@ const Cart = () => {
                     <FiPackage className="w-5 h-5" />
                   )}
                   <span className="font-medium">
-                    {orderType === 'delivery' ? 'Delivery' : 'Pickup'}
+                    {orderType === 'delivery' ? translate('Delivery') : translate('Pickup')}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
                   {orderType === 'delivery'
-                    ? 'Estimated delivery: 30-45 minutes'
-                    : 'Ready for pickup in 15-20 minutes'
+                    ? translate('Estimated delivery: 30-45 minutes')
+                    : translate('Ready for pickup in 15-20 minutes')
                   }
                 </p>
               </div>
@@ -152,7 +152,7 @@ const Cart = () => {
               {getTotal() < 35 && orderType === 'delivery' && (
                 <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-sm text-blue-700">
-                    Add ${(35 - getTotal()).toFixed(2)} more for free delivery
+                    {translate('Add')} ${(35 - getTotal()).toFixed(2)} {translate('more for free delivery')}
                   </p>
                 </div>
               )}
@@ -163,14 +163,14 @@ const Cart = () => {
                   serviceType === 'grocery' ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600'
                 } text-white rounded-lg font-semibold text-lg transition-colors block text-center`}
               >
-                Proceed to Checkout
+                {translate('Proceed to Checkout')}
               </Link>
 
               <Link
                 to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
                 className="block text-center mt-4 text-gray-600 hover:text-gray-900 transition-colors"
               >
-                Continue Shopping
+                {translate('Continue Shopping')}
               </Link>
             </div>
           </div>

@@ -78,42 +78,42 @@ const Header = () => {
             <div className='flex items-center bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-1.5 shadow-inner border border-gray-200'>
               <button
                 onClick={() => handleServiceTypeChange('food')}
-                className={`flex items-center gap-3 px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
+                className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 ${
                   serviceType === 'food'
                     ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg transform scale-105'
                     : 'text-gray-600 hover:text-orange-500 hover:bg-white hover:shadow-sm'
                 }`}
               >
                 <div
-                  className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                  className={`w-5 h-5 rounded-full flex items-center justify-center ${
                     serviceType === 'food' ? 'bg-white/20' : 'bg-orange-100'
                   }`}
                 >
                   <span
-                    className={`text-sm font-bold ${
+                    className={`text-xs font-bold ${
                       serviceType === 'food' ? 'text-white' : 'text-orange-600'
                     }`}
                   >
                     F
                   </span>
                 </div>
-                <span>{translate('Restaurant Food')}</span>
+                <span className='whitespace-nowrap'>{translate('Restaurant Food')}</span>
               </button>
               <button
                 onClick={() => handleServiceTypeChange('grocery')}
-                className={`flex items-center gap-3 px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
+                className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium text-sm transition-all duration-300 ${
                   serviceType === 'grocery'
                     ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg transform scale-105'
                     : 'text-gray-600 hover:text-green-500 hover:bg-white hover:shadow-sm'
                 }`}
               >
                 <div
-                  className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                  className={`w-5 h-5 rounded-full flex items-center justify-center ${
                     serviceType === 'grocery' ? 'bg-white/20' : 'bg-green-100'
                   }`}
                 >
                   <span
-                    className={`text-sm font-bold ${
+                    className={`text-xs font-bold ${
                       serviceType === 'grocery'
                         ? 'text-white'
                         : 'text-green-600'
@@ -122,7 +122,7 @@ const Header = () => {
                     G
                   </span>
                 </div>
-                <span>{translate('Grocery Store')}</span>
+                <span className='whitespace-nowrap'>{translate('Grocery Store')}</span>
               </button>
             </div>
 
@@ -132,7 +132,7 @@ const Header = () => {
               <div className='flex items-center bg-gray-50 rounded-xl p-1 border border-gray-200'>
                 <button
                   onClick={() => setOrderType('delivery')}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                  className={`flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                     orderType === 'delivery'
                       ? `${
                           serviceType === 'grocery'
@@ -142,12 +142,12 @@ const Header = () => {
                       : 'text-gray-600 hover:text-gray-900 hover:bg-white'
                   }`}
                 >
-                  <FiTruck className='w-4 h-4' />
-                  <span>{translate('Delivery')}</span>
+                  <FiTruck className='w-3 h-3' />
+                  <span className='whitespace-nowrap'>{translate('Delivery')}</span>
                 </button>
                 <button
                   onClick={() => setOrderType('pickup')}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                  className={`flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                     orderType === 'pickup'
                       ? `${
                           serviceType === 'grocery'
@@ -157,8 +157,8 @@ const Header = () => {
                       : 'text-gray-600 hover:text-gray-900 hover:bg-white'
                   }`}
                 >
-                  <FiPackage className='w-4 h-4' />
-                  <span>{translate('Pickup')}</span>
+                  <FiPackage className='w-3 h-3' />
+                  <span className='whitespace-nowrap'>{translate('Pickup')}</span>
                 </button>
               </div>
 
@@ -197,14 +197,14 @@ const Header = () => {
               {/* Account */}
               <Link
                 to='/login'
-                className={`flex items-center gap-2 px-6 py-3 border-2 ${
+                className={`flex items-center gap-1 px-4 py-2 border-2 ${
                   serviceType === 'grocery'
                     ? 'border-green-500 text-green-600 hover:bg-green-500 hover:shadow-lg'
                     : 'border-orange-500 text-orange-600 hover:bg-orange-500 hover:shadow-lg'
-                } rounded-xl hover:text-white transition-all font-semibold hover:scale-105`}
+                } rounded-lg hover:text-white transition-all font-medium text-sm hover:scale-105`}
               >
-                <FiUser className='w-4 h-4' />
-                <span>{translate('Sign In')}</span>
+                <FiUser className='w-3 h-3' />
+                <span className='whitespace-nowrap'>{translate('Sign In')}</span>
               </Link>
             </div>
           </div>
