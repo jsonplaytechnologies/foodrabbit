@@ -8,12 +8,14 @@ import {
   FiSearch,
 } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import { useTranslation } from '../context/TranslationContext';
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { getItemCount, orderType, setOrderType, serviceType, setServiceType } =
     useCart();
+  const { isTranslated, translate, toggleTranslation } = useTranslation();
 
   const handleServiceTypeChange = (newServiceType) => {
     setServiceType(newServiceType);
@@ -28,7 +30,6 @@ const Header = () => {
     }
   };
 
-  const isActive = (path) => location.pathname === path;
 
   return (
     <>
@@ -37,19 +38,19 @@ const Header = () => {
           <div className='flex items-center gap-6'>
             <span className='flex items-center gap-1'>
               <span className='w-2 h-2 bg-green-400 rounded-full animate-pulse'></span>
-              Free delivery on orders over $35
+{translate('Free delivery on orders over $35')}
             </span>
             <div className='flex items-center gap-1 opacity-90'>
               <FiMapPin className='w-4 h-4' />
-              <span>Deliver to 10001</span>
+              <span>{translate('Deliver to 10001')}</span>
             </div>
           </div>
           <div className='flex items-center gap-6 text-gray-300 hover:text-white'>
             <button className='hover:text-white transition-colors'>
-              Help & Support
+{translate('Help & Support')}
             </button>
             <button className='hover:text-white transition-colors'>
-              Track Order
+{translate('Track Order')}
             </button>
           </div>
         </div>
@@ -65,10 +66,10 @@ const Header = () => {
               </div>
               <div>
                 <h1 className='text-3xl font-bold text-gray-900 font-display group-hover:text-orange-600 transition-colors'>
-                  Rabbit
+{translate('Rabbit')}
                 </h1>
                 <p className='text-sm text-gray-500 -mt-1 font-medium'>
-                  Food & Grocery Delivery
+{translate('Food & Grocery Delivery')}
                 </p>
               </div>
             </Link>
@@ -96,7 +97,7 @@ const Header = () => {
                     F
                   </span>
                 </div>
-                <span>Restaurant Food</span>
+                <span>{translate('Restaurant Food')}</span>
               </button>
               <button
                 onClick={() => handleServiceTypeChange('grocery')}
@@ -121,7 +122,7 @@ const Header = () => {
                     G
                   </span>
                 </div>
-                <span>Grocery Store</span>
+                <span>{translate('Grocery Store')}</span>
               </button>
             </div>
 
@@ -142,7 +143,7 @@ const Header = () => {
                   }`}
                 >
                   <FiTruck className='w-4 h-4' />
-                  <span>Delivery</span>
+                  <span>{translate('Delivery')}</span>
                 </button>
                 <button
                   onClick={() => setOrderType('pickup')}
@@ -157,7 +158,7 @@ const Header = () => {
                   }`}
                 >
                   <FiPackage className='w-4 h-4' />
-                  <span>Pickup</span>
+                  <span>{translate('Pickup')}</span>
                 </button>
               </div>
 
@@ -180,6 +181,19 @@ const Header = () => {
                 )}
               </Link>
 
+              {/* Translation Button */}
+              <button
+                onClick={toggleTranslation}
+                className={`px-2 py-1.5 border ${
+                  serviceType === 'grocery'
+                    ? 'border-green-500 text-green-600 hover:bg-green-500'
+                    : 'border-orange-500 text-orange-600 hover:bg-orange-500'
+                } rounded-md hover:text-white transition-all text-xs font-medium`}
+                title={isTranslated ? 'Switch to English' : 'Switch to French'}
+              >
+                {isTranslated ? 'EN' : 'FR'}
+              </button>
+
               {/* Account */}
               <Link
                 to='/login'
@@ -190,7 +204,7 @@ const Header = () => {
                 } rounded-xl hover:text-white transition-all font-semibold hover:scale-105`}
               >
                 <FiUser className='w-4 h-4' />
-                <span>Sign In</span>
+                <span>{translate('Sign In')}</span>
               </Link>
             </div>
           </div>

@@ -10,85 +10,87 @@ import {
   FiCheckCircle,
 } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import { useTranslation } from '../context/TranslationContext';
 
 const Home = () => {
   const { orderType, serviceType } = useCart();
+  const { translate } = useTranslation();
 
   const foodCategories = [
     {
-      name: 'Pizza',
+      name: translate('Pizza'),
       image:
         'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=200&h=150&fit=crop',
-      count: '120+ restaurants',
+      count: translate('120+ restaurants'),
     },
     {
-      name: 'Burgers',
+      name: translate('Burgers'),
       image:
         'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=150&fit=crop',
-      count: '85+ restaurants',
+      count: translate('85+ restaurants'),
     },
     {
-      name: 'Sushi',
+      name: translate('Sushi'),
       image:
         'https://images.unsplash.com/photo-1553621042-f6e147245754?w=200&h=150&fit=crop',
-      count: '45+ restaurants',
+      count: translate('45+ restaurants'),
     },
     {
-      name: 'Chinese',
+      name: translate('Chinese'),
       image:
         'https://images.unsplash.com/photo-1526318896980-cf78c088247c?w=200&h=150&fit=crop',
-      count: '90+ restaurants',
+      count: translate('90+ restaurants'),
     },
     {
-      name: 'Mexican',
+      name: translate('Mexican'),
       image:
         'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=200&h=150&fit=crop',
-      count: '65+ restaurants',
+      count: translate('65+ restaurants'),
     },
     {
-      name: 'Indian',
+      name: translate('Indian'),
       image:
         'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=150&fit=crop',
-      count: '55+ restaurants',
+      count: translate('55+ restaurants'),
     },
   ];
 
   const groceryCategories = [
     {
-      name: 'Fresh Produce',
+      name: translate('Fresh Produce'),
       image:
         'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200&h=150&fit=crop',
-      count: '500+ items',
+      count: translate('500+ items'),
     },
     {
-      name: 'Dairy & Eggs',
+      name: translate('Dairy & Eggs'),
       image:
         'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200&h=150&fit=crop',
-      count: '200+ items',
+      count: translate('200+ items'),
     },
     {
-      name: 'Meat & Seafood',
+      name: translate('Meat & Seafood'),
       image:
         'https://images.unsplash.com/photo-1588348835776-a6ab7baa1bdb?w=200&h=150&fit=crop',
-      count: '150+ items',
+      count: translate('150+ items'),
     },
     {
-      name: 'Bakery',
+      name: translate('Bakery'),
       image:
         'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=150&fit=crop',
-      count: '100+ items',
+      count: translate('100+ items'),
     },
     {
-      name: 'Pantry Staples',
+      name: translate('Pantry Staples'),
       image:
         'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&h=150&fit=crop',
-      count: '800+ items',
+      count: translate('800+ items'),
     },
     {
-      name: 'Frozen Foods',
+      name: translate('Frozen Foods'),
       image:
         'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=150&fit=crop',
-      count: '300+ items',
+      count: translate('300+ items'),
     },
   ];
 
@@ -98,55 +100,55 @@ const Home = () => {
   const features = [
     {
       icon: FiTruck,
-      title: 'Fast Delivery',
+      title: translate('Fast Delivery'),
       description:
         serviceType === 'grocery'
-          ? 'Fresh groceries delivered in as little as 30 minutes'
-          : 'Hot meals delivered in 30 minutes or less',
+          ? translate('Fresh groceries delivered in as little as 30 minutes')
+          : translate('Hot meals delivered in 30 minutes or less'),
     },
     {
       icon: FiShield,
-      title: 'Safe & Secure',
+      title: translate('Safe & Secure'),
       description:
         serviceType === 'grocery'
-          ? 'Temperature-controlled delivery and contactless options'
-          : 'Contactless delivery and secure payment protection',
+          ? translate('Temperature-controlled delivery and contactless options')
+          : translate('Contactless delivery and secure payment protection'),
     },
     {
       icon: FiAward,
-      title: 'Premium Quality',
+      title: translate('Premium Quality'),
       description:
         serviceType === 'grocery'
-          ? 'Hand-picked fresh produce and premium grocery brands'
-          : 'Top-rated restaurants and quality ingredients only',
+          ? translate('Hand-picked fresh produce and premium grocery brands')
+          : translate('Top-rated restaurants and quality ingredients only'),
     },
     {
       icon: FiUsers,
-      title: '24/7 Support',
-      description: 'Our customer service team is always here to help you',
+      title: translate('24/7 Support'),
+      description: translate('Our customer service team is always here to help you'),
     },
   ];
 
   const testimonials = [
     {
-      name: 'Sarah Johnson',
-      role: 'Regular Customer',
+      name: translate('Sarah Johnson'),
+      role: translate('Regular Customer'),
       content:
-        'Amazing service! Everything arrives fresh and on time. The app is so easy to use.',
+        translate('Amazing service! Everything arrives fresh and on time. The app is so easy to use.'),
       rating: 5,
     },
     {
-      name: 'Mike Chen',
-      role: 'Busy Parent',
+      name: translate('Mike Chen'),
+      role: translate('Busy Parent'),
       content:
-        'Saves me so much time. Great selection and the delivery is super reliable.',
+        translate('Saves me so much time. Great selection and the delivery is super reliable.'),
       rating: 5,
     },
     {
-      name: 'Emily Rodriguez',
-      role: 'Food Enthusiast',
+      name: translate('Emily Rodriguez'),
+      role: translate('Food Enthusiast'),
       content:
-        'Love the variety of restaurants and stores available. Quality is always top-notch.',
+        translate('Love the variety of restaurants and stores available. Quality is always top-notch.'),
       rating: 5,
     },
   ];
@@ -167,26 +169,26 @@ const Home = () => {
               <h1 className='text-5xl lg:text-6xl font-bold text-gray-900 mb-6 font-display leading-tight'>
                 {serviceType === 'grocery' ? (
                   <>
-                    Fresh groceries
+                    {translate('Fresh groceries')}
                     <br />
-                    delivered fast
+                    {translate('delivered fast')}
                   </>
                 ) : (
                   <>
-                    Delicious food
+                    {translate('Delicious food')}
                     <br />
-                    delivered fast
+                    {translate('delivered fast')}
                   </>
                 )}
               </h1>
               <p className='text-xl text-gray-600 mb-8 leading-relaxed'>
                 {serviceType === 'grocery'
                   ? orderType === 'delivery'
-                    ? 'Shop from your favorite stores with same-day delivery to your doorstep'
-                    : 'Shop from your favorite stores for convenient curbside pickup'
+                    ? translate('Shop from your favorite stores with same-day delivery to your doorstep')
+                    : translate('Shop from your favorite stores for convenient curbside pickup')
                   : orderType === 'delivery'
-                  ? 'Order from your favorite restaurants with lightning-fast delivery'
-                  : 'Order from your favorite restaurants for quick and easy pickup'}
+                  ? translate('Order from your favorite restaurants with lightning-fast delivery')
+                  : translate('Order from your favorite restaurants for quick and easy pickup')}
               </p>
 
               <div className='flex flex-col sm:flex-row gap-4 mb-8'>
@@ -202,7 +204,7 @@ const Home = () => {
                       : 'bg-orange-500 hover:bg-orange-600'
                   } text-white rounded-xl font-semibold text-lg transition-all hover:shadow-lg hover:scale-105`}
                 >
-                  {serviceType === 'grocery' ? 'Shop Groceries' : 'Order Food'}
+                  {serviceType === 'grocery' ? translate('Shop Groceries') : translate('Order Food')}
                   <FiArrowRight className='w-5 h-5' />
                 </Link>
               </div>
@@ -216,7 +218,7 @@ const Home = () => {
                         : 'text-orange-500'
                     }`}
                   />
-                  <span>Free delivery over $35</span>
+                  <span>{translate('Free delivery over $35')}</span>
                 </div>
                 <div className='flex items-center gap-2'>
                   <FiCheckCircle
@@ -226,7 +228,7 @@ const Home = () => {
                         : 'text-orange-500'
                     }`}
                   />
-                  <span>Real-time tracking</span>
+                  <span>{translate('Real-time tracking')}</span>
                 </div>
                 <div className='flex items-center gap-2'>
                   <FiCheckCircle
@@ -236,7 +238,7 @@ const Home = () => {
                         : 'text-orange-500'
                     }`}
                   />
-                  <span>24/7 support</span>
+                  <span>{translate('24/7 support')}</span>
                 </div>
               </div>
             </div>
@@ -273,13 +275,13 @@ const Home = () => {
           <div className='text-center mb-12'>
             <h2 className='text-4xl font-bold text-gray-900 mb-4 font-display'>
               {serviceType === 'grocery'
-                ? 'Shop by Category'
-                : 'Browse Cuisines'}
+                ? translate('Shop by Category')
+                : translate('Browse Cuisines')}
             </h2>
             <p className='text-xl text-gray-600'>
               {serviceType === 'grocery'
-                ? 'Find everything you need in one place'
-                : 'Discover your next favorite meal'}
+                ? translate('Find everything you need in one place')
+                : translate('Discover your next favorite meal')}
             </p>
           </div>
 
@@ -316,10 +318,10 @@ const Home = () => {
         <div className='container'>
           <div className='text-center mb-12'>
             <h2 className='text-4xl font-bold text-gray-900 mb-4 font-display'>
-              Why Choose Rabbit?
+              {translate('Why Choose Rabbit?')}
             </h2>
             <p className='text-xl text-gray-600'>
-              We're committed to delivering the best experience possible
+              {translate('We\'re committed to delivering the best experience possible')}
             </p>
           </div>
 
@@ -356,10 +358,10 @@ const Home = () => {
         <div className='container'>
           <div className='text-center mb-12'>
             <h2 className='text-4xl font-bold text-gray-900 mb-4 font-display'>
-              What Our Customers Say
+              {translate('What Our Customers Say')}
             </h2>
             <p className='text-xl text-gray-600'>
-              Don't just take our word for it
+              {translate('Don\'t just take our word for it')}
             </p>
           </div>
 
@@ -404,17 +406,17 @@ const Home = () => {
       >
         <div className='container text-center'>
           <h2 className='text-4xl md:text-5xl font-bold mb-4 font-display'>
-            Get the Rabbit App
+            {translate('Get the Rabbit App')}
           </h2>
           <p className='text-xl mb-8 opacity-90'>
-            Download our app for faster ordering and exclusive deals
+            {translate('Download our app for faster ordering and exclusive deals')}
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
             <button className='bg-black text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition-colors font-semibold'>
-              Download for iOS
+              {translate('Download for iOS')}
             </button>
             <button className='bg-black text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition-colors font-semibold'>
-              Download for Android
+              {translate('Download for Android')}
             </button>
           </div>
         </div>

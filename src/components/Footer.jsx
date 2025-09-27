@@ -7,8 +7,10 @@ import {
   FiPhone,
   FiMapPin,
 } from 'react-icons/fi';
+import { useTranslation } from '../context/TranslationContext';
 
 const Footer = () => {
+  const { translate } = useTranslation();
   return (
     <footer className='bg-gray-900 text-white py-4'>
       <div className='container mx-auto px-6 py-16'>
@@ -20,15 +22,14 @@ const Footer = () => {
                 <span className='text-white font-bold text-xl'>R</span>
               </div>
               <div>
-                <h3 className='text-xl font-bold font-display'>Rabbit</h3>
+                <h3 className='text-xl font-bold font-display'>{translate('Rabbit')}</h3>
                 <p className='text-xs text-gray-400 -mt-1'>
-                  Food & Grocery Delivery
+                  {translate('Food & Grocery Delivery')}
                 </p>
               </div>
             </div>
             <p className='text-gray-400 mb-4'>
-              Your one-stop solution for food delivery and grocery shopping.
-              Fresh ingredients, delicious meals, delivered fast.
+              {translate('Your one-stop solution for food delivery and grocery shopping. Fresh ingredients, delicious meals, delivered fast.')}
             </p>
             <div className='flex items-center gap-4'>
               <a
@@ -54,14 +55,14 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className='text-lg font-semibold mb-4'>Quick Links</h3>
+            <h3 className='text-lg font-semibold mb-4'>{translate('Quick Links')}</h3>
             <ul className='space-y-2'>
               <li>
                 <Link
                   to='/'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Home
+                  {translate('Home')}
                 </Link>
               </li>
               <li>
@@ -69,7 +70,7 @@ const Footer = () => {
                   to='/restaurants'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Restaurants
+                  {translate('Restaurants')}
                 </Link>
               </li>
               <li>
@@ -77,7 +78,7 @@ const Footer = () => {
                   to='/grocery-stores'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Grocery Stores
+                  {translate('Grocery Stores')}
                 </Link>
               </li>
               <li>
@@ -85,7 +86,7 @@ const Footer = () => {
                   to='/about'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  About Us
+                  {translate('About Us')}
                 </Link>
               </li>
               <li>
@@ -93,7 +94,7 @@ const Footer = () => {
                   to='/contact'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Contact
+                  {translate('Contact')}
                 </Link>
               </li>
             </ul>
@@ -101,14 +102,14 @@ const Footer = () => {
 
           {/* Support */}
           <div>
-            <h3 className='text-lg font-semibold mb-4'>Support</h3>
+            <h3 className='text-lg font-semibold mb-4'>{translate('Support')}</h3>
             <ul className='space-y-2'>
               <li>
                 <Link
                   to='/help'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Help Center
+                  {translate('Help Center')}
                 </Link>
               </li>
               <li>
@@ -116,7 +117,7 @@ const Footer = () => {
                   to='/order-tracking'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Track Your Order
+                  {translate('Track Your Order')}
                 </Link>
               </li>
               <li>
@@ -124,7 +125,7 @@ const Footer = () => {
                   to='/faq'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  FAQ
+                  {translate('FAQ')}
                 </Link>
               </li>
               <li>
@@ -132,7 +133,7 @@ const Footer = () => {
                   to='/privacy'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Privacy Policy
+                  {translate('Privacy Policy')}
                 </Link>
               </li>
               <li>
@@ -140,7 +141,7 @@ const Footer = () => {
                   to='/terms'
                   className='text-gray-400 hover:text-white transition-colors'
                 >
-                  Terms of Service
+                  {translate('Terms of Service')}
                 </Link>
               </li>
             </ul>
@@ -148,7 +149,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className='text-lg font-semibold mb-4'>Contact Us</h3>
+            <h3 className='text-lg font-semibold mb-4'>{translate('Contact Us')}</h3>
             <div className='space-y-3'>
               <div className='flex items-center gap-3'>
                 <FiPhone className='w-5 h-5 text-orange-500' />
@@ -172,26 +173,26 @@ const Footer = () => {
 
         <div className='border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center'>
           <p className='text-gray-400 text-sm'>
-            © 2024 Rabbit. All rights reserved.
+            {translate('© 2024 Rabbit. All rights reserved.')}
           </p>
           <div className='flex items-center gap-6 mt-4 md:mt-0'>
             <Link
               to='/privacy'
               className='text-gray-400 hover:text-white text-sm transition-colors'
             >
-              Privacy Policy
+              {translate('Privacy Policy')}
             </Link>
             <Link
               to='/terms'
               className='text-gray-400 hover:text-white text-sm transition-colors'
             >
-              Terms of Service
+              {translate('Terms of Service')}
             </Link>
             <Link
               to='/cookies'
               className='text-gray-400 hover:text-white text-sm transition-colors'
             >
-              Cookie Policy
+              {translate('Cookie Policy')}
             </Link>
           </div>
         </div>

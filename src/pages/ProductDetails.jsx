@@ -15,8 +15,10 @@ import {
 } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import { getAllGroceryProducts } from '../data/groceryStores';
+import { useTranslation } from '../context/TranslationContext';
 
 const ProductDetails = () => {
+  const { translate } = useTranslation();
   const { productId } = useParams();
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
@@ -30,12 +32,12 @@ const ProductDetails = () => {
   if (!product) {
     return (
       <div className='container py-12 text-center'>
-        <h1 className='text-2xl font-bold text-gray-900'>Product not found</h1>
+        <h1 className='text-2xl font-bold text-gray-900'>{translate('Product not found')}</h1>
         <Link
           to='/grocery-stores'
           className='text-green-600 hover:text-green-700 mt-4 inline-block'
         >
-          Back to Grocery Stores
+          {translate('Back to Grocery Stores')}
         </Link>
       </div>
     );
@@ -44,7 +46,7 @@ const ProductDetails = () => {
   // Use product data or fallback to defaults
   const productData = {
     ...product,
-    brand: product.brand || 'Premium Brand',
+    brand: product.brand || translate('Premium Brand'),
     originalPrice: product.originalPrice || null,
     images: [product.image, product.image, product.image],
     store: product.storeName || 'FreshMart',
@@ -52,8 +54,8 @@ const ProductDetails = () => {
     stockCount: product.stockCount || 25,
     deliveryTime: product.deliveryTime || '30-45 min',
     features: product.nutritionHighlights || [
-      'Fresh Daily',
-      'Quality Guaranteed',
+      translate('Fresh Daily'),
+      translate('Quality Guaranteed'),
     ],
     fullDescription: product.fullDescription || product.description,
     nutritionFacts: product.nutritionFacts || {
@@ -312,7 +314,7 @@ const ProductDetails = () => {
                     onClick={handleAddToCart}
                     className='flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-xl font-semibold transition-colors'
                   >
-                    Add to Cart - ${(productData.price * quantity).toFixed(2)}
+                    {translate('Add to Cart')} - ${(productData.price * quantity).toFixed(2)}
                   </button>
                   <button className='p-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors'>
                     <FiHeart className='w-6 h-6' />

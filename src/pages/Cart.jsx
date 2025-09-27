@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { FiMinus, FiPlus, FiTrash2, FiShoppingBag, FiTruck, FiPackage } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import { useTranslation } from '../context/TranslationContext';
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, getTotal, clearCart, orderType, serviceType } = useCart();
+  const { translate } = useTranslation();
 
   const deliveryFee = getTotal() > 35 ? 0 : 3.99;
   const tax = getTotal() * 0.08;
@@ -17,9 +19,9 @@ const Cart = () => {
             <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
               <FiShoppingBag className="w-12 h-12 text-gray-400" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">{translate('Your cart is empty')}</h1>
             <p className="text-gray-600 mb-8">
-              Add some {serviceType === 'grocery' ? 'products' : 'items'} to get started
+              {translate('Add some')} {serviceType === 'grocery' ? translate('products') : translate('items')} {translate('to get started')}
             </p>
             <Link
               to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
@@ -27,7 +29,7 @@ const Cart = () => {
                 serviceType === 'grocery' ? 'bg-green-500 hover:bg-green-600' : 'bg-orange-500 hover:bg-orange-600'
               } text-white rounded-lg font-medium transition-colors`}
             >
-              {serviceType === 'grocery' ? 'Shop Groceries' : 'Order Food'}
+              {serviceType === 'grocery' ? translate('Shop Groceries') : translate('Order Food')}
             </Link>
           </div>
         </div>
@@ -43,12 +45,12 @@ const Cart = () => {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl p-6">
               <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">Your Cart</h1>
+                <h1 className="text-2xl font-bold text-gray-900">{translate('Your Cart')}</h1>
                 <button
                   onClick={clearCart}
                   className="text-red-600 hover:text-red-700 text-sm font-medium"
                 >
-                  Clear all
+                  {translate('Clear all')}
                 </button>
               </div>
 
@@ -63,10 +65,10 @@ const Cart = () => {
                     <div className="flex-1">
                       <h3 className="font-semibold text-gray-900">{item.name}</h3>
                       {item.restaurant && (
-                        <p className="text-sm text-gray-500">From {item.restaurant}</p>
+                        <p className="text-sm text-gray-500">{translate('From')} {item.restaurant}</p>
                       )}
                       {item.store && (
-                        <p className="text-sm text-gray-500">From {item.store}</p>
+                        <p className="text-sm text-gray-500">{translate('From')} {item.store}</p>
                       )}
                       <p className="text-lg font-bold text-gray-900">${item.price}</p>
                     </div>

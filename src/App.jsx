@@ -14,6 +14,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
+import { TranslationProvider } from './context/TranslationContext';
 
 const AppContent = () => {
   return (
@@ -44,9 +45,11 @@ const AppContent = () => {
 
 function App() {
   return (
-    <CartProvider>
-      <AppContent />
-    </CartProvider>
+    <TranslationProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </TranslationProvider>
   );
 }
 

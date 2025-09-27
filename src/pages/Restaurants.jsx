@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiStar, FiClock, FiSearch, FiMapPin } from 'react-icons/fi';
 import { restaurants } from '../data/restaurants';
+import { useTranslation } from '../context/TranslationContext';
 
 const Restaurants = () => {
+  const { translate } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
   const [sortBy, setSortBy] = useState('featured');
@@ -57,14 +59,13 @@ const Restaurants = () => {
 
         <div className='relative container py-20 text-center text-white'>
           <h1 className='text-5xl md:text-6xl font-bold mb-6 font-display leading-tight'>
-            Delicious Food
+            {translate('Delicious Food')}
             <span className='block text-4xl md:text-5xl text-orange-200 mt-2'>
-              Delivered Fast
+              {translate('Delivered Fast')}
             </span>
           </h1>
           <p className='text-xl md:text-2xl mb-12 text-orange-100 max-w-3xl mx-auto leading-relaxed'>
-            Discover amazing restaurants and cuisines near you. Order your
-            favorite meals with just a few clicks.
+            {translate('Discover amazing restaurants and cuisines near you. Order your favorite meals with just a few clicks.')}
           </p>
 
           {/* Search Bar */}
@@ -73,7 +74,7 @@ const Restaurants = () => {
               <FiSearch className='absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6' />
               <input
                 type='text'
-                placeholder='Search for restaurants, cuisines, or dishes...'
+                placeholder={translate('Search for restaurants, cuisines, or dishes...')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className='w-full pl-16 pr-6 py-5 text-lg text-gray-900 bg-white/95 backdrop-blur-md border-0 rounded-2xl focus:outline-none focus:ring-4 focus:ring-white/50 shadow-2xl placeholder-gray-500'
@@ -96,7 +97,7 @@ const Restaurants = () => {
                     : 'bg-white/20 text-white hover:bg-white/30 border border-white/30'
                 }`}
               >
-                {cuisine}
+{translate(cuisine)}
               </button>
             ))}
           </div>
@@ -104,10 +105,10 @@ const Restaurants = () => {
           {/* Sort Options */}
           <div className='flex flex-wrap justify-center gap-3'>
             {[
-              { value: 'featured', label: '⭐ Featured' },
-              { value: 'rating', label: '🏆 Top Rated' },
-              { value: 'deliveryTime', label: '⚡ Fast Delivery' },
-              { value: 'name', label: '📝 A-Z' },
+              { value: 'featured', label: translate('⭐ Featured') },
+              { value: 'rating', label: translate('🏆 Top Rated') },
+              { value: 'deliveryTime', label: translate('⚡ Fast Delivery') },
+              { value: 'name', label: translate('📝 A-Z') },
             ].map((option) => (
               <button
                 key={option.value}
@@ -130,13 +131,13 @@ const Restaurants = () => {
         {/* Results Header */}
         <div className='mb-8 text-center pt-4'>
           <h2 className='text-3xl font-bold text-gray-800 mb-3'>
-            {sortedRestaurants.length} Amazing Restaurants Found
+            {sortedRestaurants.length} {translate('Amazing Restaurants Found')}
           </h2>
           <p className='text-lg text-gray-600'>
-            {searchTerm && `Results for "${searchTerm}"`}
+            {searchTerm && `${translate('Results for')} "${searchTerm}"`}
             {selectedCuisine &&
               selectedCuisine !== 'All' &&
-              ` • ${selectedCuisine} cuisine`}
+              ` • ${translate(selectedCuisine)} ${translate('cuisine')}`}
           </p>
         </div>
 
@@ -161,7 +162,7 @@ const Restaurants = () => {
                 <div className='absolute top-4 left-4 flex flex-col gap-2'>
                   {restaurant.featured && (
                     <span className='bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg'>
-                      ⭐ Featured
+                      {translate('⭐ Featured')}
                     </span>
                   )}
                 </div>
@@ -172,7 +173,7 @@ const Restaurants = () => {
                 {/* Quick Action Overlay */}
                 <div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
                   <div className='bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-2xl font-semibold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300'>
-                    View Menu →
+{translate('View Menu →')}
                   </div>
                 </div>
               </div>

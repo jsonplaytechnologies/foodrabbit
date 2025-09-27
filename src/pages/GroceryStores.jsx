@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiStar, FiClock, FiSearch, FiMapPin, FiTruck } from 'react-icons/fi';
 import { groceryStores } from '../data/groceryStores';
+import { useTranslation } from '../context/TranslationContext';
 
 const GroceryStores = () => {
+  const { translate } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [sortBy, setSortBy] = useState('featured');
@@ -55,14 +57,13 @@ const GroceryStores = () => {
 
         <div className='relative container py-20 text-center text-white'>
           <h1 className='text-5xl md:text-6xl font-bold mb-6 font-display leading-tight'>
-            Fresh Groceries
+            {translate('Fresh Groceries')}
             <span className='block text-4xl md:text-5xl text-green-200 mt-2'>
-              Delivered Daily
+              {translate('Delivered Daily')}
             </span>
           </h1>
           <p className='text-xl md:text-2xl mb-12 text-green-100 max-w-3xl mx-auto leading-relaxed'>
-            Shop from your favorite grocery stores and get fresh products
-            delivered to your doorstep in minutes.
+            {translate('Shop from your favorite grocery stores and get fresh products delivered to your doorstep in minutes.')}
           </p>
 
           {/* Search Bar */}
@@ -71,7 +72,7 @@ const GroceryStores = () => {
               <FiSearch className='absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 w-6 h-6' />
               <input
                 type='text'
-                placeholder='Search for stores, products, or brands...'
+                placeholder={translate('Search for stores, products, or brands...')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className='w-full pl-16 pr-6 py-5 text-lg text-gray-900 bg-white/95 backdrop-blur-md border-0 rounded-2xl focus:outline-none focus:ring-4 focus:ring-white/50 shadow-2xl placeholder-gray-500'
@@ -92,7 +93,7 @@ const GroceryStores = () => {
                     : 'bg-white/20 text-white hover:bg-white/30 border border-white/30'
                 }`}
               >
-                {type}
+{translate(type)}
               </button>
             ))}
           </div>

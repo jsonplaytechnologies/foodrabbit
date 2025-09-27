@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import { useTranslation } from '../context/TranslationContext';
 
 const Login = () => {
+  const { translate } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,15 +24,15 @@ const Login = () => {
             <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center mx-auto mb-4">
               <span className="text-white font-bold text-2xl">R</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 font-display">Welcome Back</h1>
-            <p className="text-gray-600 mt-2">Sign in to your Rabbit account</p>
+            <h1 className="text-2xl font-bold text-gray-900 font-display">{translate('Welcome Back')}</h1>
+            <p className="text-gray-600 mt-2">{translate('Sign in to your Rabbit account')}</p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
+                {translate('Email Address')}
               </label>
               <div className="relative">
                 <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -40,7 +42,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Enter your email"
+                  placeholder={translate('Enter your email')}
                   required
                 />
               </div>
@@ -48,7 +50,7 @@ const Login = () => {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                {translate('Password')}
               </label>
               <div className="relative">
                 <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -58,7 +60,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Enter your password"
+                  placeholder={translate('Enter your password')}
                   required
                 />
                 <button
