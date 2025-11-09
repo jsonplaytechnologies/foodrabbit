@@ -1,12 +1,11 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   FiShoppingCart,
   FiUser,
   FiMapPin,
   FiTruck,
   FiPackage,
-  FiSearch,
   FiChevronDown,
 } from 'react-icons/fi';
 import {
@@ -27,7 +26,6 @@ const Header = () => {
   const { getItemCount, orderType, setOrderType, serviceType, setServiceType } =
     useCart();
   const { isTranslated, translate, toggleTranslation } = useTranslation();
-  const [searchQuery, setSearchQuery] = useState('');
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [deliveryAddress, setDeliveryAddress] = useState('933 Carnation Drive');
   const [selectedStoreCategory, setSelectedStoreCategory] = useState('all');
@@ -44,29 +42,6 @@ const Header = () => {
       }
     }
   };
-
-  const handleSearchChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-
-    // Navigate to appropriate page with search query
-    if (query.trim()) {
-      if (serviceType === 'grocery') {
-        navigate(`/grocery-stores?search=${encodeURIComponent(query)}`);
-      } else {
-        navigate(`/restaurants?search=${encodeURIComponent(query)}`);
-      }
-    }
-  };
-
-  // Clear search when location changes
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const searchParam = params.get('search');
-    if (!searchParam) {
-      setSearchQuery('');
-    }
-  }, [location]);
 
   // Store categories (icons from lucide-react)
   const storeCategories = [
@@ -155,24 +130,6 @@ const Header = () => {
                   </div>
                 </div>
               </button>
-            </div>
-
-            {/* Center: Search Bar */}
-            <div className='flex-1 max-w-2xl'>
-              <div className='relative'>
-                <FiSearch className='absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400' />
-                <input
-                  type='text'
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  placeholder={
-                    serviceType === 'grocery'
-                      ? translate('Search stores, products, or brands...')
-                      : translate('Search restaurants, cuisines, or dishes...')
-                  }
-                  className='w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all'
-                />
-              </div>
             </div>
 
             {/* Right: Service Toggle, Delivery/Pickup, Cart, Language, Sign In */}

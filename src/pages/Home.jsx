@@ -114,7 +114,7 @@ const Home = () => {
     {
       name: translate('Pizza Paradise'),
       image:
-        'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop',
       time: '20 min',
       rating: 4.6,
     },
