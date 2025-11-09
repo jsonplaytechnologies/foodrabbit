@@ -1,0 +1,50 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle with Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#EF4444;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="120" height="120" rx="24" fill="url(#bgGradient)"/>
+
+  <!-- Rabbit Icon (Simplified) -->
+  <g transform="translate(30, 25)">
+    <!-- Rabbit Head -->
+    <ellipse cx="30" cy="45" rx="22" ry="25" fill="white"/>
+
+    <!-- Left Ear -->
+    <ellipse cx="18" cy="20" rx="8" ry="24" fill="white" transform="rotate(-20 18 20)"/>
+    <ellipse cx="18" cy="20" rx="4" ry="18" fill="#FFE5DC" transform="rotate(-20 18 20)"/>
+
+    <!-- Right Ear -->
+    <ellipse cx="42" cy="20" rx="8" ry="24" fill="white" transform="rotate(20 42 20)"/>
+    <ellipse cx="42" cy="20" rx="4" ry="18" fill="#FFE5DC" transform="rotate(20 42 20)"/>
+
+    <!-- Left Eye -->
+    <circle cx="22" cy="42" r="3" fill="#1F2937"/>
+
+    <!-- Right Eye -->
+    <circle cx="38" cy="42" r="3" fill="#1F2937"/>
+
+    <!-- Nose -->
+    <circle cx="30" cy="52" r="2.5" fill="#FF6B35"/>
+
+    <!-- Mouth/Whiskers suggestion -->
+    <path d="M 30 54 Q 26 56 22 54" stroke="#9CA3AF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M 30 54 Q 34 56 38 54" stroke="#9CA3AF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Fork & Spoon decoration (subtle) -->
+  <g transform="translate(78, 85)" opacity="0.3">
+    <!-- Fork -->
+    <path d="M 0 0 L 0 12 M -3 0 L -3 8 M 3 0 L 3 8" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- Spoon -->
+    <ellipse cx="12" cy="2" rx="2.5" ry="3" fill="white"/>
+    <rect x="10.5" y="4" width="3" height="8" rx="1.5" fill="white"/>
+  </g>
+</svg>

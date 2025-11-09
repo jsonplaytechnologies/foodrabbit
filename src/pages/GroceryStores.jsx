@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiStar, FiClock, FiSearch, FiMapPin, FiTruck, FiZap, FiAward, FiList } from 'react-icons/fi';
+import { Star } from 'lucide-react';
 import { groceryStores } from '../data/groceryStores';
 import { useTranslation } from '../context/TranslationContext';
 
@@ -39,7 +40,7 @@ const GroceryStores = () => {
   return (
     <div className='min-h-screen bg-white'>
       {/* Hero Section - Green with White Text */}
-      <div className='relative bg-gradient-to-r from-green-600 via-emerald-500 to-teal-600 py-12'>
+      <div className='relative bg-gradient-to-r from-green-600 via-emerald-500 to-teal-600 py-16'>
         <div className='container'>
           <div className='text-center text-white max-w-4xl mx-auto'>
             <h1 className='text-4xl md:text-5xl font-bold mb-3'>
@@ -137,7 +138,7 @@ const GroceryStores = () => {
       </div>
 
       {/* Results Section - White Background */}
-      <div className='container py-8'>
+      <div className='container py-10'>
         {/* Results Header */}
         <div className='mb-6'>
           <h2 className='text-2xl font-bold text-gray-900'>
@@ -156,7 +157,7 @@ const GroceryStores = () => {
             <Link
               key={store.id}
               to={`/grocery-store/${store.id}`}
-              className='group bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 overflow-hidden'
+              className='group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-green-200 transition-all duration-300 overflow-hidden'
             >
               {/* Image Container */}
               <div className='relative h-48 overflow-hidden bg-gray-100'>
@@ -169,15 +170,16 @@ const GroceryStores = () => {
                 {/* Badges */}
                 {store.featured && (
                   <div className='absolute top-3 left-3'>
-                    <span className='bg-green-600 text-white px-3 py-1 rounded-md text-xs font-semibold shadow-md'>
-                      ⭐ Featured
+                    <span className='bg-green-600 text-white px-3 py-1.5 rounded-md text-xs font-semibold shadow-md flex items-center gap-1.5'>
+                      <Star className='w-3 h-3 fill-current' />
+                      Featured
                     </span>
                   </div>
                 )}
               </div>
 
               {/* Content */}
-              <div className='p-4'>
+              <div className='p-5'>
                 <div className='mb-3'>
                   <h3 className='text-lg font-bold text-gray-900 mb-1 group-hover:text-green-600 transition-colors'>
                     {store.name}

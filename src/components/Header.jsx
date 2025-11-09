@@ -9,6 +9,15 @@ import {
   FiSearch,
   FiChevronDown,
 } from 'react-icons/fi';
+import {
+  Star,
+  ShoppingCart as Cart,
+  Store,
+  Leaf,
+  Utensils,
+  Pizza,
+  Salad
+} from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useTranslation } from '../context/TranslationContext';
 
@@ -59,17 +68,17 @@ const Header = () => {
     }
   }, [location]);
 
-  // Store categories
+  // Store categories (icons from lucide-react)
   const storeCategories = [
-    { id: 'all', label: translate('Your stores'), icon: '⭐' },
-    { id: 'supermarket', label: translate('Supermarket'), icon: '🛒' },
-    { id: 'convenience', label: translate('Convenience'), icon: '🏪' },
-    { id: 'organic', label: translate('Organic'), icon: '🌿' },
-    { id: 'restaurants', label: translate('Restaurants'), icon: '🍽️' },
-    { id: 'fastfood', label: translate('Fast Food'), icon: '🍔' },
-    { id: 'asian', label: translate('Asian'), icon: '🥢' },
-    { id: 'pizza', label: translate('Pizza'), icon: '🍕' },
-    { id: 'healthy', label: translate('Healthy'), icon: '🥗' },
+    { id: 'all', label: translate('Your stores'), IconComponent: Star },
+    { id: 'supermarket', label: translate('Supermarket'), IconComponent: Cart },
+    { id: 'convenience', label: translate('Convenience'), IconComponent: Store },
+    { id: 'organic', label: translate('Organic'), IconComponent: Leaf },
+    { id: 'restaurants', label: translate('Restaurants'), IconComponent: Utensils },
+    { id: 'fastfood', label: translate('Fast Food'), IconComponent: Utensils },
+    { id: 'asian', label: translate('Asian'), IconComponent: Utensils },
+    { id: 'pizza', label: translate('Pizza'), IconComponent: Pizza },
+    { id: 'healthy', label: translate('Healthy'), IconComponent: Salad },
   ];
 
   const handleCategoryClick = (categoryId) => {
@@ -86,7 +95,7 @@ const Header = () => {
   return (
     <div className='sticky top-0 z-50 bg-white shadow-sm'>
       {/* Top Bar */}
-      <div className='bg-gray-900 text-white py-2'>
+      <div className='bg-gray-900 text-white py-3'>
         <div className='container flex justify-between items-center text-sm'>
           <div className='flex items-center gap-6'>
             <span className='flex items-center gap-1'>
@@ -111,18 +120,20 @@ const Header = () => {
 
       {/* Main Header */}
       <header className='bg-white border-b border-gray-200'>
-        <div className='container py-4'>
+        <div className='container py-5'>
           <div className='flex items-center justify-between gap-6'>
             {/* Left: Logo + Address Selector */}
             <div className='flex items-center gap-6 flex-shrink-0'>
               {/* Logo */}
               <Link to='/' className='flex items-center gap-3 group'>
-                <div className='w-10 h-10 bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform'>
-                  <span className='text-white font-bold text-xl'>R</span>
-                </div>
+                <img
+                  src='/logo.svg'
+                  alt='FoodRabbit Logo'
+                  className='w-12 h-12 group-hover:scale-105 transition-transform'
+                />
                 <div>
                   <h1 className='text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors'>
-                    Lapin
+                    FoodRabbit
                   </h1>
                   <p className='text-xs text-gray-500 -mt-0.5'>
                     {translate('Food & Grocery Delivery')}
@@ -176,7 +187,7 @@ const Header = () => {
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
-                  <span className='text-xs'>🍕</span>
+                  <Pizza className='w-3.5 h-3.5' />
                   <span>{translate('Food')}</span>
                 </button>
                 <button
@@ -187,7 +198,7 @@ const Header = () => {
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
-                  <span className='text-xs'>🛒</span>
+                  <Cart className='w-3.5 h-3.5' />
                   <span>{translate('Grocery')}</span>
                 </button>
               </div>

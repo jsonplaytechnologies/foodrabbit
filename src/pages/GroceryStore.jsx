@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { FiStar, FiClock, FiMapPin, FiHeart, FiShare2, FiPlus, FiMinus } from 'react-icons/fi';
 import { groceryStores } from '../data/groceryStores';
 import { useCart } from '../context/CartContext';
+import CategoryIcon from '../components/CategoryIcon';
 
 const GroceryStore = () => {
   const { id } = useParams();
@@ -105,7 +106,7 @@ const GroceryStore = () => {
                     : 'border-gray-200 bg-white hover:border-green-300 hover:shadow-sm'
                 }`}
               >
-                <span className="text-3xl mb-1">{cat.icon}</span>
+                <CategoryIcon category={cat.name} className="w-8 h-8 mb-1" />
                 <span className={`text-xs font-semibold ${
                   selectedCategory === cat.name ? 'text-green-600' : 'text-gray-700'
                 }`}>
@@ -151,7 +152,10 @@ const GroceryStore = () => {
                   <FiStar className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-semibold text-gray-900">Rating</p>
-                    <p className="text-xs text-gray-600 mt-1">{store.rating} ⭐ ({store.reviewCount} reviews)</p>
+                    <div className="flex items-center gap-1 text-xs text-gray-600 mt-1">
+                      <FiStar className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      <span>{store.rating} ({store.reviewCount} reviews)</span>
+                    </div>
                   </div>
                 </div>
               </div>

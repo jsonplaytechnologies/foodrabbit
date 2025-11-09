@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiStar, FiClock, FiSearch, FiMapPin, FiZap, FiAward, FiList } from 'react-icons/fi';
+import { Star } from 'lucide-react';
 import { restaurants } from '../data/restaurants';
 import { useTranslation } from '../context/TranslationContext';
 
@@ -39,7 +40,7 @@ const Restaurants = () => {
   return (
     <div className='min-h-screen bg-white'>
       {/* Hero Section - Orange/Red Gradient with White Text */}
-      <div className='relative bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 py-12'>
+      <div className='relative bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 py-16'>
         <div className='container'>
           <div className='text-center text-white max-w-4xl mx-auto'>
             <h1 className='text-4xl md:text-5xl font-bold mb-3'>
@@ -137,7 +138,7 @@ const Restaurants = () => {
       </div>
 
       {/* Results Section - White Background */}
-      <div className='container py-8'>
+      <div className='container py-10'>
         {/* Results Header */}
         <div className='mb-6'>
           <h2 className='text-2xl font-bold text-gray-900'>
@@ -156,7 +157,7 @@ const Restaurants = () => {
             <Link
               key={restaurant.id}
               to={`/restaurant/${restaurant.id}`}
-              className='group bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 overflow-hidden'
+              className='group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-xl hover:border-orange-200 transition-all duration-300 overflow-hidden'
             >
               {/* Image Container */}
               <div className='relative h-48 overflow-hidden bg-gray-100'>
@@ -169,8 +170,9 @@ const Restaurants = () => {
                 {/* Badges */}
                 {restaurant.featured && (
                   <div className='absolute top-3 left-3'>
-                    <span className='bg-orange-500 text-white px-3 py-1 rounded-md text-xs font-semibold shadow-md'>
-                      ⭐ Featured
+                    <span className='bg-orange-500 text-white px-3 py-1.5 rounded-md text-xs font-semibold shadow-md flex items-center gap-1.5'>
+                      <Star className='w-3 h-3 fill-current' />
+                      Featured
                     </span>
                   </div>
                 )}
@@ -182,7 +184,7 @@ const Restaurants = () => {
               </div>
 
               {/* Content */}
-              <div className='p-4'>
+              <div className='p-5'>
                 <div className='mb-3'>
                   <h3 className='text-lg font-bold text-gray-900 mb-1 group-hover:text-orange-600 transition-colors'>
                     {restaurant.name}

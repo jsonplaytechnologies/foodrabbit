@@ -17,37 +17,37 @@ export const groceryStores = [
       {
         id: 1,
         name: "Fresh Produce",
-        icon: "🥬",
+        icon: "Salad",
         itemCount: 45
       },
       {
         id: 2,
         name: "Dairy & Eggs",
-        icon: "🥛",
+        icon: "Milk",
         itemCount: 32
       },
       {
         id: 3,
         name: "Meat & Seafood",
-        icon: "🥩",
+        icon: "Beef",
         itemCount: 28
       },
       {
         id: 4,
         name: "Bakery",
-        icon: "🍞",
+        icon: "Croissant",
         itemCount: 24
       },
       {
         id: 5,
         name: "Pantry",
-        icon: "🥫",
+        icon: "Package",
         itemCount: 156
       },
       {
         id: 6,
         name: "Frozen",
-        icon: "❄️",
+        icon: "Snowflake",
         itemCount: 67
       }
     ],
@@ -222,25 +222,25 @@ export const groceryStores = [
       {
         id: 1,
         name: "Organic Produce",
-        icon: "🌱",
+        icon: "Sprout",
         itemCount: 67
       },
       {
         id: 2,
         name: "Natural Dairy",
-        icon: "🐄",
+        icon: "Milk",
         itemCount: 28
       },
       {
         id: 3,
         name: "Plant-Based",
-        icon: "🌿",
+        icon: "Leaf",
         itemCount: 45
       },
       {
         id: 4,
         name: "Supplements",
-        icon: "💊",
+        icon: "Pill",
         itemCount: 89
       }
     ],
@@ -287,19 +287,19 @@ export const groceryStores = [
       {
         id: 1,
         name: "Snacks",
-        icon: "🍿",
+        icon: "Candy",
         itemCount: 34
       },
       {
         id: 2,
         name: "Beverages",
-        icon: "🥤",
+        icon: "Coffee",
         itemCount: 28
       },
       {
         id: 3,
         name: "Essentials",
-        icon: "🧻",
+        icon: "ScrollText",
         itemCount: 45
       }
     ],
@@ -335,13 +335,13 @@ export const groceryStores = [
       {
         id: 1,
         name: "Bulk Items",
-        icon: "📦",
+        icon: "Package2",
         itemCount: 89
       },
       {
         id: 2,
         name: "Family Size",
-        icon: "👨‍👩‍👧‍👦",
+        icon: "Users",
         itemCount: 67
       }
     ],

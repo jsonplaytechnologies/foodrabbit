@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FiStar, FiClock, FiMapPin, FiHeart, FiShare2, FiPlus, FiMinus } from 'react-icons/fi';
+import { Utensils, Pizza, Salad, Soup, Cookie, IceCream, ChefHat } from 'lucide-react';
 import { restaurants } from '../data/restaurants';
 import { useCart } from '../context/CartContext';
 
@@ -97,29 +98,31 @@ const Restaurant = () => {
         <div className="container">
           <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
             {categories.map((category) => {
-              // Define category icons
+              // Define category icons (using Lucide React icons)
               const categoryIcons = {
-                'All': '🍽️',
-                'Pizza': '🍕',
-                'Pasta': '🍝',
-                'Salads': '🥗',
-                'Appetizers': '🥟',
-                'Desserts': '🍰',
-                'Soup': '🍜',
-                'Burgers': '🍔',
-                'Sides': '🍟',
-                'Sushi Rolls': '🍣',
-                'Sashimi': '🐟',
-                'Tacos': '🌮',
-                'Burritos': '🌯',
-                'Main': '🍽️',
-                'Main Dishes': '🍛',
-                'Noodles': '🍜',
-                'Rice': '🍚',
-                'Curry': '🍛',
-                'Bread': '🥖',
-                'Dessert': '🍮'
+                'All': Utensils,
+                'Pizza': Pizza,
+                'Pasta': Utensils,
+                'Salads': Salad,
+                'Appetizers': ChefHat,
+                'Desserts': Cookie,
+                'Soup': Soup,
+                'Burgers': ChefHat,
+                'Sides': Utensils,
+                'Sushi Rolls': ChefHat,
+                'Sashimi': ChefHat,
+                'Tacos': ChefHat,
+                'Burritos': ChefHat,
+                'Main': Utensils,
+                'Main Dishes': ChefHat,
+                'Noodles': Utensils,
+                'Rice': Utensils,
+                'Curry': Soup,
+                'Bread': Cookie,
+                'Dessert': IceCream
               };
+
+              const IconComponent = categoryIcons[category] || Utensils;
 
               return (
                 <button
@@ -131,7 +134,7 @@ const Restaurant = () => {
                       : 'border-gray-200 bg-white hover:border-orange-300 hover:shadow-sm'
                   }`}
                 >
-                  <span className="text-3xl mb-1">{categoryIcons[category] || '🍽️'}</span>
+                  <IconComponent className="w-8 h-8 mb-1" />
                   <span className={`text-xs font-semibold ${
                     selectedCategory === category ? 'text-orange-600' : 'text-gray-700'
                   }`}>
@@ -177,7 +180,10 @@ const Restaurant = () => {
                   <FiStar className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-semibold text-gray-900">Rating</p>
-                    <p className="text-xs text-gray-600 mt-1">{restaurant.rating} ⭐ ({restaurant.reviewCount} reviews)</p>
+                    <div className="flex items-center gap-1 text-xs text-gray-600 mt-1">
+                      <FiStar className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      <span>{restaurant.rating} ({restaurant.reviewCount} reviews)</span>
+                    </div>
                   </div>
                 </div>
               </div>
