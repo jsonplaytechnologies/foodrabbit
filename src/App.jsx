@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Sidebar from './components/Sidebar';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
 import { TranslationProvider } from './context/TranslationContext';
@@ -22,7 +23,8 @@ const AppContent = () => {
       <ScrollToTop />
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Header />
-        <main className="flex-grow">
+        <Sidebar />
+        <main className="flex-grow lg:ml-20">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/restaurants" element={<Restaurants />} />
