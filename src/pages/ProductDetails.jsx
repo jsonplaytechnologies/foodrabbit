@@ -20,8 +20,7 @@ import { useTranslation } from '../context/TranslationContext';
 const ProductDetails = () => {
   const { translate } = useTranslation();
   const { productId } = useParams();
-  const { addItem } = useCart();
-  const [quantity, setQuantity] = useState(1);
+  const { addItem, items, updateQuantity, removeItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [activeTab, setActiveTab] = useState('description');
 
@@ -133,20 +132,33 @@ const ProductDetails = () => {
     },
   ];
 
-  const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addItem({
-        id: `product-${productData.id}-${Date.now()}-${i}`,
-        name: productData.name,
-        price: productData.price,
-        image: productData.images[0],
-        store: productData.store,
-      });
-    }
+  // Get product quantity from cart
+  const getProductQuantity = () => {
+    const cartItemId = `product-${productData.id}`;
+    const cartItem = items.find(item => item.id === cartItemId);
+    return cartItem ? cartItem.quantity : 0;
   };
 
-  const incrementQuantity = () => setQuantity((q) => q + 1);
-  const decrementQuantity = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
+  const handleIncrement = () => {
+    addItem({
+      id: `product-${productData.id}`,
+      name: productData.name,
+      price: productData.price,
+      image: productData.images[0],
+      store: productData.store,
+      type: 'grocery'
+    });
+  };
+
+  const handleDecrement = () => {
+    const currentQty = getProductQuantity();
+    const cartItemId = `product-${productData.id}`;
+    if (currentQty > 1) {
+      updateQuantity(cartItemId, currentQty - 1);
+    } else if (currentQty === 1) {
+      removeItem(cartItemId);
+    }
+  };
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -290,32 +302,34 @@ const ProductDetails = () => {
 
               {/* Quantity & Add to Cart */}
               <div className='mb-6'>
-                <div className='flex items-center gap-4 mb-4'>
-                  <span className='font-medium text-gray-900'>Quantity:</span>
-                  <div className='flex items-center border border-gray-300 rounded-lg'>
-                    <button
-                      onClick={decrementQuantity}
-                      className='p-2 hover:bg-gray-50 transition-colors'
-                    >
-                      <FiMinus className='w-4 h-4' />
-                    </button>
-                    <span className='px-4 py-2 font-medium'>{quantity}</span>
-                    <button
-                      onClick={incrementQuantity}
-                      className='p-2 hover:bg-gray-50 transition-colors'
-                    >
-                      <FiPlus className='w-4 h-4' />
-                    </button>
-                  </div>
-                </div>
-
                 <div className='flex gap-3'>
-                  <button
-                    onClick={handleAddToCart}
-                    className='flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-xl font-semibold transition-colors'
-                  >
-                    {translate('Add to Cart')} - ${(productData.price * quantity).toFixed(2)}
-                  </button>
+                  {getProductQuantity() === 0 ? (
+                    <button
+                      onClick={handleIncrement}
+                      className='flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2'
+                    >
+                      <FiPlus className='w-5 h-5' />
+                      {translate('Add to Cart')}
+                    </button>
+                  ) : (
+                    <div className='flex-1 flex items-center justify-center gap-3 bg-white border-2 border-gray-300 rounded-xl px-4 py-3'>
+                      <button
+                        onClick={handleDecrement}
+                        className='w-10 h-10 flex items-center justify-center border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-full transition-all'
+                      >
+                        <FiMinus className='w-5 h-5' />
+                      </button>
+                      <span className='font-bold text-lg min-w-[48px] text-center text-gray-900'>
+                        {getProductQuantity()} ct
+                      </span>
+                      <button
+                        onClick={handleIncrement}
+                        className='w-10 h-10 flex items-center justify-center border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-full transition-all'
+                      >
+                        <FiPlus className='w-5 h-5' />
+                      </button>
+                    </div>
+                  )}
                   <button className='p-3 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors'>
                     <FiHeart className='w-6 h-6' />
                   </button>
@@ -323,6 +337,11 @@ const ProductDetails = () => {
                     <FiShare2 className='w-6 h-6' />
                   </button>
                 </div>
+                {getProductQuantity() > 0 && (
+                  <p className='text-sm text-gray-600 mt-3 text-center'>
+                    Total: ${(productData.price * getProductQuantity()).toFixed(2)}
+                  </p>
+                )}
               </div>
 
               {/* Delivery Info */}

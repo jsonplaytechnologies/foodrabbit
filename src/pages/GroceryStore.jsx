@@ -8,7 +8,6 @@ const GroceryStore = () => {
   const { id } = useParams();
   const { addItem, items, updateQuantity, removeItem } = useCart();
   const store = groceryStores.find(s => s.id === parseInt(id));
-  const [selectedCategory, setSelectedCategory] = useState('All');
 
   if (!store) {
     return (
@@ -29,20 +28,6 @@ const GroceryStore = () => {
     { id: 8, name: "Fresh Spinach", description: "Organic baby spinach, 5 oz", price: 3.99, image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=200&fit=crop", category: "Produce" }
   ];
 
-  const categories = store.categories || [
-    { id: 'all', name: 'All', icon: '🏪', itemCount: products.length },
-    { id: 'produce', name: 'Produce', icon: '🥬', itemCount: products.filter(p => p.category === 'Produce').length },
-    { id: 'dairy', name: 'Dairy & Eggs', icon: '🥛', itemCount: products.filter(p => p.category === 'Dairy').length },
-    { id: 'bakery', name: 'Bakery', icon: '🍞', itemCount: products.filter(p => p.category === 'Bakery').length },
-    { id: 'meat', name: 'Meat & Seafood', icon: '🥩', itemCount: products.filter(p => p.category === 'Meat').length },
-    { id: 'pantry', name: 'Pantry', icon: '🥫', itemCount: 0 },
-    { id: 'frozen', name: 'Frozen', icon: '🧊', itemCount: 0 }
-  ];
-
-  const filteredProducts = selectedCategory === 'All'
-    ? products
-    : products.filter(p => p.category === selectedCategory);
-
   const getProductQuantity = (productId) => {
     const cartItemId = `store-${store.id}-item-${productId}`;
     const cartItem = items.find(item => item.id === cartItemId);
@@ -55,7 +40,8 @@ const GroceryStore = () => {
       name: product.name,
       price: product.price,
       image: product.image,
-      store: store.name
+      store: store.name,
+      type: 'grocery'
     });
   };
 
@@ -72,7 +58,7 @@ const GroceryStore = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Store Header - Green Banner */}
-      <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4">
+      <div className="bg-gradient-to-r from-green-600 via-green-700 to-green-800 text-white py-4">
         <div className="container">
           <div className="flex items-center justify-between">
             <div>
@@ -96,32 +82,75 @@ const GroceryStore = () => {
         </div>
       </div>
 
+
       {/* Main Content with Sidebar */}
       <div className="container py-6">
         <div className="flex gap-6">
-          {/* Left Sidebar - Categories */}
-          <aside className="w-64 flex-shrink-0">
-            <div className="bg-white border border-gray-200 rounded-lg p-4 sticky top-24">
-              <h2 className="text-lg font-bold text-gray-900 mb-4">Departments</h2>
-              <nav className="space-y-1">
-                {categories.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.name)}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-left transition-colors ${
-                      selectedCategory === category.name
-                        ? 'bg-green-100 text-green-700 font-semibold'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-xl">{category.icon}</span>
-                      <span className="text-sm">{category.name}</span>
-                    </div>
-                    <span className="text-xs text-gray-500">{category.itemCount}</span>
-                  </button>
-                ))}
-              </nav>
+          {/* Left Sidebar - Store Info */}
+          <aside className="w-64 flex-shrink-0 hidden lg:block">
+            {/* Store Details Card */}
+            <div className="bg-white border border-gray-200 rounded-lg p-4 sticky top-[120px] space-y-4">
+              <div>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">Store Info</h2>
+
+                {/* Location */}
+                <div className="flex items-start gap-3 mb-4">
+                  <FiMapPin className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">Location</p>
+                    <p className="text-xs text-gray-600 mt-1">{store.address || '456 Market Street, City'}</p>
+                  </div>
+                </div>
+
+                {/* Delivery Time */}
+                <div className="flex items-start gap-3 mb-4">
+                  <FiClock className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">Delivery Time</p>
+                    <p className="text-xs text-gray-600 mt-1">{store.deliveryTime}</p>
+                  </div>
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-start gap-3">
+                  <FiStar className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">Rating</p>
+                    <p className="text-xs text-gray-600 mt-1">{store.rating} ⭐ ({store.reviewCount} reviews)</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Delivery Fee */}
+              <div className="pt-4 border-t border-gray-200">
+                <p className="text-sm font-semibold text-gray-900 mb-2">Delivery Fee</p>
+                <p className="text-lg font-bold text-green-600">
+                  {store.deliveryFee === 0 ? 'FREE' : `$${Number(store.deliveryFee).toFixed(2)}`}
+                </p>
+                {store.deliveryFee === 0 && (
+                  <p className="text-xs text-gray-600 mt-1">On orders over $35</p>
+                )}
+              </div>
+
+              {/* Store Type Badge */}
+              <div className="pt-4 border-t border-gray-200">
+                <p className="text-sm font-semibold text-gray-900 mb-2">Store Type</p>
+                <span className="inline-block px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-semibold">
+                  {store.type}
+                </span>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-4 border-t border-gray-200 space-y-2">
+                <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors text-sm font-semibold">
+                  <FiHeart className="w-4 h-4" />
+                  Save Store
+                </button>
+                <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors text-sm font-semibold">
+                  <FiShare2 className="w-4 h-4" />
+                  Share
+                </button>
+              </div>
             </div>
           </aside>
 
@@ -129,54 +158,54 @@ const GroceryStore = () => {
           <div className="flex-1">
             <div className="mb-4">
               <h2 className="text-2xl font-bold text-gray-900">
-                {selectedCategory === 'All' ? 'All Products' : selectedCategory}
+                All Products
               </h2>
-              <p className="text-sm text-gray-600 mt-1">{filteredProducts.length} items</p>
+              <p className="text-sm text-gray-600 mt-1">{products.length} items</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {filteredProducts.map((product) => {
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              {products.map((product) => {
                 const quantity = getProductQuantity(product.id);
                 return (
-                  <div key={product.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                    <Link to={`/product/${product.id}`} className="block mb-3">
+                  <div key={product.id} className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow">
+                    <Link to={`/product/${product.id}`} className="block mb-2">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-32 object-cover rounded-lg"
+                        className="w-full h-24 object-cover rounded-lg"
                       />
                     </Link>
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <Link to={`/product/${product.id}`}>
-                        <h3 className="text-sm font-semibold text-gray-900 hover:text-green-600 transition-colors line-clamp-2">
+                        <h3 className="text-xs font-semibold text-gray-900 hover:text-green-600 transition-colors line-clamp-2">
                           {product.name}
                         </h3>
                       </Link>
-                      <p className="text-xs text-gray-600 line-clamp-1">{product.description}</p>
-                      <div className="flex items-center justify-between pt-2">
-                        <span className="text-lg font-bold text-gray-900">${product.price.toFixed(2)}</span>
+                      <p className="text-xs text-gray-500 line-clamp-1">{product.description}</p>
+                      <div className="flex items-center justify-between pt-1">
+                        <span className="text-sm font-bold text-gray-900">${product.price.toFixed(2)}</span>
                         {quantity === 0 ? (
                           <button
                             onClick={() => handleIncrement(product)}
-                            className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-semibold"
+                            className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded-md transition-colors text-xs font-semibold"
                           >
-                            <FiPlus className="w-4 h-4" />
+                            <FiPlus className="w-3 h-3" />
                             Add
                           </button>
                         ) : (
-                          <div className="flex items-center gap-2 bg-green-600 text-white rounded-lg">
+                          <div className="flex items-center gap-1 bg-white border border-gray-300 rounded-md px-1 py-0.5">
                             <button
                               onClick={() => handleDecrement(product)}
-                              className="p-2 hover:bg-green-700 transition-colors rounded-l-lg"
+                              className="w-6 h-6 flex items-center justify-center border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded transition-all"
                             >
-                              <FiMinus className="w-4 h-4" />
+                              <FiMinus className="w-3 h-3" />
                             </button>
-                            <span className="font-bold text-sm min-w-[24px] text-center">{quantity}</span>
+                            <span className="font-semibold text-xs min-w-[24px] text-center text-gray-900">{quantity}</span>
                             <button
                               onClick={() => handleIncrement(product)}
-                              className="p-2 hover:bg-green-700 transition-colors rounded-r-lg"
+                              className="w-6 h-6 flex items-center justify-center border border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded transition-all"
                             >
-                              <FiPlus className="w-4 h-4" />
+                              <FiPlus className="w-3 h-3" />
                             </button>
                           </div>
                         )}
@@ -187,7 +216,7 @@ const GroceryStore = () => {
               })}
             </div>
 
-            {filteredProducts.length === 0 && (
+            {products.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-gray-600">No products found in this category.</p>
               </div>

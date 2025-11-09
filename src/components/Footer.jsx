@@ -32,24 +32,15 @@ const Footer = () => {
               {translate('Your one-stop solution for food delivery and grocery shopping. Fresh ingredients, delicious meals, delivered fast.')}
             </p>
             <div className='flex items-center gap-4'>
-              <a
-                href='#'
-                className='text-gray-400 hover:text-white transition-colors'
-              >
+              <span className='text-gray-400 cursor-not-allowed opacity-50'>
                 <FiFacebook className='w-5 h-5' />
-              </a>
-              <a
-                href='#'
-                className='text-gray-400 hover:text-white transition-colors'
-              >
+              </span>
+              <span className='text-gray-400 cursor-not-allowed opacity-50'>
                 <FiTwitter className='w-5 h-5' />
-              </a>
-              <a
-                href='#'
-                className='text-gray-400 hover:text-white transition-colors'
-              >
+              </span>
+              <span className='text-gray-400 cursor-not-allowed opacity-50'>
                 <FiInstagram className='w-5 h-5' />
-              </a>
+              </span>
             </div>
           </div>
 
@@ -82,20 +73,14 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link
-                  to='/about'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
+                <span className='text-gray-400 cursor-not-allowed opacity-50'>
                   {translate('About Us')}
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  to='/contact'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
+                <span className='text-gray-400 cursor-not-allowed opacity-50'>
                   {translate('Contact')}
-                </Link>
+                </span>
               </li>
             </ul>
           </div>
@@ -105,44 +90,29 @@ const Footer = () => {
             <h3 className='text-lg font-semibold mb-4'>{translate('Support')}</h3>
             <ul className='space-y-2'>
               <li>
-                <Link
-                  to='/help'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
+                <span className='text-gray-400 cursor-not-allowed opacity-50'>
                   {translate('Help Center')}
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  to='/order-tracking'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
+                <span className='text-gray-400 cursor-not-allowed opacity-50'>
                   {translate('Track Your Order')}
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  to='/faq'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
+                <span className='text-gray-400 cursor-not-allowed opacity-50'>
                   {translate('FAQ')}
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  to='/privacy'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
+                <span className='text-gray-400 cursor-not-allowed opacity-50'>
                   {translate('Privacy Policy')}
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  to='/terms'
-                  className='text-gray-400 hover:text-white transition-colors'
-                >
+                <span className='text-gray-400 cursor-not-allowed opacity-50'>
                   {translate('Terms of Service')}
-                </Link>
+                </span>
               </li>
             </ul>
           </div>
@@ -176,24 +146,15 @@ const Footer = () => {
             {translate('© 2024 Rabbit. All rights reserved.')}
           </p>
           <div className='flex items-center gap-6 mt-4 md:mt-0'>
-            <Link
-              to='/privacy'
-              className='text-gray-400 hover:text-white text-sm transition-colors'
-            >
+            <span className='text-gray-400 text-sm cursor-not-allowed opacity-50'>
               {translate('Privacy Policy')}
-            </Link>
-            <Link
-              to='/terms'
-              className='text-gray-400 hover:text-white text-sm transition-colors'
-            >
+            </span>
+            <span className='text-gray-400 text-sm cursor-not-allowed opacity-50'>
               {translate('Terms of Service')}
-            </Link>
-            <Link
-              to='/cookies'
-              className='text-gray-400 hover:text-white text-sm transition-colors'
-            >
+            </span>
+            <span className='text-gray-400 text-sm cursor-not-allowed opacity-50'>
               {translate('Cookie Policy')}
-            </Link>
+            </span>
           </div>
         </div>
       </div>

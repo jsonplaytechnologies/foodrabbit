@@ -1,0 +1,217 @@
+================================================================================
+                    FOODRABBIT USER FLOW - VISUAL MAP
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              HOME PAGE (/)                                   │
+│  ├─ Service Toggle: Food 🍕 | Grocery 🛒                                   │
+│  ├─ Hero Search (NON-FUNCTIONAL ✗)                                         │
+│  ├─ Category Browse                                                         │
+│  └─ Language Toggle: EN | FR                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                    │
+                 ┌──────────────────┼──────────────────┐
+                 │                  │                  │
+        FOOD (🍕) │        GROCERY (🛒) │         LOGIN/SIGNUP │
+                 │                  │                  │
+    ┌────────────▼─────────┐  ┌──────────▼──────┐  ┌──────────▼──────┐
+    │ RESTAURANTS (/restaurants) │GROCERY-STORES│  │  /login (broken)│
+    │                            │(/grocery-store)│  │  /signup        │
+    │ Search ✓ Filter ✓ Sort ✓   │                │  │                │
+    └────────────┬─────────┘  └──────────┬──────┘  └────────────┬─────┘
+                 │                       │                       │
+    ┌────────────▼─────────┐  ┌──────────▼──────┐               │
+    │ RESTAURANT DETAIL    │  │ GROCERY DETAIL  │               │
+    │ (/restaurant/:id)    │  │ (/grocery-store)│   Forgot Password ✗
+    │                      │  │                │   (route: /forgot-password)
+    │ Menu Categories ✓    │  │ Departments ✓  │   (doesn't exist)
+    │ Add to Cart ✓        │  │ Add to Cart ✓  │
+    │ Quantity Controls ✓  │  │ View Details ✓ │
+    │                      │  │ Reviews ✓      │
+    │ Search Menu Items ✗  │  │ Nutrition ✓    │
+    └────────────┬─────────┘  └──────────┬──────┘
+                 │                       │
+                 └───────────┬───────────┘
+                             │
+        ┌────────────────────▼────────────────────┐
+        │          CART PAGE (/cart)              │
+        │                                         │
+        │ ❌ ISSUE: Can mix Food + Grocery items │
+        │ ✓ Quantity Control                      │
+        │ ✓ Remove Items                          │
+        │ ✓ Clear All                             │
+        │ ✓ Cart Summary (Subtotal, Fee, Tax)    │
+        │ ❌ Service Type Switch = Silent Reset   │
+        │                                         │
+        └────────────────┬───────────────────────┘
+                         │
+        ┌────────────────▼───────────────────┐
+        │ CHECKOUT (/checkout)               │
+        │                                    │
+        │ ❌ MAJOR ISSUES:                   │
+        │ • No form validation               │
+        │ • Can proceed with empty fields    │
+        │ • No order confirmation modal      │
+        │ • Instant redirect after submit    │
+        │ • Service type bug in empty state  │
+        │                                    │
+        │ Step 1: Delivery Info              │
+        │ ├─ Name, Email, Phone             │
+        │ ├─ Address, City, ZIP              │
+        │ ├─ Delivery Instructions           │
+        │ └─ Time: ASAP / Scheduled ✗       │
+        │    (no time picker for scheduled)  │
+        │                                    │
+        │ Step 2: Payment Info               │
+        │ ├─ Card / Cash on Delivery         │
+        │ ├─ Card Number (if card)           │
+        │ ├─ Expiry & CVV (if card)          │
+        │ └─ Security Badge                  │
+        │                                    │
+        │ Step 3: Review Order               │
+        │ ├─ Order Items                     │
+        │ ├─ Delivery Address                │
+        │ ├─ Payment Method                  │
+        │ └─> Place Order (instant redirect) │
+        │                                    │
+        └────────────────┬───────────────────┘
+                         │
+        ┌────────────────▼──────────────────┐
+        │ ORDER STATUS (/order-status/:id)  │
+        │                                   │
+        │ ❌ Shows DEMO DATA ALWAYS         │
+        │ (not connected to actual order)   │
+        │                                   │
+        │ Progress Steps:                   │
+        │ 1. Order Confirmed                │
+        │ 2. Preparing                      │
+        │ 3. Out for Delivery               │
+        │ 4. Delivered                      │
+        │                                   │
+        │ ✓ Delivery Partner Info (when #3) │
+        │ ✓ Timeline View                   │
+        │ ✓ Order Summary                   │
+        │ • Order Again Button              │
+        │ • Help Button (non-functional)    │
+        │                                   │
+        └───────────────────────────────────┘
+
+================================================================================
+                         SIDEBAR NAVIGATION
+================================================================================
+
+[Desktop Only - Hidden on Mobile ✗]
+
+Home      🏠
+Shop      🛍️  (dynamic: restaurants or grocery)
+Restaurants 📦 (→ /restaurants)
+Grocery   🛒 (→ /grocery-stores)
+Offers    🏷️  (# - BROKEN ✗)
+Delivery  🚚 (# - BROKEN ✗)
+Orders    🕐 (# - BROKEN ✗)
+
+================================================================================
+                        HEADER NAVIGATION
+================================================================================
+
+Top Bar (Gray Background):
+├─ Free delivery on orders > $35
+├─ Deliver to 10001
+├─ Help & Support (non-functional ✗)
+└─ Track Order (non-functional ✗)
+
+Main Header:
+├─ Logo (clickable to home)
+├─ Service Tabs: Food 🍕 | Grocery 🛒
+├─ Search Box (NON-FUNCTIONAL ✗)
+├─ Delivery/Pickup Toggle ✓
+├─ Cart Icon (with badge) ✓
+├─ Language Toggle: EN | FR ✓
+└─ Sign In Button (→ /login)
+
+================================================================================
+                      CRITICAL ISSUE HOTSPOTS
+================================================================================
+
+🔴 LEVEL 1 (BLOCKS PRODUCTION):
+   1. Cart allows mixed service types (food + grocery)
+   2. Checkout has zero form validation
+   3. No order confirmation before submission
+   4. Order status shows hardcoded demo data
+   5. Forgot password link broken (404 error)
+
+🟠 LEVEL 2 (HIGH PRIORITY):
+   1. Non-functional search boxes everywhere
+   2. No "add to cart" success feedback
+   3. Service type switch silently clears cart
+   4. Missing loading states
+   5. Unimplemented sidebar/header features
+
+🟡 LEVEL 3 (MEDIUM PRIORITY):
+   1. Mobile sidebar hidden
+   2. No breadcrumb navigation
+   3. No error boundaries
+   4. Missing back buttons on error states
+   5. No payment error handling
+
+================================================================================
+                         USER FEEDBACK GAPS
+================================================================================
+
+✗ Add to Cart Confirmation
+✗ Item Quantity Update Toast
+✗ Service Type Switch Warning
+✗ Clear Cart Confirmation
+✗ Checkout Form Validation Messages
+✗ Order Placed Success Screen
+✗ Payment Processing Indicator
+✗ Payment Error Messages
+✗ Network Error Handling
+✗ Out of Stock Indicators
+✗ Delivery Area Not Covered Message
+✗ Login/Signup Success Message
+✗ Email Verification Flow
+✗ Form Field Error Indicators
+
+================================================================================
+                          SUCCESS STATES PRESENT
+================================================================================
+
+✓ Empty Cart Page (shows message)
+✓ No Results State (shows message)
+✓ Order Status Page (shows progress)
+✓ Product Details Page (rich info)
+
+Most user actions are SILENT with no feedback!
+
+================================================================================
+                         NAVIGATION DEAD ENDS
+================================================================================
+
+/forgot-password         ✗ (route doesn't exist)
+Header: Track Order      ✗ (no handler)
+Header: Help & Support   ✗ (no handler)
+Header: Search Box       ✗ (no handler)
+Sidebar: Offers          ✗ (link is #)
+Sidebar: Delivery        ✗ (link is #)
+Sidebar: Orders          ✗ (link is #)
+Social Login Buttons     ✗ (no handlers)
+
+Restaurant Not Found     ✗ (no back button)
+Store Not Found          ✗ (no back button)
+Product Not Found        ✓ (has back link)
+
+================================================================================
+                        ACCESSIBILITY ISSUES
+================================================================================
+
+✗ Mobile sidebar hidden entirely
+✗ No loading states = unresponsive feel
+✗ No error messages for validation
+✗ No focus management in modals (none exist)
+✗ No keyboard navigation optimization
+✗ No skip links
+✗ Color-only status indicators
+✗ No ARIA labels on interactive elements
+
+================================================================================

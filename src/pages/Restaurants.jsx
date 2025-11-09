@@ -7,42 +7,12 @@ import { useTranslation } from '../context/TranslationContext';
 const Restaurants = () => {
   const { translate } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCuisine, setSelectedCuisine] = useState('');
-  const [sortBy, setSortBy] = useState('featured');
-
-  const cuisines = [
-    'All',
-    'Italian',
-    'Chinese',
-    'Mexican',
-    'Indian',
-    'American',
-    'Japanese',
-    'Thai',
-  ];
 
   const filteredRestaurants = restaurants.filter((restaurant) => {
     const matchesSearch =
       restaurant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       restaurant.cuisine.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCuisine =
-      selectedCuisine === '' ||
-      selectedCuisine === 'All' ||
-      restaurant.cuisine === selectedCuisine;
-    return matchesSearch && matchesCuisine;
-  });
-
-  const sortedRestaurants = [...filteredRestaurants].sort((a, b) => {
-    switch (sortBy) {
-      case 'rating':
-        return b.rating - a.rating;
-      case 'deliveryTime':
-        return parseInt(a.deliveryTime) - parseInt(b.deliveryTime);
-      case 'name':
-        return a.name.localeCompare(b.name);
-      default:
-        return b.featured ? 1 : -1;
-    }
+    return matchesSearch;
   });
 
   return (
@@ -75,74 +45,23 @@ const Restaurants = () => {
         </div>
       </div>
 
-      {/* Filter Section - White Background */}
-      <div className='bg-white border-b border-gray-200 sticky top-[140px] z-30'>
-        <div className='container py-4'>
-          {/* Category Pills */}
-          <div className='flex items-center gap-3 mb-4 overflow-x-auto pb-2'>
-            {cuisines.map((cuisine) => (
-              <button
-                key={cuisine}
-                onClick={() =>
-                  setSelectedCuisine(cuisine === 'All' ? '' : cuisine)
-                }
-                className={`px-5 py-2.5 rounded-full font-medium text-sm whitespace-nowrap transition-all ${
-                  (selectedCuisine === '' && cuisine === 'All') ||
-                  selectedCuisine === cuisine
-                    ? 'bg-orange-500 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {translate(cuisine)}
-              </button>
-            ))}
-          </div>
-
-          {/* Sort Options */}
-          <div className='flex items-center gap-3 overflow-x-auto pb-2'>
-            {[
-              { value: 'featured', label: 'Featured', icon: '⭐' },
-              { value: 'rating', label: 'Top Rated', icon: '🏆' },
-              { value: 'deliveryTime', label: 'Fast Delivery', icon: '⚡' },
-              { value: 'name', label: 'A-Z', icon: '📋' },
-            ].map((option) => (
-              <button
-                key={option.value}
-                onClick={() => setSortBy(option.value)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                  sortBy === option.value
-                    ? 'bg-orange-100 text-orange-700 border-2 border-orange-500'
-                    : 'bg-white text-gray-700 border border-gray-300 hover:border-orange-500'
-                }`}
-              >
-                <span>{option.icon}</span>
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Results Section - White Background */}
       <div className='container py-8'>
         {/* Results Header */}
         <div className='mb-6'>
           <h2 className='text-2xl font-bold text-gray-900'>
-            {sortedRestaurants.length} {translate('Restaurants Found')}
+            {filteredRestaurants.length} {translate('Restaurants Found')}
           </h2>
-          {(searchTerm || selectedCuisine) && (
+          {searchTerm && (
             <p className='text-sm text-gray-600 mt-1'>
-              {searchTerm && `Results for "${searchTerm}"`}
-              {selectedCuisine &&
-                selectedCuisine !== 'All' &&
-                ` • ${translate(selectedCuisine)} cuisine`}
+              Results for "{searchTerm}"
             </p>
           )}
         </div>
 
         {/* Restaurant Grid */}
         <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pb-4'>
-          {sortedRestaurants.map((restaurant) => (
+          {filteredRestaurants.map((restaurant) => (
             <Link
               key={restaurant.id}
               to={`/restaurant/${restaurant.id}`}
@@ -222,7 +141,7 @@ const Restaurants = () => {
           ))}
         </div>
 
-        {sortedRestaurants.length === 0 && (
+        {filteredRestaurants.length === 0 && (
           <div className='text-center py-12'>
             <div className='w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4'>
               <FiSearch className='w-12 h-12 text-gray-400' />

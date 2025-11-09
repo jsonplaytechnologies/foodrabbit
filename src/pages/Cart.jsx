@@ -72,17 +72,25 @@ const Cart = () => {
                       )}
                       <p className="text-lg font-bold text-gray-900">${item.price}</p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-lg px-2 py-1">
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50"
+                        className={`w-8 h-8 flex items-center justify-center border-2 ${
+                          serviceType === 'grocery'
+                            ? 'border-green-600 text-green-600 hover:bg-green-600'
+                            : 'border-orange-500 text-orange-500 hover:bg-orange-500'
+                        } hover:text-white rounded-full transition-all`}
                       >
                         <FiMinus className="w-4 h-4" />
                       </button>
-                      <span className="text-lg font-medium w-8 text-center">{item.quantity}</span>
+                      <span className="font-semibold text-sm min-w-[32px] text-center text-gray-900">{item.quantity} ct</span>
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50"
+                        className={`w-8 h-8 flex items-center justify-center border-2 ${
+                          serviceType === 'grocery'
+                            ? 'border-green-600 text-green-600 hover:bg-green-600'
+                            : 'border-orange-500 text-orange-500 hover:bg-orange-500'
+                        } hover:text-white rounded-full transition-all`}
                       >
                         <FiPlus className="w-4 h-4" />
                       </button>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Debug</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .debug-info {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 12px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div class="debug-info" id="debugInfo">
+    <div>Scroll Y: <span id="scrollY">0</span></div>
+    <div>Top Bar Height: <span id="topBarHeight">?</span></div>
+    <div>Main Header Height: <span id="mainHeaderHeight">?</span></div>
+    <div>Filter Section Top: <span id="filterTop">?</span></div>
+  </div>
+
+  <!-- Top Bar (NOT STICKY) -->
+  <div id="topBar" class='bg-gray-900 text-white py-2'>
+    <div class='container mx-auto flex justify-between items-center text-sm px-4'>
+      <div class='flex items-center gap-6'>
+        <span class='flex items-center gap-1'>
+          <span class='w-2 h-2 bg-green-400 rounded-full animate-pulse'></span>
+          Free delivery on orders over $35
+        </span>
+      </div>
+      <div class='flex items-center gap-6'>
+        <button class='hover:text-white transition-colors'>Help & Support</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header (STICKY) -->
+  <header id="mainHeader" class='bg-white border-b border-gray-200 sticky top-0 z-50'>
+    <div class='container mx-auto py-4 px-4'>
+      <div class='flex items-center justify-between gap-6'>
+        <div class='flex items-center gap-6'>
+          <div class='flex items-center gap-3'>
+            <div class='w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-500 rounded-xl flex items-center justify-center'>
+              <span class='text-white font-bold text-xl'>R</span>
+            </div>
+            <div>
+              <h1 class='text-xl font-bold text-gray-900'>Lapin</h1>
+              <p class='text-xs text-gray-500'>Food & Grocery</p>
+            </div>
+          </div>
+        </div>
+        <div class='flex-1 max-w-2xl'>
+          <input type='text' placeholder='Search...' class='w-full px-4 py-3 bg-gray-50 border rounded-lg' />
+        </div>
+        <div class='flex items-center gap-3'>
+          <button class='px-4 py-2 bg-orange-500 text-white rounded-lg'>Sign In</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div class='bg-gradient-to-r from-orange-500 to-orange-700 py-16'>
+    <div class='container mx-auto px-4'>
+      <div class='text-center text-white max-w-4xl mx-auto'>
+        <h1 class='text-5xl font-bold mb-3'>Delicious Food</h1>
+        <p class='text-lg mb-6'>Discover amazing restaurants</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Section (STICKY) -->
+  <div id="filterSection" class='bg-white border-b border-gray-200 sticky top-[72px] z-30'>
+    <div class='container mx-auto px-4 py-4'>
+      <div class='flex gap-3 overflow-x-auto'>
+        <button class='px-5 py-2.5 rounded-full bg-orange-500 text-white'>All</button>
+        <button class='px-5 py-2.5 rounded-full bg-gray-100 text-gray-700'>Italian</button>
+        <button class='px-5 py-2.5 rounded-full bg-gray-100 text-gray-700'>Chinese</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class='container mx-auto px-4 py-8'>
+    <div class='grid grid-cols-3 gap-6'>
+      <!-- Repeat cards to make page scrollable -->
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 1</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 2</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 3</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 4</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 5</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 6</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 7</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 8</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 9</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 10</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 11</div>
+      <div class='bg-white border rounded-lg p-4 h-64'>Card 12</div>
+    </div>
+  </div>
+
+  <script>
+    function updateDebugInfo() {
+      const topBar = document.getElementById('topBar');
+      const mainHeader = document.getElementById('mainHeader');
+      const filterSection = document.getElementById('filterSection');
+
+      document.getElementById('scrollY').textContent = Math.round(window.scrollY);
+      document.getElementById('topBarHeight').textContent = topBar.offsetHeight + 'px';
+      document.getElementById('mainHeaderHeight').textContent = mainHeader.offsetHeight + 'px';
+
+      const filterRect = filterSection.getBoundingClientRect();
+      document.getElementById('filterTop').textContent = Math.round(filterRect.top) + 'px from top';
+    }
+
+    window.addEventListener('scroll', updateDebugInfo);
+    window.addEventListener('load', updateDebugInfo);
+    setInterval(updateDebugInfo, 100);
+  </script>
+</body>
+</html>

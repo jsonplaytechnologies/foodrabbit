@@ -3,411 +3,339 @@ import {
   FiClock,
   FiStar,
   FiTruck,
-  FiShield,
-  FiAward,
-  FiUsers,
   FiArrowRight,
-  FiCheckCircle,
   FiSearch,
+  FiChevronRight,
 } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import { useTranslation } from '../context/TranslationContext';
 
 const Home = () => {
-  const { orderType, serviceType } = useCart();
+  const { serviceType, setServiceType } = useCart();
   const { translate } = useTranslation();
 
-  const foodCategories = [
+  // Sample stores data for restaurants
+  const restaurants = [
     {
-      name: translate('Pizza'),
-      image:
-        'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=200&h=150&fit=crop',
-      count: translate('120+ restaurants'),
+      name: translate('Pizza Palace'),
+      image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop',
+      deliveryTime: '25-35 min',
+      rating: 4.8,
+      category: translate('Pizza'),
     },
     {
-      name: translate('Burgers'),
-      image:
-        'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=150&fit=crop',
-      count: translate('85+ restaurants'),
+      name: translate('Burger House'),
+      image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&h=200&fit=crop',
+      deliveryTime: '20-30 min',
+      rating: 4.7,
+      category: translate('Burgers'),
     },
     {
-      name: translate('Sushi'),
-      image:
-        'https://images.unsplash.com/photo-1553621042-f6e147245754?w=200&h=150&fit=crop',
-      count: translate('45+ restaurants'),
+      name: translate('Sushi Express'),
+      image: 'https://images.unsplash.com/photo-1553621042-f6e147245754?w=300&h=200&fit=crop',
+      deliveryTime: '30-40 min',
+      rating: 4.9,
+      category: translate('Sushi'),
     },
     {
-      name: translate('Chinese'),
-      image:
-        'https://images.unsplash.com/photo-1526318896980-cf78c088247c?w=200&h=150&fit=crop',
-      count: translate('90+ restaurants'),
-    },
-    {
-      name: translate('Mexican'),
-      image:
-        'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=200&h=150&fit=crop',
-      count: translate('65+ restaurants'),
-    },
-    {
-      name: translate('Indian'),
-      image:
-        'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=150&fit=crop',
-      count: translate('55+ restaurants'),
+      name: translate('Taco Fiesta'),
+      image: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=300&h=200&fit=crop',
+      deliveryTime: '25-35 min',
+      rating: 4.6,
+      category: translate('Mexican'),
     },
   ];
 
-  const groceryCategories = [
+  // Sample stores data for grocery
+  const groceryStores = [
     {
-      name: translate('Fresh Produce'),
-      image:
-        'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200&h=150&fit=crop',
-      count: translate('500+ items'),
+      name: translate('Fresh Market'),
+      image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=300&h=200&fit=crop',
+      deliveryTime: '30-45 min',
+      rating: 4.8,
+      category: translate('Supermarket'),
     },
     {
-      name: translate('Dairy & Eggs'),
-      image:
-        'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=200&h=150&fit=crop',
-      count: translate('200+ items'),
+      name: translate('Organic Grocer'),
+      image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&h=200&fit=crop',
+      deliveryTime: '35-50 min',
+      rating: 4.9,
+      category: translate('Organic'),
     },
     {
-      name: translate('Meat & Seafood'),
-      image:
-        'https://images.unsplash.com/photo-1588348835776-a6ab7baa1bdb?w=200&h=150&fit=crop',
-      count: translate('150+ items'),
+      name: translate('Quick Stop'),
+      image: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=300&h=200&fit=crop',
+      deliveryTime: '15-25 min',
+      rating: 4.5,
+      category: translate('Convenience'),
     },
     {
-      name: translate('Bakery'),
-      image:
-        'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=150&fit=crop',
-      count: translate('100+ items'),
-    },
-    {
-      name: translate('Pantry Staples'),
-      image:
-        'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&h=150&fit=crop',
-      count: translate('800+ items'),
-    },
-    {
-      name: translate('Frozen Foods'),
-      image:
-        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=150&fit=crop',
-      count: translate('300+ items'),
+      name: translate('Specialty Foods'),
+      image: 'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?w=300&h=200&fit=crop',
+      deliveryTime: '40-55 min',
+      rating: 4.7,
+      category: translate('Specialty'),
     },
   ];
 
-  const categories =
-    serviceType === 'grocery' ? groceryCategories : foodCategories;
+  const stores = serviceType === 'grocery' ? groceryStores : restaurants;
 
-  const features = [
-    {
-      icon: FiTruck,
-      title: translate('Fast Delivery'),
-      description:
-        serviceType === 'grocery'
-          ? translate('Fresh groceries delivered in as little as 30 minutes')
-          : translate('Hot meals delivered in 30 minutes or less'),
-    },
-    {
-      icon: FiShield,
-      title: translate('Safe & Secure'),
-      description:
-        serviceType === 'grocery'
-          ? translate('Temperature-controlled delivery and contactless options')
-          : translate('Contactless delivery and secure payment protection'),
-    },
-    {
-      icon: FiAward,
-      title: translate('Premium Quality'),
-      description:
-        serviceType === 'grocery'
-          ? translate('Hand-picked fresh produce and premium grocery brands')
-          : translate('Top-rated restaurants and quality ingredients only'),
-    },
-    {
-      icon: FiUsers,
-      title: translate('24/7 Support'),
-      description: translate('Our customer service team is always here to help you'),
-    },
-  ];
+  // Category pills for filtering
+  const storeCategoryPills = serviceType === 'grocery'
+    ? [
+        { name: translate('All'), active: true },
+        { name: translate('Supermarket'), active: false },
+        { name: translate('Convenience'), active: false },
+        { name: translate('Organic'), active: false },
+        { name: translate('Specialty'), active: false },
+      ]
+    : [
+        { name: translate('All'), active: true },
+        { name: translate('Restaurant'), active: false },
+        { name: translate('Fast Food'), active: false },
+        { name: translate('Pizza'), active: false },
+        { name: translate('Asian'), active: false },
+      ];
 
-  const testimonials = [
-    {
-      name: translate('Sarah Johnson'),
-      role: translate('Regular Customer'),
-      content:
-        translate('Amazing service! Everything arrives fresh and on time. The app is so easy to use.'),
-      rating: 5,
-    },
-    {
-      name: translate('Mike Chen'),
-      role: translate('Busy Parent'),
-      content:
-        translate('Saves me so much time. Great selection and the delivery is super reliable.'),
-      rating: 5,
-    },
-    {
-      name: translate('Emily Rodriguez'),
-      role: translate('Food Enthusiast'),
-      content:
-        translate('Love the variety of restaurants and stores available. Quality is always top-notch.'),
-      rating: 5,
-    },
-  ];
+  // Featured categories for the bottom section
+  const featuredCategories = serviceType === 'grocery'
+    ? [
+        {
+          title: translate('Fresh Produce'),
+          description: translate('Crisp vegetables & ripe fruits'),
+          image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop',
+        },
+        {
+          title: translate('Dairy & Eggs'),
+          description: translate('Farm fresh daily essentials'),
+          image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=300&fit=crop',
+        },
+        {
+          title: translate('Meat & Seafood'),
+          description: translate('Premium quality proteins'),
+          image: 'https://images.unsplash.com/photo-1588348835776-a6ab7baa1bdb?w=400&h=300&fit=crop',
+        },
+        {
+          title: translate('Bakery'),
+          description: translate('Freshly baked goods'),
+          image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop',
+        },
+      ]
+    : [
+        {
+          title: translate('Pizza'),
+          description: translate('120+ restaurants'),
+          image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop',
+        },
+        {
+          title: translate('Burgers'),
+          description: translate('85+ restaurants'),
+          image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
+        },
+        {
+          title: translate('Asian'),
+          description: translate('200+ restaurants'),
+          image: 'https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&h=300&fit=crop',
+        },
+        {
+          title: translate('Mexican'),
+          description: translate('65+ restaurants'),
+          image: 'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&h=300&fit=crop',
+        },
+      ];
 
   return (
     <div className='min-h-screen bg-white'>
-      {/* Hero Section */}
-      <section
-        className={`relative py-16 ${
-          serviceType === 'grocery'
-            ? 'bg-gradient-to-r from-green-600 via-emerald-500 to-teal-600'
-            : 'bg-gradient-to-r from-orange-500 via-red-500 to-pink-600'
-        }`}
-      >
-        <div className='container'>
-          <div className='text-center text-white max-w-4xl mx-auto'>
-            <h1 className='text-4xl lg:text-5xl font-bold mb-4 leading-tight'>
-              {serviceType === 'grocery'
-                ? translate('Fresh Groceries')
-                : translate('Delicious Food')}
-              <br />
-              {translate('Delivered Daily')}
-            </h1>
-            <p className='text-xl mb-8 opacity-95'>
-              {serviceType === 'grocery'
-                ? translate('Shop from your favorite stores and get fresh products delivered to your door in minutes')
-                : translate('Discover incredible restaurants and cuisines near you. Order your favorite meals in just a few clicks')}
-            </p>
-
-            {/* Search Bar in Hero */}
-            <div className='max-w-2xl mx-auto'>
-              <div className='relative'>
-                <FiSearch className='absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400' />
-                <input
-                  type='text'
-                  placeholder={
-                    serviceType === 'grocery'
-                      ? translate('Search stores, products, or brands...')
-                      : translate('Search restaurants, cuisines, or dishes...')
-                  }
-                  className='w-full pl-14 pr-4 py-4 bg-white text-gray-900 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-white/50 text-lg'
-                />
-              </div>
+      {/* Clean Top Section - Instacart Style */}
+      <section className='bg-white py-12 border-b border-gray-100'>
+        <div className='container px-4 md:px-6 max-w-7xl mx-auto'>
+          {/* Service Type Toggle - Subtle */}
+          <div className='flex justify-center mb-8'>
+            <div className='inline-flex bg-gray-100 rounded-lg p-1'>
+              <button
+                onClick={() => setServiceType('food')}
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
+                  serviceType === 'food'
+                    ? 'bg-orange-500 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {translate('Food Delivery')}
+              </button>
+              <button
+                onClick={() => setServiceType('grocery')}
+                className={`px-6 py-2 rounded-md text-sm font-medium transition-all ${
+                  serviceType === 'grocery'
+                    ? 'bg-green-600 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {translate('Grocery')}
+              </button>
             </div>
+          </div>
 
-            <div className='flex items-center justify-center gap-6 mt-6 text-sm'>
-              <div className='flex items-center gap-2'>
-                <FiCheckCircle className='w-5 h-5' />
-                <span>{translate('Free delivery over $35')}</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <FiClock className='w-5 h-5' />
-                <span>{translate('Fast 30-min delivery')}</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <FiCheckCircle className='w-5 h-5' />
-                <span>{translate('24/7 support')}</span>
-              </div>
+          {/* Simple Heading */}
+          <h1 className='text-3xl md:text-4xl font-bold text-gray-900 text-center mb-6'>
+            {serviceType === 'grocery'
+              ? translate('Order groceries for delivery')
+              : translate('Order food for delivery')}
+          </h1>
+
+          {/* Search Bar */}
+          <div className='max-w-2xl mx-auto'>
+            <div className='relative'>
+              <FiSearch className='absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400' />
+              <input
+                type='text'
+                placeholder={translate('Search products, stores, and recipes')}
+                className='w-full pl-12 pr-4 py-3.5 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent'
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Filter Pills Section */}
-      <section className='py-8 bg-white border-b border-gray-200'>
-        <div className='container'>
-          <div className='flex items-center gap-3 overflow-x-auto pb-2'>
-            <button
-              className={`px-4 py-2 rounded-full font-medium text-sm whitespace-nowrap transition-all ${
-                serviceType === 'grocery'
-                  ? 'bg-green-600 text-white'
-                  : 'bg-orange-500 text-white'
-              }`}
-            >
-              {translate('All')}
-            </button>
-            {serviceType === 'grocery' ? (
-              <>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-green-600 hover:text-green-600 whitespace-nowrap transition-all'>
-                  {translate('Supermarket')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-green-600 hover:text-green-600 whitespace-nowrap transition-all'>
-                  {translate('Convenience')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-green-600 hover:text-green-600 whitespace-nowrap transition-all'>
-                  {translate('Organic')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-green-600 hover:text-green-600 whitespace-nowrap transition-all'>
-                  {translate('Specialty')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-green-600 hover:text-green-600 whitespace-nowrap transition-all'>
-                  {translate('Pharmacy')}
-                </button>
-              </>
-            ) : (
-              <>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-orange-500 hover:text-orange-600 whitespace-nowrap transition-all'>
-                  {translate('Italian')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-orange-500 hover:text-orange-600 whitespace-nowrap transition-all'>
-                  {translate('Chinese')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-orange-500 hover:text-orange-600 whitespace-nowrap transition-all'>
-                  {translate('Mexican')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-orange-500 hover:text-orange-600 whitespace-nowrap transition-all'>
-                  {translate('Indian')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-orange-500 hover:text-orange-600 whitespace-nowrap transition-all'>
-                  {translate('American')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-orange-500 hover:text-orange-600 whitespace-nowrap transition-all'>
-                  {translate('Japanese')}
-                </button>
-                <button className='px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-orange-500 hover:text-orange-600 whitespace-nowrap transition-all'>
-                  {translate('Thai')}
-                </button>
-              </>
-            )}
-            <div className='border-l border-gray-300 h-6 mx-2'></div>
-            <button className='flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-gray-900 hover:text-gray-900 whitespace-nowrap transition-all'>
-              <FiStar className='w-4 h-4' />
-              {translate('Top Rated')}
-            </button>
-            <button className='flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-gray-900 hover:text-gray-900 whitespace-nowrap transition-all'>
-              <FiClock className='w-4 h-4' />
-              {translate('Fast Delivery')}
-            </button>
-            <button className='flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full font-medium text-sm text-gray-700 hover:border-gray-900 hover:text-gray-900 whitespace-nowrap transition-all'>
-              <FiAward className='w-4 h-4' />
-              {translate('A-Z')}
-            </button>
+      {/* Store Categories Pills */}
+      <section className='bg-white py-3 border-b border-gray-100 sticky top-[113px] z-10'>
+        <div className='container px-4 md:px-6 max-w-7xl mx-auto'>
+          <div className='flex items-center gap-2 overflow-x-auto scrollbar-hide'>
+            {storeCategoryPills.map((pill, index) => (
+              <button
+                key={index}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                  pill.active
+                    ? serviceType === 'grocery'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-orange-500 text-white'
+                    : 'bg-white border border-gray-300 text-gray-700 hover:border-gray-400'
+                }`}
+              >
+                {pill.name}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Categories Grid Section */}
-      <section className='py-12 bg-white'>
-        <div className='container'>
-          <div className='mb-8'>
-            <h2 className='text-3xl font-bold text-gray-900 mb-2'>
+      {/* Your Stores Section - Horizontal Scrollable */}
+      <section className='bg-white py-6'>
+        <div className='container px-4 md:px-6 max-w-7xl mx-auto'>
+          <div className='flex items-center justify-between mb-4'>
+            <h2 className='text-2xl font-bold text-gray-900'>
               {serviceType === 'grocery'
-                ? translate('Shop by Category')
-                : translate('Browse Cuisines')}
+                ? translate('Your grocery stores')
+                : translate('Your restaurants')}
             </h2>
-            <p className='text-lg text-gray-600'>
-              {serviceType === 'grocery'
-                ? translate('Find everything you need in one place')
-                : translate('Discover your next favorite meal')}
-            </p>
+            <Link
+              to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
+              className='text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center gap-1'
+            >
+              {translate('See all')}
+              <FiChevronRight className='w-4 h-4' />
+            </Link>
           </div>
 
-          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>
-            {categories.map((category, index) => (
+          {/* Horizontal Scrollable Store Cards */}
+          <div className='overflow-x-auto pb-4 -mx-4 px-4'>
+            <div className='flex gap-4 min-w-max'>
+              {stores.map((store, index) => (
+                <Link
+                  key={index}
+                  to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
+                  className='flex-none w-72 bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow'
+                >
+                  <div className='aspect-video w-full bg-gray-100 overflow-hidden'>
+                    <img
+                      src={store.image}
+                      alt={store.name}
+                      className='w-full h-full object-cover'
+                    />
+                  </div>
+                  <div className='p-4'>
+                    <h3 className='font-semibold text-gray-900 mb-1'>
+                      {store.name}
+                    </h3>
+                    <div className='flex items-center gap-3 text-xs text-gray-600'>
+                      <div className='flex items-center gap-1'>
+                        <FiClock className='w-3.5 h-3.5' />
+                        {store.deliveryTime}
+                      </div>
+                      <div className='flex items-center gap-1'>
+                        <FiStar className='w-3.5 h-3.5 fill-current text-yellow-400' />
+                        {store.rating}
+                      </div>
+                    </div>
+                    <p className='text-xs text-gray-500 mt-1'>{store.category}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Categories Section - Clean Grid */}
+      <section className='bg-white py-8 border-t border-gray-100'>
+        <div className='container px-4 md:px-6 max-w-7xl mx-auto'>
+          <h2 className='text-2xl font-bold text-gray-900 mb-6'>
+            {serviceType === 'grocery'
+              ? translate('Shop by category')
+              : translate('Popular cuisines')}
+          </h2>
+
+          <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
+            {featuredCategories.map((category, index) => (
               <Link
                 key={index}
-                to={
-                  serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'
-                }
-                className='group bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md transition-all duration-300 hover:scale-105'
+                to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
+                className='group bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow'
               >
-                <div className='aspect-square mb-3 bg-gray-100 rounded-lg overflow-hidden'>
+                <div className='aspect-video w-full bg-gray-100 overflow-hidden'>
                   <img
                     src={category.image}
-                    alt={category.name}
-                    className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-300'
+                    alt={category.title}
+                    className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
                   />
                 </div>
-                <h3 className='font-semibold text-gray-900 mb-1 text-center text-sm'>
-                  {category.name}
-                </h3>
-                <p className='text-xs text-gray-500 text-center'>
-                  {category.count}
-                </p>
+                <div className='p-4'>
+                  <h3 className='font-semibold text-gray-900 text-sm mb-0.5'>
+                    {category.title}
+                  </h3>
+                  <p className='text-xs text-gray-500'>{category.description}</p>
+                </div>
               </Link>
             ))}
           </div>
-
-          <div className='text-center mt-8'>
-            <Link
-              to={serviceType === 'grocery' ? '/grocery-stores' : '/restaurants'}
-              className={`inline-flex items-center gap-2 px-6 py-3 ${
-                serviceType === 'grocery'
-                  ? 'bg-green-600 hover:bg-green-700'
-                  : 'bg-orange-500 hover:bg-orange-600'
-              } text-white rounded-lg font-semibold transition-all`}
-            >
-              {serviceType === 'grocery' ? translate('View All Stores') : translate('View All Restaurants')}
-              <FiArrowRight className='w-4 h-4' />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className='py-16 bg-gray-50'>
-        <div className='container'>
-          <div className='text-center mb-12'>
-            <h2 className='text-3xl font-bold text-gray-900 mb-2'>
-              {translate('Why Choose Rabbit?')}
+      {/* Bottom Promotional Section */}
+      <section className='bg-gray-50 py-12 mt-8'>
+        <div className='container px-4 md:px-6 max-w-7xl mx-auto'>
+          <div className='bg-white rounded-xl p-8 md:p-12 text-center border border-gray-200'>
+            <h2 className='text-2xl md:text-3xl font-bold text-gray-900 mb-3'>
+              {translate('Get the Rabbit App')}
             </h2>
-            <p className='text-lg text-gray-600'>
-              {translate('We\'re committed to delivering the best experience possible')}
+            <p className='text-gray-600 mb-8 max-w-2xl mx-auto'>
+              {translate('Download our app for faster ordering and exclusive deals')}
             </p>
-          </div>
-
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
-            {features.map((feature, index) => (
-              <div key={index} className='bg-white rounded-xl p-6 text-center border border-gray-200 hover:shadow-md transition-shadow'>
-                <div
-                  className={`w-14 h-14 ${
-                    serviceType === 'grocery' ? 'bg-green-100' : 'bg-orange-100'
-                  } rounded-xl flex items-center justify-center mx-auto mb-4`}
-                >
-                  <feature.icon
-                    className={`w-7 h-7 ${
-                      serviceType === 'grocery'
-                        ? 'text-green-600'
-                        : 'text-orange-600'
-                    }`}
-                  />
-                </div>
-                <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                  {feature.title}
-                </h3>
-                <p className='text-sm text-gray-600 leading-relaxed'>
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section
-        className={`py-16 ${
-          serviceType === 'grocery'
-            ? 'bg-gradient-to-r from-green-600 to-emerald-600'
-            : 'bg-gradient-to-r from-orange-500 to-red-600'
-        } text-white`}
-      >
-        <div className='container text-center'>
-          <h2 className='text-3xl md:text-4xl font-bold mb-3'>
-            {translate('Get the Rabbit App')}
-          </h2>
-          <p className='text-lg mb-8 opacity-95'>
-            {translate('Download our app for faster ordering and exclusive deals')}
-          </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <button className='bg-gray-900 text-white px-8 py-3 rounded-lg hover:bg-black transition-colors font-semibold flex items-center justify-center gap-2'>
-              <span>📱</span>
-              {translate('Download for iOS')}
-            </button>
-            <button className='bg-gray-900 text-white px-8 py-3 rounded-lg hover:bg-black transition-colors font-semibold flex items-center justify-center gap-2'>
-              <span>🤖</span>
-              {translate('Download for Android')}
-            </button>
+            <div className='flex flex-col sm:flex-row gap-3 justify-center items-center'>
+              <Link
+                to='#'
+                className='inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium'
+              >
+                <FiTruck className='w-5 h-5' />
+                {translate('App Store')}
+              </Link>
+              <Link
+                to='#'
+                className='inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-medium'
+              >
+                <FiTruck className='w-5 h-5' />
+                {translate('Google Play')}
+              </Link>
+            </div>
           </div>
         </div>
       </section>
