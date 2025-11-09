@@ -1,19 +1,40 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiStar, FiClock, FiSearch, FiMapPin, FiTruck } from 'react-icons/fi';
+import { FiStar, FiClock, FiSearch, FiMapPin, FiTruck, FiZap, FiAward, FiList } from 'react-icons/fi';
 import { groceryStores } from '../data/groceryStores';
 import { useTranslation } from '../context/TranslationContext';
 
 const GroceryStores = () => {
   const { translate } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedType, setSelectedType] = useState('All');
+  const [selectedFilter, setSelectedFilter] = useState('Featured');
 
-  const filteredStores = groceryStores.filter((store) => {
+  // Extract unique store types
+  const storeTypes = ['All', ...new Set(groceryStores.map(store => store.type))];
+
+  let filteredStores = groceryStores.filter((store) => {
     const matchesSearch =
       store.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       store.description.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSearch;
+    const matchesType = selectedType === 'All' || store.type === selectedType;
+    return matchesSearch && matchesType;
   });
+
+  // Apply additional filters
+  if (selectedFilter === 'Featured') {
+    filteredStores = filteredStores.filter(s => s.featured);
+  } else if (selectedFilter === 'Top Rated') {
+    filteredStores = [...filteredStores].sort((a, b) => b.rating - a.rating);
+  } else if (selectedFilter === 'Fast Delivery') {
+    filteredStores = [...filteredStores].sort((a, b) => {
+      const aTime = parseInt(a.deliveryTime.split('-')[0]);
+      const bTime = parseInt(b.deliveryTime.split('-')[0]);
+      return aTime - bTime;
+    });
+  } else if (selectedFilter === 'A-Z') {
+    filteredStores = [...filteredStores].sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   return (
     <div className='min-h-screen bg-white'>
@@ -41,6 +62,76 @@ const GroceryStores = () => {
                 />
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky Store Type Categories and Filters */}
+      <div className="sticky top-[88px] z-40 bg-white shadow-sm">
+        <div className="container">
+          {/* Store Type Categories */}
+          <div className="flex items-center gap-2 py-4 overflow-x-auto scrollbar-hide border-b border-gray-200">
+            {storeTypes.map((type) => (
+              <button
+                key={type}
+                onClick={() => setSelectedType(type)}
+                className={`flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                  selectedType === type
+                    ? 'bg-green-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+
+          {/* Filter Buttons */}
+          <div className="flex items-center gap-2 py-3 overflow-x-auto scrollbar-hide">
+            <button
+              onClick={() => setSelectedFilter('Featured')}
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border-2 ${
+                selectedFilter === 'Featured'
+                  ? 'border-green-600 bg-green-50 text-green-600'
+                  : 'border-gray-200 bg-white text-gray-700 hover:border-green-300'
+              }`}
+            >
+              <FiStar className="w-4 h-4" />
+              Featured
+            </button>
+            <button
+              onClick={() => setSelectedFilter('Top Rated')}
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border-2 ${
+                selectedFilter === 'Top Rated'
+                  ? 'border-green-600 bg-green-50 text-green-600'
+                  : 'border-gray-200 bg-white text-gray-700 hover:border-green-300'
+              }`}
+            >
+              <FiAward className="w-4 h-4" />
+              Top Rated
+            </button>
+            <button
+              onClick={() => setSelectedFilter('Fast Delivery')}
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border-2 ${
+                selectedFilter === 'Fast Delivery'
+                  ? 'border-green-600 bg-green-50 text-green-600'
+                  : 'border-gray-200 bg-white text-gray-700 hover:border-green-300'
+              }`}
+            >
+              <FiZap className="w-4 h-4" />
+              Fast Delivery
+            </button>
+            <button
+              onClick={() => setSelectedFilter('A-Z')}
+              className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border-2 ${
+                selectedFilter === 'A-Z'
+                  ? 'border-green-600 bg-green-50 text-green-600'
+                  : 'border-gray-200 bg-white text-gray-700 hover:border-green-300'
+              }`}
+            >
+              <FiList className="w-4 h-4" />
+              A-Z
+            </button>
           </div>
         </div>
       </div>

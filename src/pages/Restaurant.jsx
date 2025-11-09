@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 const Restaurant = () => {
   const { id } = useParams();
   const { addItem, items, updateQuantity, removeItem } = useCart();
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const restaurant = restaurants.find(r => r.id === parseInt(id));
 
   if (!restaurant) {
@@ -27,6 +28,14 @@ const Restaurant = () => {
     { id: 7, name: "Greek Salad", description: "Feta, olives, tomatoes, cucumber", price: 11.99, image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=300&h=200&fit=crop", category: "Salads" },
     { id: 8, name: "Mozzarella Sticks", description: "Fried mozzarella with marinara", price: 9.99, image: "https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=300&h=200&fit=crop", category: "Appetizers" }
   ];
+
+  // Extract unique categories from menu items
+  const categories = ['All', ...new Set(menuItems.map(item => item.category))];
+
+  // Filter menu items based on selected category
+  const filteredMenuItems = selectedCategory === 'All'
+    ? menuItems
+    : menuItems.filter(item => item.category === selectedCategory);
 
   const getItemQuantity = (itemId) => {
     const cartItemId = `restaurant-${restaurant.id}-item-${itemId}`;
@@ -83,6 +92,57 @@ const Restaurant = () => {
         </div>
       </div>
 
+      {/* Sticky Categories Navigation */}
+      <div className="sticky top-[88px] z-40 bg-white border-b border-gray-200 shadow-sm py-4">
+        <div className="container">
+          <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+            {categories.map((category) => {
+              // Define category icons
+              const categoryIcons = {
+                'All': '🍽️',
+                'Pizza': '🍕',
+                'Pasta': '🍝',
+                'Salads': '🥗',
+                'Appetizers': '🥟',
+                'Desserts': '🍰',
+                'Soup': '🍜',
+                'Burgers': '🍔',
+                'Sides': '🍟',
+                'Sushi Rolls': '🍣',
+                'Sashimi': '🐟',
+                'Tacos': '🌮',
+                'Burritos': '🌯',
+                'Main': '🍽️',
+                'Main Dishes': '🍛',
+                'Noodles': '🍜',
+                'Rice': '🍚',
+                'Curry': '🍛',
+                'Bread': '🥖',
+                'Dessert': '🍮'
+              };
+
+              return (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`flex-shrink-0 flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all min-w-[100px] ${
+                    selectedCategory === category
+                      ? 'border-orange-500 bg-orange-50 shadow-md'
+                      : 'border-gray-200 bg-white hover:border-orange-300 hover:shadow-sm'
+                  }`}
+                >
+                  <span className="text-3xl mb-1">{categoryIcons[category] || '🍽️'}</span>
+                  <span className={`text-xs font-semibold ${
+                    selectedCategory === category ? 'text-orange-600' : 'text-gray-700'
+                  }`}>
+                    {category}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
 
       {/* Main Content with Sidebar */}
       <div className="container py-6">
@@ -151,13 +211,13 @@ const Restaurant = () => {
           <div className="flex-1">
             <div className="mb-4">
               <h2 className="text-2xl font-bold text-gray-900">
-                All Items
+                {selectedCategory === 'All' ? 'All Items' : selectedCategory}
               </h2>
-              <p className="text-sm text-gray-600 mt-1">{menuItems.length} items</p>
+              <p className="text-sm text-gray-600 mt-1">{filteredMenuItems.length} items</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {menuItems.map((item) => {
+              {filteredMenuItems.map((item) => {
                 const quantity = getItemQuantity(item.id);
                 return (
                   <div key={item.id} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
@@ -207,7 +267,7 @@ const Restaurant = () => {
               })}
             </div>
 
-            {menuItems.length === 0 && (
+            {filteredMenuItems.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-gray-600">No items found in this category.</p>
               </div>

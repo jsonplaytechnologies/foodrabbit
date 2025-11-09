@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 const GroceryStore = () => {
   const { id } = useParams();
   const { addItem, items, updateQuantity, removeItem } = useCart();
+  const [selectedCategory, setSelectedCategory] = useState('All Products');
   const store = groceryStores.find(s => s.id === parseInt(id));
 
   if (!store) {
@@ -27,6 +28,14 @@ const GroceryStore = () => {
     { id: 7, name: "Organic Eggs", description: "Free-range organic eggs, dozen", price: 6.99, image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=300&h=200&fit=crop", category: "Dairy" },
     { id: 8, name: "Fresh Spinach", description: "Organic baby spinach, 5 oz", price: 3.99, image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=200&fit=crop", category: "Produce" }
   ];
+
+  // Get total product count
+  const totalProductCount = products.length;
+
+  // Filter products based on selected category
+  const filteredProducts = selectedCategory === 'All Products'
+    ? products
+    : products.filter(product => product.category === selectedCategory);
 
   const getProductQuantity = (productId) => {
     const cartItemId = `store-${store.id}-item-${productId}`;
@@ -82,6 +91,32 @@ const GroceryStore = () => {
         </div>
       </div>
 
+      {/* Category Cards */}
+      <div className="sticky top-[88px] z-40 bg-white py-4 border-b border-gray-200 shadow-sm">
+        <div className="container">
+          <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+            {store.categories && store.categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.name)}
+                className={`flex-shrink-0 flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all min-w-[100px] ${
+                  selectedCategory === cat.name
+                    ? 'border-green-600 bg-green-50 shadow-md'
+                    : 'border-gray-200 bg-white hover:border-green-300 hover:shadow-sm'
+                }`}
+              >
+                <span className="text-3xl mb-1">{cat.icon}</span>
+                <span className={`text-xs font-semibold ${
+                  selectedCategory === cat.name ? 'text-green-600' : 'text-gray-700'
+                }`}>
+                  {cat.name}
+                </span>
+                <span className="text-xs text-gray-500 mt-0.5">({cat.itemCount})</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* Main Content with Sidebar */}
       <div className="container py-6">
@@ -158,13 +193,13 @@ const GroceryStore = () => {
           <div className="flex-1">
             <div className="mb-4">
               <h2 className="text-2xl font-bold text-gray-900">
-                All Products
+                {selectedCategory}
               </h2>
-              <p className="text-sm text-gray-600 mt-1">{products.length} items</p>
+              <p className="text-sm text-gray-600 mt-1">{filteredProducts.length} items</p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
-              {products.map((product) => {
+              {filteredProducts.map((product) => {
                 const quantity = getProductQuantity(product.id);
                 return (
                   <div key={product.id} className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow">
@@ -216,7 +251,7 @@ const GroceryStore = () => {
               })}
             </div>
 
-            {products.length === 0 && (
+            {filteredProducts.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-gray-600">No products found in this category.</p>
               </div>
