@@ -13,7 +13,7 @@ const translations = {
   'Restaurant Food': 'Nourriture de restaurant',
   'Grocery Store': 'Épicerie',
   'Delivery': 'Livraison',
-  'Pickup': 'Ramassage',
+  'Pickup': 'Retrait en magasin',
   'Sign In': 'Se connecter',
 
   // Home page translations
