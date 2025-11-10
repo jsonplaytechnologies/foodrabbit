@@ -123,18 +123,18 @@ const Footer = () => {
             <div className='space-y-3'>
               <div className='flex items-center gap-3'>
                 <FiPhone className='w-5 h-5 text-orange-500' />
-                <span className='text-gray-400'>1-800-RABBIT</span>
+                <span className='text-gray-400'>{translate('1-800-RABBIT')}</span>
               </div>
               <div className='flex items-center gap-3'>
                 <FiMail className='w-5 h-5 text-orange-500' />
-                <span className='text-gray-400'>support@rabbit.com</span>
+                <span className='text-gray-400'>{translate('support@rabbit.com')}</span>
               </div>
               <div className='flex items-start gap-3'>
                 <FiMapPin className='w-5 h-5 text-orange-500 mt-1' />
                 <span className='text-gray-400'>
-                  123 Delivery Street
+                  {translate('123 Delivery Street')}
                   <br />
-                  New York, NY 10001
+                  {translate('New York, NY 10001')}
                 </span>
               </div>
             </div>

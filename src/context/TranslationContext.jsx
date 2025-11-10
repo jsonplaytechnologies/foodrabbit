@@ -29,6 +29,17 @@ const translations = {
   'Free delivery over $35': 'Livraison gratuite de plus de 35 $',
   'Real-time tracking': 'Suivi en temps réel',
   '24/7 support': 'Support 24/7',
+  'Fresh Groceries?': 'Épicerie fraîche?',
+  'Craving?': 'Une envie?',
+  'Order Now!': 'Commandez maintenant!',
+  'Fresh groceries delivered to your doorstep. Shop online, save time!': 'Épicerie fraîche livrée à votre porte. Magasinez en ligne, gagnez du temps!',
+  'Your favorite food delivered hot & fresh to your doorstep in minutes': 'Votre nourriture préférée livrée chaude et fraîche à votre porte en quelques minutes',
+  'Explore Stores': 'Explorer les magasins',
+  'Explore Restaurants': 'Explorer les restaurants',
+  'View Deals': 'Voir les offres',
+  'Featured Stores': 'Magasins en vedette',
+  'Featured Restaurants': 'Restaurants en vedette',
+  'Handpicked favorites just for you': 'Favoris sélectionnés rien que pour vous',
 
   // Categories
   'Shop by Category': 'Acheter par catégorie',
@@ -63,6 +74,17 @@ const translations = {
   '100+ items': '100+ articles',
   '800+ items': '800+ articles',
   '300+ items': '300+ articles',
+  '500+': '500+',
+  '200+': '200+',
+  '150+': '150+',
+  '100+': '100+',
+  '300+': '300+',
+  '250+': '250+',
+  '120+': '120+',
+  '95+': '95+',
+  '80+': '80+',
+  '70+': '70+',
+  '60+': '60+',
 
   // Features
   'Why Choose Rabbit?': 'Pourquoi choisir Lapin?',
@@ -123,6 +145,10 @@ const translations = {
   // Restaurant page translations
   'Delicious Food': 'Nourriture délicieuse',
   'Delivered Fast': 'Livré rapidement',
+  '10% OFF': '10% DE RÉDUCTION',
+  '15% OFF': '15% DE RÉDUCTION',
+  '20% OFF': '20% DE RÉDUCTION',
+  '25% OFF': '25% DE RÉDUCTION',
   'Discover amazing restaurants and cuisines near you. Order your favorite meals with just a few clicks.': 'Découvrez des restaurants et des cuisines incroyables près de chez vous. Commandez vos repas préférés en quelques clics.',
   'Search for restaurants, cuisines, or dishes...': 'Rechercher des restaurants, des cuisines ou des plats...',
   'American': 'Américain',
@@ -138,9 +164,7 @@ const translations = {
   'Try adjusting your search or filters': 'Essayez d\'ajuster votre recherche ou vos filtres',
   'min': 'min',
   'Free delivery': 'Livraison gratuite',
-  'Featured': 'En vedette',
   'Top Rated': 'Mieux notés',
-  'Fast Delivery': 'Livraison rapide',
   'A-Z': 'A-Z',
   'Amazing Restaurants Found': 'Restaurants incroyables trouvés',
   'Results for': 'Résultats pour',
@@ -305,6 +329,231 @@ const translations = {
   'Save': 'Sauvegarder',
   'Share': 'Partager',
   'reviews': 'avis',
+
+  // Missing translations from all pages
+
+  // Home page
+  'ct': 'pièce',
+
+  // Restaurants page
+  'Delivery:': 'Livraison:',
+
+  // Restaurant page
+  'Restaurant not found': 'Restaurant introuvable',
+  'Location': 'Emplacement',
+  '123 Main Street, City': '123 rue Principale, Ville',
+  'All Items': 'Tous les articles',
+  'Save Restaurant': 'Sauvegarder le restaurant',
+  'No items found in this category.': 'Aucun article trouvé dans cette catégorie.',
+  'delivery': 'livraison',
+
+  // Grocery Store page
+  'Store not found': 'Magasin introuvable',
+  '456 Market Street, City': '456 rue du Marché, Ville',
+  'Store Type': 'Type de magasin',
+  'Save Store': 'Sauvegarder le magasin',
+  'All Products': 'Tous les produits',
+  'No products found in this category.': 'Aucun produit trouvé dans cette catégorie.',
+  'Fresh organic bananas, 1 lb': 'Bananes biologiques fraîches, 1 lb',
+  'Whole Milk': 'Lait entier',
+  'Fresh whole milk, 1 gallon': 'Lait entier frais, 1 gallon',
+  'Sourdough Bread': 'Pain au levain',
+  'Artisan sourdough bread loaf': 'Pain au levain artisanal',
+  'Ground Beef': 'Bœuf haché',
+  'Fresh ground beef, 1 lb': 'Bœuf haché frais, 1 lb',
+  'Fresh Tomatoes': 'Tomates fraîches',
+  'Vine-ripened tomatoes, 1 lb': 'Tomates mûries sur pied, 1 lb',
+  'Cheddar Cheese': 'Fromage cheddar',
+  'Sharp cheddar cheese, 8 oz': 'Fromage cheddar fort, 8 oz',
+  'Organic Eggs': 'Œufs biologiques',
+  'Free-range organic eggs, dozen': 'Œufs biologiques de poules élevées en plein air, douzaine',
+  'Fresh Spinach': 'Épinards frais',
+  'Organic baby spinach, 5 oz': 'Jeunes épinards biologiques, 5 oz',
+  'Meat': 'Viande',
+
+  // Checkout page
+  'Add some items to your cart before checking out.': 'Ajoutez des articles à votre panier avant de passer à la caisse.',
+  'Browse Restaurants': 'Parcourir les restaurants',
+  'Review': 'Réviser',
+  'First Name *': 'Prénom *',
+  'Last Name *': 'Nom de famille *',
+  'Email *': 'E-mail *',
+  'Phone Number *': 'Numéro de téléphone *',
+  'Address *': 'Adresse *',
+  'Apartment/Suite': 'Appartement/Suite',
+  'City *': 'Ville *',
+  'ZIP Code *': 'Code postal *',
+  'Leave at door, ring bell, etc.': 'Laisser à la porte, sonner, etc.',
+  'ASAP (30-45 minutes)': 'Dès que possible (30-45 minutes)',
+  'Schedule for later': 'Programmer pour plus tard',
+  'Continue to Payment': 'Continuer vers le paiement',
+  'Payment Information': 'Informations de paiement',
+  'Credit/Debit Card': 'Carte de crédit/débit',
+  'Cash on Delivery': 'Paiement à la livraison',
+  'Cardholder Name *': 'Nom du titulaire *',
+  '1234 5678 9012 3456': '1234 5678 9012 3456',
+  'Expiry Date *': 'Date d\'expiration *',
+  'CVV *': 'CVV *',
+  '123': '123',
+  'Your payment information is secure and encrypted': 'Vos informations de paiement sont sécurisées et cryptées',
+  'Review Your Order': 'Réviser votre commande',
+  'Apt ': 'App ',
+  'more items': 'articles de plus',
+  'Estimated Delivery': 'Livraison estimée',
+
+  // Login page
+  'Or continue with': 'Ou continuer avec',
+  'Google': 'Google',
+  'Facebook': 'Facebook',
+  'Sign up for free': 'S\'inscrire gratuitement',
+
+  // Signup page
+  'Create Account': 'Créer un compte',
+
+  // OrderStatus page
+  'Out for Delivery': 'En cours de livraison',
+  'Your order is on the way': 'Votre commande est en route',
+  'Your order has been delivered. Enjoy your meal!': 'Votre commande a été livrée. Bon appétit!',
+  'Classic Margherita Pizza': 'Pizza Margherita classique',
+  'Caesar Salad': 'Salade César',
+  'Mario\'s Italian': 'Mario\'s Italien',
+  'Order #': 'Commande #',
+  'Estimated delivery in': 'Livraison estimée dans',
+  'Order completed!': 'Commande terminée!',
+  'Alex Rodriguez': 'Alex Rodriguez',
+  'Delivery Partner': 'Partenaire de livraison',
+  'Call': 'Appeler',
+  'Currently on Oak Avenue, 2 minutes away': 'Actuellement sur Oak Avenue, à 2 minutes',
+  'Delivered to 123 Main Street, Apt 4B': 'Livré au 123 rue Principale, App 4B',
+  'Order Delivered Successfully!': 'Commande livrée avec succès!',
+  'Your order was delivered at 3:05 PM. We hope you enjoy your meal!': 'Votre commande a été livrée à 15h05. Nous espérons que vous apprécierez votre repas!',
+  'Rate Your Experience': 'Évaluez votre expérience',
+  'Order Items': 'Articles de la commande',
+  'Quantity:': 'Quantité:',
+  'Order Timeline': 'Chronologie de la commande',
+  'Delivery Address': 'Adresse de livraison',
+  '123 Main Street': '123 rue Principale',
+  'Apt 4B': 'App 4B',
+  'New York, NY 10001': 'New York, NY 10001',
+  '**** **** **** 1234': '**** **** **** 1234',
+  'Order Again': 'Commander à nouveau',
+  'Need Help?': 'Besoin d\'aide?',
+
+  // ProductDetails page
+  'Serving size': 'Portion',
+  'Calories': 'Calories',
+  '% Daily Value*': '% Valeur quotidienne*',
+  'Total Fat': 'Lipides totaux',
+  'Saturated Fat': 'Graisses saturées',
+  'Cholesterol': 'Cholestérol',
+  'Sodium': 'Sodium',
+  'Total Carbohydrate': 'Glucides totaux',
+  'Dietary Fiber': 'Fibres alimentaires',
+  'Total Sugars': 'Sucres totaux',
+  'Protein': 'Protéines',
+  'Vitamin C': 'Vitamine C',
+  'Folate': 'Folate',
+  'Potassium': 'Potassium',
+  '*Percent Daily Values are based on a 2,000 calorie diet.': '*Les valeurs quotidiennes en pourcentage sont basées sur un régime de 2 000 calories.',
+  'Customer Reviews': 'Avis des clients',
+  'Based on': 'Basé sur',
+  'Verified Purchase': 'Achat vérifié',
+  'Helpful': 'Utile',
+  'Not helpful': 'Pas utile',
+  'Write a Review': 'Écrire un avis',
+  'Organic Strawberries': 'Fraises biologiques',
+  'Organic Blueberries': 'Bleuets biologiques',
+  'Organic Apples': 'Pommes biologiques',
+  'Sarah M.': 'Sarah M.',
+  'Always fresh and perfectly ripe! These products are sweet and delicious. Great for my morning routine.': 'Toujours frais et parfaitement mûrs! Ces produits sont sucrés et délicieux. Parfait pour ma routine matinale.',
+  'Mike K.': 'Mike K.',
+  'Good quality product, though sometimes they arrive needing a day to ripen. Still taste great.': 'Produit de bonne qualité, bien qu\'ils arrivent parfois en ayant besoin d\'un jour pour mûrir. Le goût est toujours excellent.',
+  'Emma L.': 'Emma L.',
+  'Love the quality and freshness. The taste is noticeably better than other brands.': 'J\'adore la qualité et la fraîcheur. Le goût est nettement meilleur que les autres marques.',
+  'Fresh or refund': 'Frais ou remboursé',
+
+  // Components
+  'Switch to English': 'Passer à l\'anglais',
+  'Switch to French': 'Passer au français',
+  'FoodRabbit Logo': 'Logo FoodRabbit',
+  'FoodRabbit': 'FoodRabbit',
+  'Coming Soon': 'Bientôt disponible',
+  '1-800-RABBIT': '1-800-RABBIT',
+  'support@rabbit.com': 'support@rabbit.com',
+  '123 Delivery Street': '123 rue de Livraison',
+
+  // Home page - Store/Restaurant names
+  'Fresh Market': 'Marché Frais',
+  'Organic Grocer': 'Épicerie Bio',
+  'Quick Mart': 'Dépanneur Express',
+  'The Golden Spoon': 'La Cuillère d\'Or',
+  'Burger Empire': 'Empire du Burger',
+  'Sushi Masters': 'Maîtres du Sushi',
+
+  // Home page - Quick Bites/Shop by Aisle
+  'Pizza Paradise': 'Paradis de la Pizza',
+  'Taco Bell Express': 'Taco Bell Express',
+  'Pasta House': 'Maison des Pâtes',
+  'Chicken Delight': 'Délice de Poulet',
+
+  // Home page - Categories
+  'Dairy': 'Produits laitiers',
+  'Snacks': 'Collations',
+
+  // Home page - Cuisines
+  'Asian': 'Asiatique',
+  'Desserts': 'Desserts',
+  'Healthy': 'Santé',
+  'BBQ': 'BBQ',
+
+  // Home page - Badges
+  'Trending': 'Tendance',
+  'Popular': 'Populaire',
+  'Fast': 'Rapide',
+  'New': 'Nouveau',
+  'Fine Dining': 'Gastronomie',
+  'Fast Food': 'Restauration rapide',
+
+  // Home page - Time periods
+  '20 min': '20 min',
+  '25 min': '25 min',
+  '18 min': '18 min',
+  '15 min': '15 min',
+  '22 min': '22 min',
+
+  // Home page - Availability messages
+  '1000+ Grocery Stores Available': '1000+ épiceries disponibles',
+  '5000+ Restaurants Available': '5000+ restaurants disponibles',
+
+  // Home page - Section titles
+  'Shop by Aisle': 'Acheter par rayon',
+  'Quick Bites': 'Bouchées rapides',
+  'Browse Categories': 'Parcourir les catégories',
+  'Explore Cuisines': 'Explorer les cuisines',
+
+  // Home page - Section descriptions
+  'Popular grocery categories': 'Catégories d\'épicerie populaires',
+  'Fast delivery under 30 minutes': 'Livraison rapide en moins de 30 minutes',
+  'Everything you need in one place': 'Tout ce dont vous avez besoin en un seul endroit',
+  'Discover flavors from around the world': 'Découvrez des saveurs du monde entier',
+
+  // Home page - CTA Section
+  'Ready to Order?': 'Prêt à commander?',
+  'Join thousands of happy customers. Download our app today!': 'Rejoignez des milliers de clients satisfaits. Téléchargez notre application aujourd\'hui!',
+  'App Store': 'App Store',
+  'Google Play': 'Google Play',
+
+  // Home page - Benefits section
+  'Lightning Fast': 'Ultra Rapide',
+  'Get your food in 30 minutes or less': 'Recevez votre nourriture en 30 minutes ou moins',
+  'Best Prices': 'Meilleurs prix',
+  'Exclusive deals and discounts': 'Offres et réductions exclusives',
+  'Contactless delivery available': 'Livraison sans contact disponible',
+  'Quality Food': 'Nourriture de qualité',
+  'Fresh ingredients, every time': 'Ingrédients frais, à chaque fois',
+
+  // Home page - See All
+  'See All': 'Voir tout',
 };
 
 export const TranslationProvider = ({ children }) => {

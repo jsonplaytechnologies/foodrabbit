@@ -87,7 +87,7 @@ const Sidebar = () => {
 
               {/* Tooltip */}
               <div className='absolute left-full ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap'>
-                {item.label} (Coming Soon)
+                {item.label} ({translate('Coming Soon')})
               </div>
             </div>
           );

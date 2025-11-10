@@ -79,7 +79,7 @@ const Login = () => {
                   type="checkbox"
                   className="rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                 />
-                <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                <span className="ml-2 text-sm text-gray-600">{translate('Remember me')}</span>
               </label>
             </div>
 
@@ -87,7 +87,7 @@ const Login = () => {
               type="submit"
               className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition-colors"
             >
-              Sign In
+              {translate('Sign In')}
             </button>
           </form>
 
@@ -98,7 +98,7 @@ const Login = () => {
                 <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">{translate('Or continue with')}</span>
               </div>
             </div>
           </div>
@@ -106,18 +106,18 @@ const Login = () => {
           {/* Social Login */}
           <div className="grid grid-cols-2 gap-3">
             <button className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-              <span className="text-sm font-medium">Google</span>
+              <span className="text-sm font-medium">{translate('Google')}</span>
             </button>
             <button className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-              <span className="text-sm font-medium">Facebook</span>
+              <span className="text-sm font-medium">{translate('Facebook')}</span>
             </button>
           </div>
 
           {/* Sign Up Link */}
           <p className="mt-8 text-center text-sm text-gray-600">
-            Don't have an account?{' '}
+            {translate("Don't have an account?")}{' '}
             <Link to="/signup" className="text-orange-600 hover:text-orange-700 font-medium">
-              Sign up for free
+              {translate('Sign up for free')}
             </Link>
           </p>
         </div>

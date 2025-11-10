@@ -98,7 +98,7 @@ const Restaurants = () => {
               }`}
             >
               <FiStar className="w-4 h-4" />
-              Featured
+              {translate('Featured')}
             </button>
             <button
               onClick={() => setSelectedFilter('Top Rated')}
@@ -109,7 +109,7 @@ const Restaurants = () => {
               }`}
             >
               <FiAward className="w-4 h-4" />
-              Top Rated
+              {translate('Top Rated')}
             </button>
             <button
               onClick={() => setSelectedFilter('Fast Delivery')}
@@ -120,7 +120,7 @@ const Restaurants = () => {
               }`}
             >
               <FiZap className="w-4 h-4" />
-              Fast Delivery
+              {translate('Fast Delivery')}
             </button>
             <button
               onClick={() => setSelectedFilter('A-Z')}
@@ -131,7 +131,7 @@ const Restaurants = () => {
               }`}
             >
               <FiList className="w-4 h-4" />
-              A-Z
+              {translate('A-Z')}
             </button>
           </div>
         </div>
@@ -146,7 +146,7 @@ const Restaurants = () => {
           </h2>
           {searchTerm && (
             <p className='text-sm text-gray-600 mt-1'>
-              Results for "{searchTerm}"
+              {translate('Results for')} "{searchTerm}"
             </p>
           )}
         </div>
@@ -172,7 +172,7 @@ const Restaurants = () => {
                   <div className='absolute top-3 left-3'>
                     <span className='bg-orange-500 text-white px-3 py-1.5 rounded-md text-xs font-semibold shadow-md flex items-center gap-1.5'>
                       <Star className='w-3 h-3 fill-current' />
-                      Featured
+                      {translate('Featured')}
                     </span>
                   </div>
                 )}
@@ -215,11 +215,11 @@ const Restaurants = () => {
                 <div className='mb-3'>
                   {restaurant.deliveryFee === 0 ? (
                     <span className='inline-block bg-green-100 text-green-700 px-3 py-1 rounded-md text-xs font-semibold'>
-                      Free delivery over $35
+                      {translate('Free delivery over $35')}
                     </span>
                   ) : (
                     <span className='text-gray-600 text-sm'>
-                      Delivery: ${restaurant.deliveryFee}
+                      {translate('Delivery:')} ${restaurant.deliveryFee}
                     </span>
                   )}
                 </div>
@@ -240,10 +240,10 @@ const Restaurants = () => {
               <FiSearch className='w-12 h-12 text-gray-400' />
             </div>
             <h3 className='text-xl font-semibold text-gray-900 mb-2'>
-              No restaurants found
+              {translate('No restaurants found')}
             </h3>
             <p className='text-gray-600'>
-              Try adjusting your search or filters
+              {translate('Try adjusting your search or filters')}
             </p>
           </div>
         )}

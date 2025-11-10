@@ -103,12 +103,12 @@ const Header = () => {
               <Link to='/' className='flex items-center gap-3 group'>
                 <img
                   src='/logo.svg'
-                  alt='FoodRabbit Logo'
+                  alt={translate('FoodRabbit Logo')}
                   className='w-12 h-12 group-hover:scale-105 transition-transform'
                 />
                 <div>
                   <h1 className='text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors'>
-                    FoodRabbit
+                    {translate('FoodRabbit')}
                   </h1>
                   <p className='text-xs text-gray-500 -mt-0.5'>
                     {translate('Food & Grocery Delivery')}
@@ -216,7 +216,7 @@ const Header = () => {
               <button
                 onClick={toggleTranslation}
                 className='px-3 py-1.5 border border-gray-200 text-gray-700 rounded-md hover:bg-gray-50 transition-all text-xs font-medium'
-                title={isTranslated ? 'Switch to English' : 'Switch to French'}
+                title={isTranslated ? translate('Switch to English') : translate('Switch to French')}
               >
                 {isTranslated ? 'EN' : 'FR'}
               </button>

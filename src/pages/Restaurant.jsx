@@ -4,17 +4,19 @@ import { FiStar, FiClock, FiMapPin, FiHeart, FiShare2, FiPlus, FiMinus } from 'r
 import { Utensils, Pizza, Salad, Soup, Cookie, IceCream, ChefHat } from 'lucide-react';
 import { restaurants } from '../data/restaurants';
 import { useCart } from '../context/CartContext';
+import { useTranslation } from '../context/TranslationContext';
 
 const Restaurant = () => {
   const { id } = useParams();
   const { addItem, items, updateQuantity, removeItem } = useCart();
+  const { translate } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const restaurant = restaurants.find(r => r.id === parseInt(id));
 
   if (!restaurant) {
     return (
       <div className="container py-12 text-center">
-        <h1 className="text-2xl font-bold text-gray-900">Restaurant not found</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{translate('Restaurant not found')}</h1>
       </div>
     );
   }
@@ -85,7 +87,7 @@ const Restaurant = () => {
                   <span>{restaurant.deliveryTime}</span>
                 </div>
                 <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-semibold">
-                  {restaurant.deliveryFee === 0 ? 'Free delivery over $35' : `$${restaurant.deliveryFee} delivery`}
+                  {restaurant.deliveryFee === 0 ? translate('Free delivery over $35') : `$${restaurant.deliveryFee} ${translate('delivery')}`}
                 </span>
               </div>
             </div>
@@ -155,14 +157,14 @@ const Restaurant = () => {
             {/* Restaurant Details Card */}
             <div className="bg-white border border-gray-200 rounded-lg p-4 sticky top-[120px] space-y-4">
               <div>
-                <h2 className="text-lg font-bold text-gray-900 mb-3">Restaurant Info</h2>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">{translate('Restaurant Info')}</h2>
 
                 {/* Location */}
                 <div className="flex items-start gap-3 mb-4">
                   <FiMapPin className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">Location</p>
-                    <p className="text-xs text-gray-600 mt-1">{restaurant.address || '123 Main Street, City'}</p>
+                    <p className="text-sm font-semibold text-gray-900">{translate('Location')}</p>
+                    <p className="text-xs text-gray-600 mt-1">{restaurant.address || translate('123 Main Street, City')}</p>
                   </div>
                 </div>
 
@@ -170,7 +172,7 @@ const Restaurant = () => {
                 <div className="flex items-start gap-3 mb-4">
                   <FiClock className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">Delivery Time</p>
+                    <p className="text-sm font-semibold text-gray-900">{translate('Delivery Time')}</p>
                     <p className="text-xs text-gray-600 mt-1">{restaurant.deliveryTime}</p>
                   </div>
                 </div>
@@ -179,10 +181,10 @@ const Restaurant = () => {
                 <div className="flex items-start gap-3">
                   <FiStar className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">Rating</p>
+                    <p className="text-sm font-semibold text-gray-900">{translate('Rating')}</p>
                     <div className="flex items-center gap-1 text-xs text-gray-600 mt-1">
                       <FiStar className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                      <span>{restaurant.rating} ({restaurant.reviewCount} reviews)</span>
+                      <span>{restaurant.rating} ({restaurant.reviewCount} {translate('reviews')})</span>
                     </div>
                   </div>
                 </div>
@@ -190,12 +192,12 @@ const Restaurant = () => {
 
               {/* Delivery Fee */}
               <div className="pt-4 border-t border-gray-200">
-                <p className="text-sm font-semibold text-gray-900 mb-2">Delivery Fee</p>
+                <p className="text-sm font-semibold text-gray-900 mb-2">{translate('Delivery Fee')}</p>
                 <p className="text-lg font-bold text-orange-600">
-                  {restaurant.deliveryFee === 0 ? 'FREE' : `$${Number(restaurant.deliveryFee).toFixed(2)}`}
+                  {restaurant.deliveryFee === 0 ? translate('FREE') : `$${Number(restaurant.deliveryFee).toFixed(2)}`}
                 </p>
                 {restaurant.deliveryFee === 0 && (
-                  <p className="text-xs text-gray-600 mt-1">On orders over $35</p>
+                  <p className="text-xs text-gray-600 mt-1">{translate('On orders over $35')}</p>
                 )}
               </div>
 
@@ -203,11 +205,11 @@ const Restaurant = () => {
               <div className="pt-4 border-t border-gray-200 space-y-2">
                 <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors text-sm font-semibold">
                   <FiHeart className="w-4 h-4" />
-                  Save Restaurant
+                  {translate('Save Restaurant')}
                 </button>
                 <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors text-sm font-semibold">
                   <FiShare2 className="w-4 h-4" />
-                  Share
+                  {translate('Share')}
                 </button>
               </div>
             </div>
@@ -217,9 +219,9 @@ const Restaurant = () => {
           <div className="flex-1">
             <div className="mb-4">
               <h2 className="text-2xl font-bold text-gray-900">
-                {selectedCategory === 'All' ? 'All Items' : selectedCategory}
+                {selectedCategory === 'All' ? translate('All Items') : selectedCategory}
               </h2>
-              <p className="text-sm text-gray-600 mt-1">{filteredMenuItems.length} items</p>
+              <p className="text-sm text-gray-600 mt-1">{filteredMenuItems.length} {translate('items')}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -247,7 +249,7 @@ const Restaurant = () => {
                             className="flex items-center gap-1 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors text-sm font-semibold"
                           >
                             <FiPlus className="w-4 h-4" />
-                            Add
+                            {translate('Add')}
                           </button>
                         ) : (
                           <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-lg px-2 py-1">
@@ -257,7 +259,7 @@ const Restaurant = () => {
                             >
                               <FiMinus className="w-4 h-4" />
                             </button>
-                            <span className="font-semibold text-sm min-w-[32px] text-center text-gray-900">{quantity} ct</span>
+                            <span className="font-semibold text-sm min-w-[32px] text-center text-gray-900">{quantity} {translate('ct')}</span>
                             <button
                               onClick={() => handleIncrement(item)}
                               className="w-8 h-8 flex items-center justify-center border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded-full transition-all"
@@ -275,7 +277,7 @@ const Restaurant = () => {
 
             {filteredMenuItems.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-600">No items found in this category.</p>
+                <p className="text-gray-600">{translate('No items found in this category.')}</p>
               </div>
             )}
           </div>

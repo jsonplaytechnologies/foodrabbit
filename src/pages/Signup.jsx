@@ -53,7 +53,7 @@ const Signup = () => {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
+                {translate('Email Address')}
               </label>
               <div className="relative">
                 <FiMail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -63,7 +63,7 @@ const Signup = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Enter your email"
+                  placeholder={translate('Enter your email')}
                   required
                 />
               </div>
@@ -71,7 +71,7 @@ const Signup = () => {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                {translate('Password')}
               </label>
               <div className="relative">
                 <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -81,7 +81,7 @@ const Signup = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Enter your password"
+                  placeholder={translate('Enter your password')}
                   required
                 />
                 <button
@@ -99,7 +99,7 @@ const Signup = () => {
                 htmlFor="confirm-password"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Confirm Password
+                {translate('Confirm Password')}
               </label>
               <div className="relative">
                 <FiLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -109,7 +109,7 @@ const Signup = () => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Confirm your password"
+                  placeholder={translate('Confirm your password')}
                   required
                 />
                 <button
@@ -126,15 +126,15 @@ const Signup = () => {
               type="submit"
               className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold transition-colors"
             >
-              Create Account
+              {translate('Create Account')}
             </button>
           </form>
 
           {/* Sign In Link */}
           <p className="mt-8 text-center text-sm text-gray-600">
-            Already have an account?{' '}
+            {translate('Already have an account?')}{' '}
             <Link to="/login" className="text-orange-600 hover:text-orange-700 font-medium">
-              Sign in
+              {translate('Sign in')}
             </Link>
           </p>
         </div>

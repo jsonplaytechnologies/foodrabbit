@@ -78,29 +78,32 @@ const ProductDetails = () => {
   const reviews = product.reviews || [
     {
       id: 1,
-      customerName: 'Sarah M.',
+      customerName: translate('Sarah M.'),
       rating: 5,
       date: '2024-12-15',
-      comment:
-        'Always fresh and perfectly ripe! These products are sweet and delicious. Great for my morning routine.',
+      comment: translate(
+        'Always fresh and perfectly ripe! These products are sweet and delicious. Great for my morning routine.'
+      ),
       verified: true,
     },
     {
       id: 2,
-      customerName: 'Mike K.',
+      customerName: translate('Mike K.'),
       rating: 4,
       date: '2024-12-10',
-      comment:
-        'Good quality product, though sometimes they arrive needing a day to ripen. Still taste great.',
+      comment: translate(
+        'Good quality product, though sometimes they arrive needing a day to ripen. Still taste great.'
+      ),
       verified: true,
     },
     {
       id: 3,
-      customerName: 'Emma L.',
+      customerName: translate('Emma L.'),
       rating: 5,
       date: '2024-12-08',
-      comment:
-        'Love the quality and freshness. The taste is noticeably better than other brands.',
+      comment: translate(
+        'Love the quality and freshness. The taste is noticeably better than other brands.'
+      ),
       verified: true,
     },
   ];
@@ -108,7 +111,7 @@ const ProductDetails = () => {
   const relatedProducts = [
     {
       id: 2,
-      name: 'Organic Strawberries',
+      name: translate('Organic Strawberries'),
       price: 4.99,
       image:
         'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=200&h=200&fit=crop',
@@ -116,7 +119,7 @@ const ProductDetails = () => {
     },
     {
       id: 3,
-      name: 'Organic Blueberries',
+      name: translate('Organic Blueberries'),
       price: 5.99,
       image:
         'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=200&h=200&fit=crop',
@@ -124,7 +127,7 @@ const ProductDetails = () => {
     },
     {
       id: 4,
-      name: 'Organic Apples',
+      name: translate('Organic Apples'),
       price: 3.99,
       image:
         'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=200&h=200&fit=crop',
@@ -167,14 +170,14 @@ const ProductDetails = () => {
         <div className='container py-4'>
           <nav className='flex items-center space-x-2 text-sm'>
             <Link to='/' className='text-gray-500 hover:text-gray-700'>
-              Home
+              {translate('Home')}
             </Link>
             <span className='text-gray-400'>/</span>
             <Link
               to='/grocery-stores'
               className='text-gray-500 hover:text-gray-700'
             >
-              Grocery Stores
+              {translate('Grocery Stores')}
             </Link>
             <span className='text-gray-400'>/</span>
             <Link
@@ -232,11 +235,11 @@ const ProductDetails = () => {
                   </span>
                   {productData.inStock ? (
                     <span className='bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-medium'>
-                      In Stock ({productData.stockCount} available)
+                      {translate('In Stock')} ({productData.stockCount} {translate('available')})
                     </span>
                   ) : (
                     <span className='bg-red-100 text-red-700 px-2 py-1 rounded text-sm font-medium'>
-                      Out of Stock
+                      {translate('Out of Stock')}
                     </span>
                   )}
                 </div>
@@ -244,7 +247,7 @@ const ProductDetails = () => {
                   {productData.name}
                 </h1>
                 <p className='text-lg text-gray-600 mb-2'>
-                  by {productData.brand}
+                  {translate('by')} {productData.brand}
                 </p>
 
                 <div className='flex items-center gap-4 mb-4'>
@@ -265,7 +268,7 @@ const ProductDetails = () => {
                       {productData.rating || 4.5}
                     </span>
                     <span className='text-gray-500'>
-                      ({productData.reviewCount || reviews.length} reviews)
+                      ({productData.reviewCount || reviews.length} {translate('reviews')})
                     </span>
                   </div>
                 </div>
@@ -286,7 +289,7 @@ const ProductDetails = () => {
               {/* Features */}
               <div className='mb-6'>
                 <h3 className='font-semibold text-gray-900 mb-3'>
-                  Product Features
+                  {translate('Product Features')}
                 </h3>
                 <div className='flex flex-wrap gap-2'>
                   {productData.features.map((feature, index) => (
@@ -349,7 +352,7 @@ const ProductDetails = () => {
                 <div className='text-center'>
                   <FiTruck className='w-6 h-6 text-green-600 mx-auto mb-2' />
                   <p className='text-sm font-medium text-gray-900'>
-                    Fast Delivery
+                    {translate('Fast Delivery')}
                   </p>
                   <p className='text-xs text-gray-600'>
                     {product.deliveryTime}
@@ -358,14 +361,14 @@ const ProductDetails = () => {
                 <div className='text-center'>
                   <FiShield className='w-6 h-6 text-green-600 mx-auto mb-2' />
                   <p className='text-sm font-medium text-gray-900'>
-                    Quality Guaranteed
+                    {translate('Quality Guaranteed')}
                   </p>
-                  <p className='text-xs text-gray-600'>Fresh or refund</p>
+                  <p className='text-xs text-gray-600'>{translate('Fresh or refund')}</p>
                 </div>
                 <div className='text-center'>
                   <FiClock className='w-6 h-6 text-green-600 mx-auto mb-2' />
                   <p className='text-sm font-medium text-gray-900'>
-                    Fast Delivery
+                    {translate('Fast Delivery')}
                   </p>
                   <p className='text-xs text-gray-600'>
                     {productData.deliveryTime}
@@ -389,7 +392,7 @@ const ProductDetails = () => {
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                 >
-                  Description
+                  {translate('Description')}
                 </button>
                 <button
                   onClick={() => setActiveTab('nutrition')}
@@ -399,7 +402,7 @@ const ProductDetails = () => {
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                 >
-                  Nutrition Facts
+                  {translate('Nutrition Facts')}
                 </button>
                 <button
                   onClick={() => setActiveTab('reviews')}
@@ -409,7 +412,7 @@ const ProductDetails = () => {
                       : 'text-gray-500 hover:text-gray-700'
                   }`}
                 >
-                  Reviews ({productData.reviewCount || reviews.length})
+                  {translate('Reviews')} ({productData.reviewCount || reviews.length})
                 </button>
               </nav>
             </div>
@@ -419,7 +422,7 @@ const ProductDetails = () => {
               {activeTab === 'description' && (
                 <div>
                   <h3 className='text-xl font-semibold text-gray-900 mb-4'>
-                    Product Description
+                    {translate('Product Description')}
                   </h3>
                   <p className='text-gray-600 leading-relaxed mb-6'>
                     {productData.fullDescription}
@@ -428,7 +431,7 @@ const ProductDetails = () => {
                   {productData.origin && (
                     <>
                       <h4 className='font-semibold text-gray-900 mb-2'>
-                        Origin
+                        {translate('Origin')}
                       </h4>
                       <p className='text-gray-600 mb-4'>{productData.origin}</p>
                     </>
@@ -437,7 +440,7 @@ const ProductDetails = () => {
                   {productData.storageInstructions && (
                     <>
                       <h4 className='font-semibold text-gray-900 mb-2'>
-                        Storage Instructions
+                        {translate('Storage Instructions')}
                       </h4>
                       <p className='text-gray-600'>
                         {productData.storageInstructions}
@@ -451,21 +454,21 @@ const ProductDetails = () => {
               {activeTab === 'nutrition' && (
                 <div>
                   <h3 className='text-xl font-semibold text-gray-900 mb-6'>
-                    Nutrition Facts
+                    {translate('Nutrition Facts')}
                   </h3>
                   <div className='bg-white border-2 border-black max-w-md'>
                     <div className='p-4'>
                       <h4 className='text-2xl font-bold border-b-8 border-black pb-2 mb-2'>
-                        Nutrition Facts
+                        {translate('Nutrition Facts')}
                       </h4>
                       <div className='text-sm border-b border-black pb-2 mb-2'>
-                        <span className='font-medium'>Serving size</span>{' '}
+                        <span className='font-medium'>{translate('Serving size')}</span>{' '}
                         {productData.nutritionFacts.servingSize}
                       </div>
 
                       <div className='border-b-4 border-black pb-2 mb-2'>
                         <div className='flex justify-between items-end'>
-                          <span className='text-lg font-bold'>Calories</span>
+                          <span className='text-lg font-bold'>{translate('Calories')}</span>
                           <span className='text-3xl font-bold'>
                             {productData.nutritionFacts.calories}
                           </span>
@@ -474,12 +477,12 @@ const ProductDetails = () => {
 
                       <div className='text-sm border-b border-black pb-2 mb-2'>
                         <div className='font-bold text-right mb-1'>
-                          % Daily Value*
+                          {translate('% Daily Value*')}
                         </div>
 
                         <div className='flex justify-between py-1 border-b border-gray-300'>
                           <span>
-                            <span className='font-bold'>Total Fat</span>{' '}
+                            <span className='font-bold'>{translate('Total Fat')}</span>{' '}
                             {productData.nutritionFacts.fat}
                           </span>
                           <span className='font-bold'>1%</span>
@@ -487,7 +490,7 @@ const ProductDetails = () => {
 
                         <div className='flex justify-between py-1 pl-4 border-b border-gray-300'>
                           <span>
-                            Saturated Fat{' '}
+                            {translate('Saturated Fat')}{' '}
                             {productData.nutritionFacts.saturatedFat}
                           </span>
                           <span className='font-bold'>1%</span>
@@ -495,7 +498,7 @@ const ProductDetails = () => {
 
                         <div className='flex justify-between py-1 border-b border-gray-300'>
                           <span>
-                            <span className='font-bold'>Cholesterol</span>{' '}
+                            <span className='font-bold'>{translate('Cholesterol')}</span>{' '}
                             {productData.nutritionFacts.cholesterol}
                           </span>
                           <span className='font-bold'>0%</span>
@@ -503,7 +506,7 @@ const ProductDetails = () => {
 
                         <div className='flex justify-between py-1 border-b border-gray-300'>
                           <span>
-                            <span className='font-bold'>Sodium</span>{' '}
+                            <span className='font-bold'>{translate('Sodium')}</span>{' '}
                             {productData.nutritionFacts.sodium}
                           </span>
                           <span className='font-bold'>0%</span>
@@ -512,7 +515,7 @@ const ProductDetails = () => {
                         <div className='flex justify-between py-1 border-b border-gray-300'>
                           <span>
                             <span className='font-bold'>
-                              Total Carbohydrate
+                              {translate('Total Carbohydrate')}
                             </span>{' '}
                             {productData.nutritionFacts.carbs}
                           </span>
@@ -521,57 +524,56 @@ const ProductDetails = () => {
 
                         <div className='flex justify-between py-1 pl-4 border-b border-gray-300'>
                           <span>
-                            Dietary Fiber {productData.nutritionFacts.fiber}
+                            {translate('Dietary Fiber')} {productData.nutritionFacts.fiber}
                           </span>
                           <span className='font-bold'>11%</span>
                         </div>
 
                         <div className='flex justify-between py-1 pl-4 border-b border-gray-300'>
                           <span>
-                            Total Sugars {productData.nutritionFacts.sugar}
+                            {translate('Total Sugars')} {productData.nutritionFacts.sugar}
                           </span>
                           <span></span>
                         </div>
 
                         <div className='flex justify-between py-1 border-b-4 border-black'>
                           <span>
-                            <span className='font-bold'>Protein</span>{' '}
+                            <span className='font-bold'>{translate('Protein')}</span>{' '}
                             {productData.nutritionFacts.protein}
                           </span>
                           <span></span>
                         </div>
 
                         <div className='flex justify-between py-1 border-b border-gray-300'>
-                          <span>Vitamin C</span>
+                          <span>{translate('Vitamin C')}</span>
                           <span className='font-bold'>
                             {productData.nutritionFacts.vitaminC}
                           </span>
                         </div>
 
                         <div className='flex justify-between py-1 border-b border-gray-300'>
-                          <span>Vitamin B6</span>
+                          <span>{translate('Vitamin B6')}</span>
                           <span className='font-bold'>
                             {productData.nutritionFacts.vitaminB6}
                           </span>
                         </div>
 
                         <div className='flex justify-between py-1 border-b border-gray-300'>
-                          <span>Folate</span>
+                          <span>{translate('Folate')}</span>
                           <span className='font-bold'>
                             {productData.nutritionFacts.folate}
                           </span>
                         </div>
 
                         <div className='flex justify-between py-1'>
-                          <span>Potassium</span>
+                          <span>{translate('Potassium')}</span>
                           <span className='font-bold'>12%</span>
                         </div>
                       </div>
 
                       <div className='text-xs pt-2'>
                         <p>
-                          *Percent Daily Values are based on a 2,000 calorie
-                          diet.
+                          {translate('*Percent Daily Values are based on a 2,000 calorie diet.')}
                         </p>
                       </div>
                     </div>
@@ -583,7 +585,7 @@ const ProductDetails = () => {
               {activeTab === 'reviews' && (
                 <div>
                   <h3 className='text-xl font-semibold text-gray-900 mb-6'>
-                    Customer Reviews
+                    {translate('Customer Reviews')}
                   </h3>
 
                   {/* Review Summary */}
@@ -608,7 +610,7 @@ const ProductDetails = () => {
                               ))}
                             </div>
                             <p className='text-gray-600'>
-                              Based on {reviews.length} reviews
+                              {translate('Based on')} {reviews.length} {translate('reviews')}
                             </p>
                           </div>
                         </div>
@@ -662,7 +664,7 @@ const ProductDetails = () => {
                               </h4>
                               {review.verified && (
                                 <span className='bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium'>
-                                  Verified Purchase
+                                  {translate('Verified Purchase')}
                                 </span>
                               )}
                               <span className='text-sm text-gray-500'>
@@ -689,11 +691,11 @@ const ProductDetails = () => {
                             <div className='flex items-center gap-4 text-sm'>
                               <button className='flex items-center gap-1 text-gray-500 hover:text-green-600 transition-colors'>
                                 <FiThumbsUp className='w-4 h-4' />
-                                <span>Helpful ({review.helpful || 0})</span>
+                                <span>{translate('Helpful')} ({review.helpful || 0})</span>
                               </button>
                               <button className='flex items-center gap-1 text-gray-500 hover:text-red-600 transition-colors'>
                                 <FiThumbsDown className='w-4 h-4' />
-                                <span>Not helpful</span>
+                                <span>{translate('Not helpful')}</span>
                               </button>
                             </div>
                           </div>
@@ -705,7 +707,7 @@ const ProductDetails = () => {
                   {/* Write Review Button */}
                   <div className='mt-8 text-center'>
                     <button className='bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors'>
-                      Write a Review
+                      {translate('Write a Review')}
                     </button>
                   </div>
                 </div>
@@ -717,7 +719,7 @@ const ProductDetails = () => {
         {/* Related Products */}
         <div className='mt-12 py-6'>
           <h3 className='text-2xl font-bold text-gray-900 mb-6'>
-            You might also like
+            {translate('You might also like')}
           </h3>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
             {relatedProducts.map((item) => (

@@ -26,7 +26,7 @@ const Home = () => {
       rating: 4.9,
       category: translate('Supermarket'),
       badge: translate('Trending'),
-      discount: '15% OFF',
+      discount: translate('15% OFF'),
     },
     {
       name: translate('Organic Grocer'),
@@ -36,7 +36,7 @@ const Home = () => {
       rating: 4.8,
       category: translate('Organic'),
       badge: translate('Popular'),
-      discount: '20% OFF',
+      discount: translate('20% OFF'),
     },
     {
       name: translate('Quick Mart'),
@@ -46,7 +46,7 @@ const Home = () => {
       rating: 4.7,
       category: translate('Convenience'),
       badge: translate('Fast'),
-      discount: '10% OFF',
+      discount: translate('10% OFF'),
     },
   ] : [
     {
@@ -57,7 +57,7 @@ const Home = () => {
       rating: 4.9,
       category: translate('Fine Dining'),
       badge: translate('Trending'),
-      discount: '20% OFF',
+      discount: translate('20% OFF'),
     },
     {
       name: translate('Burger Empire'),
@@ -67,7 +67,7 @@ const Home = () => {
       rating: 4.7,
       category: translate('Fast Food'),
       badge: translate('Popular'),
-      discount: '15% OFF',
+      discount: translate('15% OFF'),
     },
     {
       name: translate('Sushi Masters'),
@@ -77,7 +77,7 @@ const Home = () => {
       rating: 4.8,
       category: translate('Japanese'),
       badge: translate('New'),
-      discount: '25% OFF',
+      discount: translate('25% OFF'),
     },
   ];
 
@@ -86,28 +86,28 @@ const Home = () => {
       name: translate('Dairy & Eggs'),
       image:
         'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=300&fit=crop',
-      time: '20 min',
+      time: translate('20 min'),
       rating: 4.7,
     },
     {
       name: translate('Fresh Produce'),
       image:
         'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=400&h=300&fit=crop',
-      time: '25 min',
+      time: translate('25 min'),
       rating: 4.8,
     },
     {
       name: translate('Bakery'),
       image:
         'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=300&fit=crop',
-      time: '18 min',
+      time: translate('18 min'),
       rating: 4.6,
     },
     {
       name: translate('Beverages'),
       image:
         'https://images.unsplash.com/photo-1598614187854-26a60e982dc4?w=400&h=300&fit=crop',
-      time: '15 min',
+      time: translate('15 min'),
       rating: 4.5,
     },
   ] : [
@@ -115,28 +115,28 @@ const Home = () => {
       name: translate('Pizza Paradise'),
       image:
         'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop',
-      time: '20 min',
+      time: translate('20 min'),
       rating: 4.6,
     },
     {
       name: translate('Taco Bell Express'),
       image:
         'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&h=300&fit=crop',
-      time: '18 min',
+      time: translate('18 min'),
       rating: 4.5,
     },
     {
       name: translate('Pasta House'),
       image:
         'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop',
-      time: '22 min',
+      time: translate('22 min'),
       rating: 4.7,
     },
     {
       name: translate('Chicken Delight'),
       image:
         'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&h=300&fit=crop',
-      time: '25 min',
+      time: translate('25 min'),
       rating: 4.8,
     },
   ];
@@ -146,42 +146,42 @@ const Home = () => {
       name: translate('Fresh Produce'),
       image:
         'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=300&h=300&fit=crop',
-      count: '500+',
+      count: translate('500+'),
       color: 'from-green-400 to-emerald-500',
     },
     {
       name: translate('Dairy'),
       image:
         'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&h=300&fit=crop',
-      count: '200+',
+      count: translate('200+'),
       color: 'from-blue-400 to-cyan-500',
     },
     {
       name: translate('Meat & Seafood'),
       image:
         'https://images.unsplash.com/photo-1588348835776-a6ab7baa1bdb?w=300&h=300&fit=crop',
-      count: '150+',
+      count: translate('150+'),
       color: 'from-red-500 to-pink-500',
     },
     {
       name: translate('Bakery'),
       image:
         'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=300&fit=crop',
-      count: '100+',
+      count: translate('100+'),
       color: 'from-amber-500 to-orange-500',
     },
     {
       name: translate('Snacks'),
       image:
         'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=300&h=300&fit=crop',
-      count: '300+',
+      count: translate('300+'),
       color: 'from-purple-500 to-pink-500',
     },
     {
       name: translate('Beverages'),
       image:
         'https://images.unsplash.com/photo-1598614187854-26a60e982dc4?w=300&h=300&fit=crop',
-      count: '250+',
+      count: translate('250+'),
       color: 'from-cyan-500 to-blue-500',
     },
   ] : [
@@ -189,42 +189,42 @@ const Home = () => {
       name: translate('Italian'),
       image:
         'https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=300&h=300&fit=crop',
-      count: '120+',
+      count: translate('120+'),
       color: 'from-red-500 to-orange-500',
     },
     {
       name: translate('Asian'),
       image:
         'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=300&h=300&fit=crop',
-      count: '95+',
+      count: translate('95+'),
       color: 'from-yellow-500 to-red-500',
     },
     {
       name: translate('Mexican'),
       image:
         'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=300&h=300&fit=crop',
-      count: '80+',
+      count: translate('80+'),
       color: 'from-green-500 to-yellow-500',
     },
     {
       name: translate('Desserts'),
       image:
         'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=300&h=300&fit=crop',
-      count: '150+',
+      count: translate('150+'),
       color: 'from-pink-500 to-purple-500',
     },
     {
       name: translate('Healthy'),
       image:
         'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=300&fit=crop',
-      count: '70+',
+      count: translate('70+'),
       color: 'from-green-400 to-teal-500',
     },
     {
       name: translate('BBQ'),
       image:
         'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop',
-      count: '60+',
+      count: translate('60+'),
       color: 'from-orange-600 to-red-600',
     },
   ];
@@ -333,7 +333,7 @@ const Home = () => {
                       ? 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=700&h=700&fit=crop'
                       : 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700&h=700&fit=crop'
                   }
-                  alt={serviceType === 'grocery' ? 'Fresh groceries' : 'Delicious food'}
+                  alt={serviceType === 'grocery' ? translate('Fresh groceries') : translate('Delicious food')}
                   className='rounded-3xl shadow-2xl w-full'
                 />
               </div>
@@ -399,7 +399,7 @@ const Home = () => {
                     <div className='flex items-center gap-4 text-sm'>
                       <div className='flex items-center gap-1'>
                         <FiClock className='w-4 h-4 text-gray-400' />
-                        <span className='font-medium'>{restaurant.deliveryTime} min</span>
+                        <span className='font-medium'>{restaurant.deliveryTime} {translate('min')}</span>
                       </div>
                       <div className='flex items-center gap-1'>
                         <FiStar className='w-4 h-4 text-yellow-400 fill-current' />

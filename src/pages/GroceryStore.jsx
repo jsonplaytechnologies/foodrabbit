@@ -4,9 +4,11 @@ import { FiStar, FiClock, FiMapPin, FiHeart, FiShare2, FiPlus, FiMinus } from 'r
 import { groceryStores } from '../data/groceryStores';
 import { useCart } from '../context/CartContext';
 import CategoryIcon from '../components/CategoryIcon';
+import { useTranslation } from '../context/TranslationContext';
 
 const GroceryStore = () => {
   const { id } = useParams();
+  const { translate } = useTranslation();
   const { addItem, items, updateQuantity, removeItem } = useCart();
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const store = groceryStores.find(s => s.id === parseInt(id));
@@ -14,20 +16,20 @@ const GroceryStore = () => {
   if (!store) {
     return (
       <div className="container py-12 text-center">
-        <h1 className="text-2xl font-bold text-gray-900">Store not found</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{translate('Store not found')}</h1>
       </div>
     );
   }
 
   const products = store.products || [
-    { id: 1, name: "Organic Bananas", description: "Fresh organic bananas, 1 lb", price: 2.99, image: "https://images.pexels.com/photos/61127/pexels-photo-61127.jpeg?w=300&h=200&fit=crop", category: "Produce" },
-    { id: 2, name: "Whole Milk", description: "Fresh whole milk, 1 gallon", price: 4.49, image: "https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?w=300&h=200&fit=crop", category: "Dairy" },
-    { id: 3, name: "Sourdough Bread", description: "Artisan sourdough bread loaf", price: 5.99, image: "https://images.pexels.com/photos/209206/pexels-photo-209206.jpeg?w=300&h=200&fit=crop", category: "Bakery" },
-    { id: 4, name: "Ground Beef", description: "Fresh ground beef, 1 lb", price: 8.99, image: "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?w=300&h=200&fit=crop", category: "Meat" },
-    { id: 5, name: "Fresh Tomatoes", description: "Vine-ripened tomatoes, 1 lb", price: 3.49, image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=300&h=200&fit=crop", category: "Produce" },
-    { id: 6, name: "Cheddar Cheese", description: "Sharp cheddar cheese, 8 oz", price: 5.49, image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=300&h=200&fit=crop", category: "Dairy" },
-    { id: 7, name: "Organic Eggs", description: "Free-range organic eggs, dozen", price: 6.99, image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=300&h=200&fit=crop", category: "Dairy" },
-    { id: 8, name: "Fresh Spinach", description: "Organic baby spinach, 5 oz", price: 3.99, image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=200&fit=crop", category: "Produce" }
+    { id: 1, name: translate("Organic Bananas"), description: translate("Fresh organic bananas, 1 lb"), price: 2.99, image: "https://images.pexels.com/photos/61127/pexels-photo-61127.jpeg?w=300&h=200&fit=crop", category: translate("Produce") },
+    { id: 2, name: translate("Whole Milk"), description: translate("Fresh whole milk, 1 gallon"), price: 4.49, image: "https://images.pexels.com/photos/416978/pexels-photo-416978.jpeg?w=300&h=200&fit=crop", category: translate("Dairy") },
+    { id: 3, name: translate("Sourdough Bread"), description: translate("Artisan sourdough bread loaf"), price: 5.99, image: "https://images.pexels.com/photos/209206/pexels-photo-209206.jpeg?w=300&h=200&fit=crop", category: translate("Bakery") },
+    { id: 4, name: translate("Ground Beef"), description: translate("Fresh ground beef, 1 lb"), price: 8.99, image: "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?w=300&h=200&fit=crop", category: translate("Meat") },
+    { id: 5, name: translate("Fresh Tomatoes"), description: translate("Vine-ripened tomatoes, 1 lb"), price: 3.49, image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=300&h=200&fit=crop", category: translate("Produce") },
+    { id: 6, name: translate("Cheddar Cheese"), description: translate("Sharp cheddar cheese, 8 oz"), price: 5.49, image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=300&h=200&fit=crop", category: translate("Dairy") },
+    { id: 7, name: translate("Organic Eggs"), description: translate("Free-range organic eggs, dozen"), price: 6.99, image: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=300&h=200&fit=crop", category: translate("Dairy") },
+    { id: 8, name: translate("Fresh Spinach"), description: translate("Organic baby spinach, 5 oz"), price: 3.99, image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=200&fit=crop", category: translate("Produce") }
   ];
 
   // Get total product count
@@ -84,7 +86,7 @@ const GroceryStore = () => {
                   <span>{store.deliveryTime}</span>
                 </div>
                 <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-semibold">
-                  {store.deliveryFee === 0 ? 'Free delivery over $35' : `$${store.deliveryFee} delivery`}
+                  {store.deliveryFee === 0 ? translate('Free delivery over $35') : `$${store.deliveryFee} ${translate('delivery')}`}
                 </span>
               </div>
             </div>
@@ -127,14 +129,14 @@ const GroceryStore = () => {
             {/* Store Details Card */}
             <div className="bg-white border border-gray-200 rounded-lg p-4 sticky top-[120px] space-y-4">
               <div>
-                <h2 className="text-lg font-bold text-gray-900 mb-3">Store Info</h2>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">{translate('Store Info')}</h2>
 
                 {/* Location */}
                 <div className="flex items-start gap-3 mb-4">
                   <FiMapPin className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">Location</p>
-                    <p className="text-xs text-gray-600 mt-1">{store.address || '456 Market Street, City'}</p>
+                    <p className="text-sm font-semibold text-gray-900">{translate('Location')}</p>
+                    <p className="text-xs text-gray-600 mt-1">{store.address || translate('456 Market Street, City')}</p>
                   </div>
                 </div>
 
@@ -142,7 +144,7 @@ const GroceryStore = () => {
                 <div className="flex items-start gap-3 mb-4">
                   <FiClock className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">Delivery Time</p>
+                    <p className="text-sm font-semibold text-gray-900">{translate('Delivery Time')}</p>
                     <p className="text-xs text-gray-600 mt-1">{store.deliveryTime}</p>
                   </div>
                 </div>
@@ -151,10 +153,10 @@ const GroceryStore = () => {
                 <div className="flex items-start gap-3">
                   <FiStar className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">Rating</p>
+                    <p className="text-sm font-semibold text-gray-900">{translate('Rating')}</p>
                     <div className="flex items-center gap-1 text-xs text-gray-600 mt-1">
                       <FiStar className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                      <span>{store.rating} ({store.reviewCount} reviews)</span>
+                      <span>{store.rating} ({store.reviewCount} {translate('reviews')})</span>
                     </div>
                   </div>
                 </div>
@@ -162,18 +164,18 @@ const GroceryStore = () => {
 
               {/* Delivery Fee */}
               <div className="pt-4 border-t border-gray-200">
-                <p className="text-sm font-semibold text-gray-900 mb-2">Delivery Fee</p>
+                <p className="text-sm font-semibold text-gray-900 mb-2">{translate('Delivery Fee')}</p>
                 <p className="text-lg font-bold text-green-600">
-                  {store.deliveryFee === 0 ? 'FREE' : `$${Number(store.deliveryFee).toFixed(2)}`}
+                  {store.deliveryFee === 0 ? translate('FREE') : `$${Number(store.deliveryFee).toFixed(2)}`}
                 </p>
                 {store.deliveryFee === 0 && (
-                  <p className="text-xs text-gray-600 mt-1">On orders over $35</p>
+                  <p className="text-xs text-gray-600 mt-1">{translate('On orders over $35')}</p>
                 )}
               </div>
 
               {/* Store Type Badge */}
               <div className="pt-4 border-t border-gray-200">
-                <p className="text-sm font-semibold text-gray-900 mb-2">Store Type</p>
+                <p className="text-sm font-semibold text-gray-900 mb-2">{translate('Store Type')}</p>
                 <span className="inline-block px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-semibold">
                   {store.type}
                 </span>
@@ -183,11 +185,11 @@ const GroceryStore = () => {
               <div className="pt-4 border-t border-gray-200 space-y-2">
                 <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors text-sm font-semibold">
                   <FiHeart className="w-4 h-4" />
-                  Save Store
+                  {translate('Save Store')}
                 </button>
                 <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors text-sm font-semibold">
                   <FiShare2 className="w-4 h-4" />
-                  Share
+                  {translate('Share')}
                 </button>
               </div>
             </div>
@@ -199,7 +201,7 @@ const GroceryStore = () => {
               <h2 className="text-2xl font-bold text-gray-900">
                 {selectedCategory}
               </h2>
-              <p className="text-sm text-gray-600 mt-1">{filteredProducts.length} items</p>
+              <p className="text-sm text-gray-600 mt-1">{filteredProducts.length} {translate('items')}</p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
@@ -229,7 +231,7 @@ const GroceryStore = () => {
                             className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded-md transition-colors text-xs font-semibold"
                           >
                             <FiPlus className="w-3 h-3" />
-                            Add
+                            {translate('Add')}
                           </button>
                         ) : (
                           <div className="flex items-center gap-1 bg-white border border-gray-300 rounded-md px-1 py-0.5">
@@ -257,7 +259,7 @@ const GroceryStore = () => {
 
             {filteredProducts.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-600">No products found in this category.</p>
+                <p className="text-gray-600">{translate('No products found in this category.')}</p>
               </div>
             )}
           </div>
